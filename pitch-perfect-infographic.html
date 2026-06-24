@@ -406,7 +406,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
-const FLAG_BASE = 'https://raw.githubusercontent.com/lipis/flag-icons/main/flags/4x3/';
+const FLAG_BASE = 'https://flagcdn.com/28x21/';
 
 // ── TRANSLATIONS ──
 const LANGS = {
@@ -638,18 +638,10 @@ let currentLang = 'en';
 // Cache of code -> blob URL for flags
 const flagCache = {};
 
-// ── PRE-FETCH FLAGS AS BASE64 DATA URLS ──
+// ── FLAGS: flagcdn.com PNGs with crossorigin work reliably with html2canvas ──
 async function preloadFlags() {
-  await Promise.all(nations.map(async n => {
-    if (flagCache[n.code]) return;
-    try {
-      const res = await fetch(`${FLAG_BASE}${n.code}.svg`);
-      const text = await res.text();
-      flagCache[n.code] = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(text)));
-    } catch(e) {
-      flagCache[n.code] = `${FLAG_BASE}${n.code}.svg`;
-    }
-  }));
+  // No preload needed - flagcdn PNGs work with useCORS:true directly
+  return Promise.resolve();
 }
 
 // ── APPLY LANGUAGE ──
@@ -723,8 +715,8 @@ function build() {
       ? `<div class="g-row-nation">${nationName}</div>`
       : `<div class="g-row-nation outside" style="left:${barPct}%">${nationName}</div>`;
 
-    // Use blob URL if available, fallback to direct URL
-    const flagSrc = flagCache[n.code] || `${FLAG_BASE}${n.code}.svg`;
+    // flagcdn PNG with crossorigin for html2canvas compatibility
+    const flagSrc = `${FLAG_BASE}${n.code}.png`;
 
     const row = document.createElement('div');
     row.className = `g-row${topClass}`;
@@ -765,14 +757,7 @@ async function exportPNG() {
     allowTaint: false,
     backgroundColor: '#f4f6fb',
     logging: false,
-    imageTimeout: 0,
-    onclone: (doc) => {
-      // Replace any remaining external src with cached base64 in the clone
-      doc.querySelectorAll('img.g-row-flag').forEach(img => {
-        const code = img.alt ? nations.find(n => (LANGS[currentLang].nations[n.nation] || n.nation) === img.alt)?.code : null;
-        if (code && flagCache[code]) img.src = flagCache[code];
-      });
-    }
+    imageTimeout: 15000
   }).then(canvas => {
     const link = document.createElement('a');
     link.download = `pitch-perfect-wc2026-${currentLang}.png`;
