@@ -638,16 +638,16 @@ let currentLang = 'en';
 // Cache of code -> blob URL for flags
 const flagCache = {};
 
-// ── PRE-FETCH FLAGS AS BLOB URLS ──
+// ── PRE-FETCH FLAGS AS BASE64 DATA URLS ──
 async function preloadFlags() {
   await Promise.all(nations.map(async n => {
     if (flagCache[n.code]) return;
     try {
       const res = await fetch(`${FLAG_BASE}${n.code}.svg`);
-      const blob = await res.blob();
-      flagCache[n.code] = URL.createObjectURL(blob);
+      const text = await res.text();
+      flagCache[n.code] = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(text)));
     } catch(e) {
-      flagCache[n.code] = `${FLAG_BASE}${n.code}.svg`; // fallback
+      flagCache[n.code] = `${FLAG_BASE}${n.code}.svg`;
     }
   }));
 }
@@ -761,11 +761,18 @@ async function exportPNG() {
 
   html2canvas(document.getElementById('graphic'), {
     scale: 2,
-    useCORS: false,      // blobs don't need CORS
-    allowTaint: true,
+    useCORS: true,
+    allowTaint: false,
     backgroundColor: '#f4f6fb',
     logging: false,
-    imageTimeout: 0
+    imageTimeout: 0,
+    onclone: (doc) => {
+      // Replace any remaining external src with cached base64 in the clone
+      doc.querySelectorAll('img.g-row-flag').forEach(img => {
+        const code = img.alt ? nations.find(n => (LANGS[currentLang].nations[n.nation] || n.nation) === img.alt)?.code : null;
+        if (code && flagCache[code]) img.src = flagCache[code];
+      });
+    }
   }).then(canvas => {
     const link = document.createElement('a');
     link.download = `pitch-perfect-wc2026-${currentLang}.png`;
