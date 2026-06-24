@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pitch-Perfect: The World Cup's Most In-Tune Fandoms, Ranked Across All 48 Nations</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=Inter+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:      #f0f2f8;
+    --surface: #ffffff;
+    --surface2:#e8eaf2;
+    --dark:    #0d1024;
+    --dark2:   #1a1f3a;
+    --border:  rgba(13,16,36,0.10);
+    --t1:      #0abfa3;
+    --t2:      #5b4fcf;
+    --t3:      #e8900a;
+    --t4:      #d94040;
+    --text:    #0d1024;
+    --muted:   #5a6080;
+    --display: 'Bebas Neue', sans-serif;
+    --body:    'Inter', sans-serif;
+    --mono:    'Inter Mono', monospace;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    padding: 52px 24px 44px;
+    text-align: center;
+    overflow: hidden;
+    background: linear-gradient(180deg, #0d1024 0%, #1a1f3a 100%);
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(10,191,163,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .waveform-canvas {
+    display: block;
+    margin: 0 auto 28px;
+    width: 100%;
+    max-width: 700px;
+    height: 68px;
+  }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--t1);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .hero-title {
+    font-family: var(--display);
+    font-size: clamp(34px, 6.5vw, 72px);
+    line-height: 1.0;
+    letter-spacing: 0.03em;
+    color: #fff;
+    margin-bottom: 16px;
+  }
+  .hero-title span { color: var(--t1); }
+
+  .hero-sub {
+    font-size: 14px;
+    color: rgba(255,255,255,0.62);
+    max-width: 580px;
+    margin: 0 auto 36px;
+    line-height: 1.75;
+  }
+  .hero-sub strong { color: rgba(255,255,255,0.88); font-weight: 600; }
+
+  /* ── STATS + TIERS ── */
+  .hero-bottom {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 48px;
+    flex-wrap: wrap;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .stat-block { text-align: center; }
+  .stat-num {
+    font-family: var(--display);
+    font-size: 52px;
+    color: var(--t1);
+    line-height: 1;
+    display: block;
+  }
+  .stat-label {
+    font-size: 11px;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 4px;
+    display: block;
+  }
+
+  .tier-pills {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-align: left;
+  }
+  .tier-pill {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .tier-pill-dot {
+    width: 10px; height: 10px;
+    border-radius: 2px;
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+  .tier-pill-info { display: flex; flex-direction: column; gap: 1px; }
+  .tier-pill-name {
+    font-family: var(--body);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+  .tier-pill-desc {
+    font-family: var(--body);
+    font-size: 11px;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.4;
+  }
+
+  /* ── SECTION ── */
+  .section {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+  .section-title {
+    font-family: var(--display);
+    font-size: 26px;
+    letter-spacing: 0.05em;
+    color: var(--dark);
+    margin-bottom: 6px;
+  }
+  .section-desc {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 16px;
+    line-height: 1.7;
+  }
+
+  /* CI legend */
+  .ci-legend {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding: 10px 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .ci-icon {
+    flex-shrink: 0;
+    width: 14px;
+    height: 20px;
+    position: relative;
+  }
+  .ci-icon::before {
+    content: '';
+    position: absolute;
+    left: 50%; top: 0;
+    transform: translateX(-50%);
+    width: 2px; height: 100%;
+    background: #888;
+    border-radius: 1px;
+  }
+
+  /* ── CHART ── */
+  .chart-header {
+    display: grid;
+    grid-template-columns: 30px 32px 1fr 96px;
+    gap: 8px;
+    align-items: center;
+    padding: 0 10px 8px;
+    border-bottom: 2px solid var(--border);
+    margin-bottom: 4px;
+  }
+  .chart-header span {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--dark);
+    font-family: var(--body);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  .chart-header .h-score { text-align: right; }
+
+  .chart-rows { display: flex; flex-direction: column; gap: 2px; }
+
+  .chart-row {
+    display: grid;
+    grid-template-columns: 30px 32px 1fr 96px;
+    gap: 8px;
+    align-items: center;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.13s;
+  }
+  .chart-row:hover { background: var(--surface2); }
+
+  /* top 3 rows */
+  .chart-row.top1 { background: rgba(255,215,0,0.07); }
+  .chart-row.top2 { background: rgba(192,192,192,0.07); }
+  .chart-row.top3 { background: rgba(205,127,50,0.07); }
+  .chart-row.top1:hover { background: rgba(255,215,0,0.13); }
+  .chart-row.top2:hover { background: rgba(192,192,192,0.13); }
+  .chart-row.top3:hover { background: rgba(205,127,50,0.13); }
+
+  .row-rank {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1px;
+  }
+  .row-rank .trophy { font-size: 14px; line-height: 1; }
+  .row-rank .rank-num { font-size: 11px; }
+  .rank-num-large {
+    font-family: var(--display);
+    font-size: 22px !important;
+    line-height: 1;
+  }
+
+  .row-flag {
+    width: 28px; height: 20px;
+    border-radius: 3px;
+    object-fit: cover;
+    display: block;
+    border: 1px solid rgba(0,0,0,0.08);
+  }
+
+  .row-bar-wrap {
+    position: relative;
+    height: 26px;
+    display: flex;
+    align-items: center;
+  }
+  .row-bar {
+    height: 26px;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+    min-width: 4px;
+  }
+  .row-bar::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent 0px, transparent 5px,
+      rgba(255,255,255,0.15) 5px, rgba(255,255,255,0.15) 6px
+    );
+  }
+  .row-nation {
+    position: absolute;
+    left: 0;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+    z-index: 2;
+    padding: 0 8px;
+    line-height: 26px;
+    pointer-events: none;
+    color: #fff;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+  }
+  .row-nation.outside {
+    color: var(--dark);
+    text-shadow: none;
+    left: var(--bar-pct);
+    padding-left: 6px;
+  }
+  /* top-3 nation label bigger */
+  .chart-row.top1 .row-nation,
+  .chart-row.top2 .row-nation,
+  .chart-row.top3 .row-nation {
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  /* CI marker - simple vertical line */
+  .ci-marker {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2px;
+    height: 18px;
+    background: rgba(0,0,0,0.45);
+    border-radius: 1px;
+    z-index: 3;
+  }
+
+  /* score column */
+  .row-score-wrap {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 5px;
+  }
+  .row-score-val {
+    font-family: var(--body);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+  }
+  .row-tier-badge {
+    display: inline-block;
+    font-size: 9px;
+    font-family: var(--mono);
+    letter-spacing: 0.06em;
+    padding: 1px 5px;
+    border-radius: 3px;
+  }
+
+  /* tier label rows */
+  .tier-label-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 12px 0 4px;
+    padding: 0 10px;
+  }
+  .tier-label-text {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    font-weight: 600;
+  }
+  .tier-label-line { flex: 1; height: 1px; background: var(--border); }
+
+  /* ── TOOLTIP ── */
+  .tooltip {
+    position: fixed;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 12px;
+    pointer-events: none;
+    z-index: 999;
+    min-width: 220px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.14);
+    display: none;
+  }
+  .tooltip-nation { font-weight: 700; font-size: 14px; margin-bottom: 10px; color: var(--dark); }
+  .tooltip-row { display: flex; justify-content: space-between; gap: 16px; margin-bottom: 5px; color: var(--muted); }
+  .tooltip-row span:last-child { font-family: var(--mono); color: var(--dark); }
+  .tooltip-divider { border: none; border-top: 1px solid var(--border); margin: 8px 0; }
+  .tooltip-bar-wrap { display: flex; flex-direction: column; gap: 6px; }
+  .tooltip-comp-row { display: flex; align-items: center; gap: 8px; }
+  .tooltip-comp-label { font-size: 11px; color: var(--muted); width: 90px; flex-shrink: 0; }
+  .tooltip-comp-bar-bg { flex: 1; height: 6px; background: var(--surface2); border-radius: 3px; overflow: hidden; }
+  .tooltip-comp-bar { height: 100%; border-radius: 3px; }
+  .tooltip-comp-val { font-family: var(--mono); font-size: 11px; color: var(--dark); width: 38px; text-align: right; }
+  .tooltip-caveat { font-size: 10px; color: var(--muted); margin-top: 8px; font-style: italic; padding-top: 8px; border-top: 1px solid var(--border); }
+
+  /* ── METHODOLOGY ── */
+  .methodology {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 0 20px 52px;
+  }
+  .meth-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.13s;
+  }
+  .meth-toggle:hover { background: var(--surface2); }
+  .meth-toggle-title { font-family: var(--display); font-size: 20px; letter-spacing: 0.05em; color: var(--dark); }
+  .meth-toggle-icon { font-size: 16px; color: var(--muted); transition: transform 0.2s; }
+  .meth-toggle.open .meth-toggle-icon { transform: rotate(180deg); }
+  .meth-body {
+    display: none;
+    padding: 24px 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+  }
+  .meth-body.open { display: block; }
+  .meth-step { margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+  .meth-step:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .meth-step-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--t1);
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  .meth-step p { font-size: 13px; color: var(--muted); line-height: 1.75; }
+  .meth-step p + p { margin-top: 8px; }
+  .meth-step strong { color: var(--dark); font-weight: 600; }
+  .meth-caveat-tag {
+    display: inline-block;
+    background: rgba(232,144,10,0.1);
+    border: 1px solid rgba(232,144,10,0.3);
+    color: var(--t3);
+    font-size: 11px;
+    padding: 1px 6px;
+    border-radius: 3px;
+    margin: 0 2px;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center;
+    padding: 28px 24px;
+    border-top: 1px solid var(--border);
+    background: var(--dark);
+  }
+  .footer-brand { font-family: var(--display); font-size: 22px; letter-spacing: 0.08em; color: #fff; }
+  .footer-brand span { color: var(--t1); }
+
+  @media (max-width: 600px) {
+    .chart-header, .chart-row {
+      grid-template-columns: 22px 26px 1fr 72px;
+      gap: 5px; padding: 5px 6px;
+    }
+    .row-nation { font-size: 10px; }
+    .hero-bottom { gap: 28px; }
+    .stat-num { font-size: 40px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <canvas class="waveform-canvas" id="waveCanvas"></canvas>
+  <p class="eyebrow">2026 World Cup · National Anthem Analysis · All 48 Nations</p>
+  <h1 class="hero-title">Pitch-<span>Perfect</span></h1>
+  <p class="hero-sub">
+    The anthem singing of all <strong>48 nations</strong> at the 2026 World Cup was analyzed using vocal isolation and pitch detection software to determine which nation's supporters and players sing their national anthem most in tune.
+  </p>
+
+  <div class="hero-bottom">
+    <div class="stat-block">
+      <span class="stat-num">48</span>
+      <span class="stat-label">Nations Analyzed</span>
+    </div>
+    <div class="stat-block">
+      <span class="stat-num">4</span>
+      <span class="stat-label">Statistical Tiers</span>
+    </div>
+    <div class="tier-pills">
+      <div class="tier-pill">
+        <div class="tier-pill-dot" style="background:#0abfa3"></div>
+        <div class="tier-pill-info">
+          <span class="tier-pill-name" style="color:#0abfa3">Tier 1 - The best</span>
+          <span class="tier-pill-desc">Consistently on pitch - the top-ranked nations</span>
+        </div>
+      </div>
+      <div class="tier-pill">
+        <div class="tier-pill-dot" style="background:#5b4fcf"></div>
+        <div class="tier-pill-info">
+          <span class="tier-pill-name" style="color:#9d94f0">Tier 2 - Above average</span>
+          <span class="tier-pill-desc">Mostly in tune, ranking in the upper half</span>
+        </div>
+      </div>
+      <div class="tier-pill">
+        <div class="tier-pill-dot" style="background:#e8900a"></div>
+        <div class="tier-pill-info">
+          <span class="tier-pill-name" style="color:#f5b04a">Tier 3 - Below average</span>
+          <span class="tier-pill-desc">Passion there, but pitch accuracy falls short</span>
+        </div>
+      </div>
+      <div class="tier-pill">
+        <div class="tier-pill-dot" style="background:#d94040"></div>
+        <div class="tier-pill-info">
+          <span class="tier-pill-name" style="color:#e87070">Tier 4 - Bottom ranked</span>
+          <span class="tier-pill-desc">The lowest-scoring nations in the analysis</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RANKING -->
+<div class="section">
+  <h2 class="section-title">The Full Ranking</h2>
+  <p class="section-desc">
+    Each nation is scored on four measures: <strong>pitch accuracy</strong> - how closely the crowd's singing lands on recognizable notes (40%); <strong>commitment</strong> - how much of the anthem is actively sung rather than mumbled or silent (40%); <strong>melodic richness</strong> - whether the singing has genuine melodic variety rather than a monotone drone (10%); and <strong>pitch stability</strong> - how steadily notes are held without wavering (10%). Scores range from 0 to 1, where 1 is the highest possible score.
+  </p>
+
+  <div class="ci-legend">
+    <div class="ci-icon"></div>
+    <span>The vertical line on each bar marks the upper end of that nation's score range - how high the score could reasonably go given natural variation in the recording. This upper value is what determines which tier a nation is placed in.</span>
+  </div>
+
+  <div class="chart-header">
+    <span>#</span>
+    <span></span>
+    <span>Nation</span>
+    <span class="h-score">Score</span>
+  </div>
+  <div class="chart-rows" id="chartRows"></div>
+</div>
+
+<!-- METHODOLOGY -->
+<div class="methodology">
+  <div class="meth-toggle" id="methToggle">
+    <span class="meth-toggle-title">Methodology</span>
+    <span class="meth-toggle-icon">▼</span>
+  </div>
+  <div class="meth-body" id="methBody">
+
+    <div class="meth-step">
+      <div class="meth-step-title">Scope</div>
+      <p>One anthem clip was collected per nation from 2026 World Cup matches - all 48 competing nations. The score measures how precisely supporters and players sang in tune and how consistently they sang throughout the anthem. Six nations had a professional artist perform at their opening match rather than the supporters and players. Each of these was replaced with a rendition from a later match featuring supporters and players singing.</p>
+    </div>
+
+    <div class="meth-step">
+      <div class="meth-step-title">Audio Processing</div>
+      <p>Each clip was trimmed to the sung portion only. Demucs - a professional-grade audio separation tool - isolated the vocal track from crowd noise, the stadium public address system, and the live band. Pitch was then extracted from the isolated vocals using the pyin algorithm, producing 43 pitch readings per second. Each reading was assigned a confidence score, so moments where the microphone panned away or the signal was weak counted for less in the final score.</p>
+    </div>
+
+    <div class="meth-step">
+      <div class="meth-step-title">Four Components Scored</div>
+      <p><strong>Pitch accuracy (40%)</strong> - the percentage of sung moments that land within one fifth of a semitone of a note fitting the supporters and players' own singing. Nations singing slightly sharp or flat of standard concert pitch are not penalized - only imprecision relative to themselves counts against them.</p>
+      <p><strong>Commitment (40%)</strong> - the fraction of the clip's duration carrying detected singing. Supporters and players who sing every word score higher than those who trail off or mumble.</p>
+      <p><strong>Melodic richness (10%)</strong> - whether the singing contains genuine melodic movement. Both a monotone drone and random noise score zero; real melodic variety scores one.</p>
+      <p><strong>Pitch stability (10%)</strong> - how steadily singers hold their notes between consecutive moments, rather than sliding or wavering off pitch.</p>
+    </div>
+
+    <div class="meth-step">
+      <div class="meth-step-title">Tiers Explained</div>
+      <p>Alongside the individual rankings, nations are grouped into four tiers based on their overall pitch performance. The tiers are an additional layer of context on top of the ranking - they indicate which nations are genuinely performing at a higher or lower level of pitch accuracy across the field. Tier 1 nations are the most in-tune in the analysis, their scores clearly and consistently higher than those in lower tiers. Tier 2 nations perform above the midpoint of the field, Tier 3 below it, and Tier 4 contains the lowest-scoring nations. Within each tier, the individual ranking still holds - but the tier label gives a broader picture of where each nation genuinely sits in terms of pitch accuracy.</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-brand">Action<span>Network</span>.com</div>
+</footer>
+
+<div class="tooltip" id="tooltip"></div>
+
+<script>
+const FLAG_BASE = 'https://raw.githubusercontent.com/lipis/flag-icons/main/flags/4x3/';
+
+const nations = [
+  {rank:1,  tier:1, nation:"Japan",             score:0.7843, ci_low:0.593, ci_high:0.913, intonation:79.20, participation:0.82, richness:1.00, stability:1.00, code:"jp"},
+  {rank:2,  tier:1, nation:"Curaçao",           score:0.6701, ci_low:0.558, ci_high:0.778, intonation:83.10, participation:0.56, richness:1.00, stability:1.00, code:"cw"},
+  {rank:3,  tier:1, nation:"Iran",              score:0.6602, ci_low:0.529, ci_high:0.766, intonation:92.90, participation:0.39, richness:1.00, stability:0.98, code:"ir"},
+  {rank:4,  tier:1, nation:"Haiti",             score:0.6553, ci_low:0.535, ci_high:0.754, intonation:88.70, participation:0.44, richness:1.00, stability:1.00, code:"ht"},
+  {rank:5,  tier:1, nation:"Cape Verde",        score:0.6350, ci_low:0.500, ci_high:0.786, intonation:70.70, participation:0.71, richness:1.00, stability:1.00, code:"cv"},
+  {rank:6,  tier:1, nation:"South Korea",       score:0.6172, ci_low:0.495, ci_high:0.835, intonation:75.20, participation:0.61, richness:1.00, stability:0.99, code:"kr"},
+  {rank:7,  tier:1, nation:"Germany",           score:0.6154, ci_low:0.514, ci_high:0.733, intonation:76.20, participation:0.59, richness:1.00, stability:0.99, code:"de"},
+  {rank:8,  tier:1, nation:"Algeria",           score:0.6132, ci_low:0.539, ci_high:0.765, intonation:75.60, participation:0.59, richness:1.00, stability:1.00, code:"dz"},
+  {rank:9,  tier:1, nation:"United States",     score:0.6114, ci_low:0.473, ci_high:0.715, intonation:61.10, participation:0.87, richness:1.00, stability:0.94, code:"us", caveat:true},
+  {rank:10, tier:1, nation:"South Africa",      score:0.6111, ci_low:0.384, ci_high:0.690, intonation:60.70, participation:0.87, richness:1.00, stability:0.95, code:"za", caveat:true},
+  {rank:11, tier:1, nation:"Switzerland",       score:0.5894, ci_low:0.471, ci_high:0.743, intonation:87.40, participation:0.35, richness:1.00, stability:1.00, code:"ch"},
+  {rank:12, tier:1, nation:"Czech Republic",    score:0.5660, ci_low:0.513, ci_high:0.730, intonation:78.70, participation:0.47, richness:1.00, stability:0.98, code:"cz"},
+  {rank:13, tier:2, nation:"Senegal",           score:0.5324, ci_low:0.440, ci_high:0.637, intonation:73.70, participation:0.51, richness:1.00, stability:0.96, code:"sn"},
+  {rank:14, tier:2, nation:"Qatar",             score:0.5254, ci_low:0.457, ci_high:0.680, intonation:72.10, participation:0.50, richness:1.00, stability:1.00, code:"qa"},
+  {rank:15, tier:2, nation:"Ivory Coast",       score:0.5010, ci_low:0.428, ci_high:0.672, intonation:71.20, participation:0.48, richness:1.00, stability:0.99, code:"ci"},
+  {rank:16, tier:2, nation:"DR Congo",          score:0.4988, ci_low:0.392, ci_high:0.619, intonation:77.70, participation:0.36, richness:1.00, stability:1.00, code:"cd"},
+  {rank:17, tier:2, nation:"Sweden",            score:0.4787, ci_low:0.391, ci_high:0.609, intonation:76.80, participation:0.36, richness:1.00, stability:0.97, code:"se"},
+  {rank:18, tier:2, nation:"Jordan",            score:0.4636, ci_low:0.150, ci_high:0.609, intonation:70.40, participation:0.43, richness:1.00, stability:0.99, code:"jo"},
+  {rank:19, tier:2, nation:"Iraq",              score:0.4588, ci_low:0.399, ci_high:0.624, intonation:59.50, participation:0.60, richness:1.00, stability:1.00, code:"iq"},
+  {rank:20, tier:2, nation:"Egypt",             score:0.4559, ci_low:0.374, ci_high:0.609, intonation:71.40, participation:0.40, richness:1.00, stability:0.99, code:"eg"},
+  {rank:21, tier:2, nation:"Scotland",          score:0.4511, ci_low:0.376, ci_high:0.622, intonation:60.80, participation:0.59, richness:1.00, stability:0.96, code:"gb-sct"},
+  {rank:22, tier:2, nation:"Saudi Arabia",      score:0.4497, ci_low:0.263, ci_high:0.554, intonation:74.70, participation:0.34, richness:1.00, stability:0.98, code:"sa"},
+  {rank:23, tier:2, nation:"Ghana",             score:0.4492, ci_low:0.375, ci_high:0.622, intonation:64.60, participation:0.51, richness:1.00, stability:0.98, code:"gh"},
+  {rank:24, tier:2, nation:"Uzbekistan",        score:0.4379, ci_low:0.272, ci_high:0.667, intonation:64.80, participation:0.50, richness:1.00, stability:0.96, code:"uz"},
+  {rank:25, tier:2, nation:"Croatia",           score:0.4298, ci_low:0.383, ci_high:0.569, intonation:75.00, participation:0.32, richness:1.00, stability:0.95, code:"hr"},
+  {rank:26, tier:2, nation:"France",            score:0.4296, ci_low:0.370, ci_high:0.557, intonation:70.90, participation:0.37, richness:1.00, stability:0.98, code:"fr"},
+  {rank:27, tier:2, nation:"Portugal",          score:0.4258, ci_low:0.334, ci_high:0.590, intonation:75.10, participation:0.28, richness:1.00, stability:1.00, code:"pt"},
+  {rank:28, tier:2, nation:"Norway",            score:0.4193, ci_low:0.220, ci_high:0.589, intonation:68.90, participation:0.38, richness:1.00, stability:0.99, code:"no"},
+  {rank:29, tier:2, nation:"Mexico",            score:0.4107, ci_low:0.314, ci_high:0.613, intonation:77.00, participation:0.26, richness:1.00, stability:0.94, code:"mx", caveat:true},
+  {rank:30, tier:2, nation:"New Zealand",       score:0.4004, ci_low:0.344, ci_high:0.527, intonation:72.70, participation:0.29, richness:1.00, stability:0.98, code:"nz"},
+  {rank:31, tier:2, nation:"Australia",         score:0.3930, ci_low:0.336, ci_high:0.582, intonation:63.90, participation:0.42, richness:1.00, stability:0.99, code:"au"},
+  {rank:32, tier:2, nation:"Morocco",           score:0.3928, ci_low:0.285, ci_high:0.562, intonation:63.90, participation:0.47, richness:1.00, stability:0.91, code:"ma"},
+  {rank:33, tier:2, nation:"Paraguay",          score:0.3671, ci_low:0.273, ci_high:0.551, intonation:69.90, participation:0.35, richness:1.00, stability:0.87, code:"py", caveat:true},
+  {rank:34, tier:2, nation:"Belgium",           score:0.3558, ci_low:0.276, ci_high:0.539, intonation:70.80, participation:0.24, richness:1.00, stability:0.99, code:"be"},
+  {rank:35, tier:3, nation:"Austria",           score:0.3470, ci_low:0.314, ci_high:0.495, intonation:69.10, participation:0.26, richness:1.00, stability:0.98, code:"at"},
+  {rank:36, tier:3, nation:"Uruguay",           score:0.3354, ci_low:0.260, ci_high:0.489, intonation:68.40, participation:0.29, richness:1.00, stability:0.92, code:"uy"},
+  {rank:37, tier:3, nation:"Turkey",            score:0.3186, ci_low:0.280, ci_high:0.473, intonation:60.80, participation:0.39, richness:1.00, stability:0.92, code:"tr"},
+  {rank:38, tier:3, nation:"Bosnia & Herz.",    score:0.3181, ci_low:0.231, ci_high:0.536, intonation:65.70, participation:0.30, richness:1.00, stability:0.93, code:"ba", caveat:true, caveatNote:"Sourced from a supporter recording filmed at the stadium"},
+  {rank:39, tier:3, nation:"Netherlands",       score:0.3175, ci_low:0.234, ci_high:0.564, intonation:57.80, participation:0.42, richness:1.00, stability:0.95, code:"nl"},
+  {rank:40, tier:3, nation:"England",           score:0.3100, ci_low:0.210, ci_high:0.666, intonation:58.10, participation:0.44, richness:1.00, stability:0.89, code:"gb-eng"},
+  {rank:41, tier:3, nation:"Canada",            score:0.2896, ci_low:0.225, ci_high:0.411, intonation:56.20, participation:0.45, richness:1.00, stability:0.87, code:"ca", caveat:true},
+  {rank:42, tier:3, nation:"Tunisia",           score:0.2712, ci_low:0.206, ci_high:0.567, intonation:66.00, participation:0.19, richness:1.00, stability:0.97, code:"tn"},
+  {rank:43, tier:3, nation:"Brazil",            score:0.2538, ci_low:0.178, ci_high:0.412, intonation:65.30, participation:0.21, richness:1.00, stability:0.91, code:"br"},
+  {rank:44, tier:4, nation:"Colombia",          score:0.2371, ci_low:0.171, ci_high:0.356, intonation:52.70, participation:0.42, richness:1.00, stability:0.87, code:"co"},
+  {rank:45, tier:4, nation:"Spain",             score:0.2192, ci_low:0.157, ci_high:0.428, intonation:68.00, participation:0.20, richness:1.00, stability:0.76, code:"es"},
+  {rank:46, tier:4, nation:"Argentina",         score:0.2122, ci_low:0.138, ci_high:0.376, intonation:56.00, participation:0.41, richness:1.00, stability:0.73, code:"ar"},
+  {rank:47, tier:4, nation:"Panama",            score:0.2101, ci_low:0.133, ci_high:0.393, intonation:60.10, participation:0.23, richness:1.00, stability:0.90, code:"pa"},
+  {rank:48, tier:4, nation:"Ecuador",           score:0.1295, ci_low:0.092, ci_high:0.390, intonation:57.80, participation:0.22, richness:1.00, stability:0.76, code:"ec"},
+];
+
+const TIER_COLORS = {1:'#0abfa3', 2:'#5b4fcf', 3:'#e8900a', 4:'#d94040'};
+const TIER_NAMES  = {1:'Tier 1 - Pitch-Perfect', 2:'Tier 2 - In-Tune', 3:'Tier 3 - Close', 4:'Tier 4 - Off-Key'};
+const TROPHIES    = {1:'🥇', 2:'🥈', 3:'🥉'};
+const MAX_SCORE   = 0.7843;
+const BAR_MAX_PCT = 90;
+
+function flagUrl(code) {
+  return FLAG_BASE + code.toLowerCase() + '.svg';
+}
+
+function buildChart() {
+  const container = document.getElementById('chartRows');
+  let currentTier = 0;
+
+  nations.forEach(n => {
+    if (n.tier !== currentTier) {
+      currentTier = n.tier;
+      const label = document.createElement('div');
+      label.className = 'tier-label-row';
+      label.innerHTML = `<span class="tier-label-text" style="color:${TIER_COLORS[n.tier]}">${TIER_NAMES[n.tier]}</span><div class="tier-label-line"></div>`;
+      container.appendChild(label);
+    }
+
+    const barPct    = Math.max((n.score / MAX_SCORE) * BAR_MAX_PCT, n.rank === 48 ? 16 : 0);
+    const ciHighPct = Math.max((n.ci_high / MAX_SCORE) * BAR_MAX_PCT, n.rank === 48 ? 16 : 0);
+    const labelInside = barPct >= 16;
+
+    // Top-3 class
+    const topClass = n.rank <= 3 ? ` top${n.rank}` : '';
+
+    // Rank cell content
+    const rankHtml = TROPHIES[n.rank]
+      ? `<span class="trophy">${TROPHIES[n.rank]}</span><span class="rank-num rank-num-large" style="color:${TIER_COLORS[n.tier]}">${n.rank}</span>`
+      : `<span class="rank-num">${n.rank}</span>`;
+
+    const row = document.createElement('div');
+    row.className = `chart-row${topClass}`;
+    row.innerHTML = `
+      <div class="row-rank">${rankHtml}</div>
+      <img class="row-flag" src="${flagUrl(n.code)}" alt="${n.nation}" loading="lazy">
+      <div class="row-bar-wrap" style="--bar-pct:${barPct}%">
+        <div class="row-bar" style="width:${barPct}%;background:linear-gradient(90deg,${TIER_COLORS[n.tier]}dd,${TIER_COLORS[n.tier]}77);"></div>
+        <div class="ci-marker" style="left:${ciHighPct}%;"></div>
+        <div class="row-nation${labelInside ? '' : ' outside'}">${n.nation}${n.caveat ? ' <span style="font-size:9px;opacity:0.5">*</span>' : ''}</div>
+      </div>
+      <div class="row-score-wrap">
+        <span class="row-score-val">${n.score.toFixed(3)}</span>
+        <span class="row-tier-badge" style="background:${TIER_COLORS[n.tier]}22;color:${TIER_COLORS[n.tier]};border:1px solid ${TIER_COLORS[n.tier]}55">T${n.tier}</span>
+      </div>
+    `;
+
+    row.addEventListener('mouseenter', e => showTooltip(e, n));
+    row.addEventListener('mousemove',  e => moveTooltip(e));
+    row.addEventListener('mouseleave', hideTooltip);
+    container.appendChild(row);
+  });
+}
+
+// ── TOOLTIP ──
+const tooltip = document.getElementById('tooltip');
+
+function showTooltip(e, n) {
+  const comps = [
+    {label:'Pitch accuracy', val:n.intonation/100, display:n.intonation.toFixed(1)+'%', color:'#0abfa3'},
+    {label:'Commitment',     val:n.participation,  display:Math.round(n.participation*100)+'%', color:'#5b4fcf'},
+    {label:'Richness',       val:n.richness,       display:Math.round(n.richness*100)+'%',       color:'#e8900a'},
+    {label:'Stability',      val:n.stability,      display:Math.round(n.stability*100)+'%',      color:'#888'},
+  ];
+  const caveatHtml = n.caveat
+    ? `<div class="tooltip-caveat">* ${n.caveatNote || 'Supporters and players rendition sourced from a later group match'}</div>`
+    : '';
+
+  tooltip.innerHTML = `
+    <div class="tooltip-nation">${TROPHIES[n.rank] ? TROPHIES[n.rank]+' ' : ''}${n.rank}. ${n.nation}</div>
+    <div class="tooltip-row"><span>Score</span><span>${n.score.toFixed(4)}</span></div>
+    <div class="tooltip-row"><span>Score range</span><span>${n.ci_low.toFixed(3)} - ${n.ci_high.toFixed(3)}</span></div>
+    <hr class="tooltip-divider">
+    <div class="tooltip-bar-wrap">
+      ${comps.map(c=>`
+        <div class="tooltip-comp-row">
+          <span class="tooltip-comp-label">${c.label}</span>
+          <div class="tooltip-comp-bar-bg"><div class="tooltip-comp-bar" style="width:${c.val*100}%;background:${c.color}"></div></div>
+          <span class="tooltip-comp-val">${c.display}</span>
+        </div>`).join('')}
+    </div>
+    ${caveatHtml}
+  `;
+  tooltip.style.display = 'block';
+  moveTooltip(e);
+}
+
+function moveTooltip(e) {
+  const pad=16, tw=tooltip.offsetWidth, th=tooltip.offsetHeight;
+  let x=e.clientX+pad, y=e.clientY+pad;
+  if (x+tw>window.innerWidth-8)  x=e.clientX-tw-pad;
+  if (y+th>window.innerHeight-8) y=e.clientY-th-pad;
+  tooltip.style.left=x+'px'; tooltip.style.top=y+'px';
+}
+function hideTooltip() { tooltip.style.display='none'; }
+
+// ── WAVEFORM ──
+function drawWaveform() {
+  const canvas=document.getElementById('waveCanvas');
+  const ctx=canvas.getContext('2d');
+  const dpr=window.devicePixelRatio||1;
+  const rect=canvas.getBoundingClientRect();
+  canvas.width=rect.width*dpr; canvas.height=rect.height*dpr;
+  ctx.scale(dpr,dpr);
+  const W=rect.width, H=rect.height;
+  const barCount=Math.floor(W/7);
+  const scores=nations.map(n=>n.score);
+  const minS=Math.min(...scores), maxS=Math.max(...scores);
+  const norm=scores.map(s=>(s-minS)/(maxS-minS));
+  let frame=0;
+  function draw() {
+    ctx.clearRect(0,0,W,H);
+    const t=frame/60;
+    for(let i=0;i<barCount;i++){
+      const x=i*(W/barCount), bw=(W/barCount)-2;
+      const si=Math.floor((i/barCount)*nations.length);
+      const nv=norm[si]||0.5;
+      const wave=Math.sin(i*0.25+t*2.5)*0.28+Math.sin(i*0.08+t*1.2)*0.38+nv*0.34;
+      const h=Math.max(3,(0.12+Math.abs(wave))*H*0.88);
+      const tier=nations[si]?nations[si].tier:2;
+      ctx.fillStyle=TIER_COLORS[tier]+'bb';
+      ctx.beginPath(); ctx.roundRect(x,(H-h)/2,bw,h,2); ctx.fill();
+    }
+    frame++; requestAnimationFrame(draw);
+  }
+  draw();
+}
+
+document.getElementById('methToggle').addEventListener('click',function(){
+  this.classList.toggle('open');
+  document.getElementById('methBody').classList.toggle('open');
+});
+
+buildChart();
+drawWaveform();
+window.addEventListener('resize',()=>{ setTimeout(drawWaveform,100); });
+</script>
+</body>
+</html>
