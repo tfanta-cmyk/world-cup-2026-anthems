@@ -1,0 +1,1441 @@
+<!DOCTYPE html>
+<html lang="en-GB" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pitch-Perfect: The World Cup's Most In-Tune Fandoms, Ranked Across All 48 Nations</title>
+<link id="google-fonts-main" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=Inter+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link id="google-fonts-extra" href="" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg:#f0f2f8; --surface:#ffffff; --surface2:#e8eaf2;
+    --dark:#0d1024; --dark2:#1a1f3a; --border:rgba(13,16,36,0.10);
+    --t1:#0abfa3; --t2:#5b4fcf; --t3:#e8900a; --t4:#d94040;
+    --text:#0d1024; --muted:#5a6080;
+    --display:'Bebas Neue',sans-serif; --body:'Inter',sans-serif; --mono:'Inter Mono',monospace;
+  }
+  body { background:var(--bg); color:var(--text); font-family:var(--body); min-height:100vh; overflow-x:hidden; }
+
+  /* LANG SWITCHER */
+  .lang-bar {
+    background:linear-gradient(135deg,#0abfa3 0%,#0891b2 100%);
+    padding:14px 24px;
+    display:flex; align-items:center; justify-content:center; gap:14px;
+    flex-wrap:wrap; box-shadow:0 2px 12px rgba(10,191,163,0.35);
+  }
+  .lang-bar-emoji { font-size:22px; line-height:1; flex-shrink:0; }
+  .lang-bar-label { font-size:14px; font-weight:700; color:#fff; letter-spacing:0.02em; white-space:nowrap; }
+  .lang-select {
+    background:rgba(255,255,255,0.18); color:#fff;
+    border:2px solid rgba(255,255,255,0.5);
+    border-radius:8px; padding:7px 14px; font-size:14px; font-weight:600;
+    font-family:var(--body); cursor:pointer; outline:none; min-width:180px;
+  }
+  .lang-select option { background:#0d1024; color:#fff; }
+  .lang-select:hover, .lang-select:focus { border-color:#fff; background:rgba(255,255,255,0.28); }
+  .lang-disclaimer {
+    font-size:11px; color:rgba(255,255,255,0.8);
+    font-style:italic; max-width:360px; text-align:center; line-height:1.4;
+  }
+
+  /* HERO */
+  .hero {
+    position:relative; padding:52px 24px 44px; text-align:center;
+    overflow:hidden; background:linear-gradient(180deg,#0d1024 0%,#1a1f3a 100%);
+  }
+  .hero::before {
+    content:''; position:absolute; inset:0;
+    background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(10,191,163,0.12) 0%,transparent 70%);
+    pointer-events:none;
+  }
+  .waveform-canvas { display:block; margin:0 auto 28px; width:100%; max-width:700px; height:68px; }
+  .eyebrow { font-family:var(--mono); font-size:11px; letter-spacing:0.18em; color:var(--t1); text-transform:uppercase; margin-bottom:12px; }
+  .hero-title { font-family:var(--display); font-size:clamp(34px,6.5vw,72px); line-height:1.0; letter-spacing:0.03em; color:#fff; margin-bottom:16px; }
+  .hero-title span { color:var(--t1); }
+  .hero-sub { font-size:14px; color:rgba(255,255,255,0.62); max-width:580px; margin:0 auto 36px; line-height:1.75; }
+  .hero-sub strong { color:rgba(255,255,255,0.88); font-weight:600; }
+  .hero-bottom { display:flex; justify-content:center; align-items:flex-start; gap:48px; flex-wrap:wrap; max-width:800px; margin:0 auto; }
+  .stat-block { text-align:center; }
+  .stat-num { font-family:var(--display); font-size:52px; color:var(--t1); line-height:1; display:block; }
+  .stat-label { font-size:11px; color:rgba(255,255,255,0.45); letter-spacing:0.1em; text-transform:uppercase; margin-top:4px; display:block; }
+  .tier-pills { display:flex; flex-direction:column; gap:8px; text-align:left; }
+  .tier-pill { display:flex; align-items:flex-start; gap:10px; }
+  .tier-pill-dot { width:10px; height:10px; border-radius:2px; flex-shrink:0; margin-top:3px; }
+  .tier-pill-info { display:flex; flex-direction:column; gap:1px; }
+  .tier-pill-name { font-family:var(--body); font-size:12px; font-weight:700; }
+  .tier-pill-desc { font-family:var(--body); font-size:11px; color:rgba(255,255,255,0.45); line-height:1.4; }
+
+  /* SECTION */
+  .section { max-width:880px; margin:0 auto; padding:40px 20px; }
+  .section-title { font-family:var(--display); font-size:26px; letter-spacing:0.05em; color:var(--dark); margin-bottom:6px; }
+  .section-desc { font-size:13px; color:var(--muted); margin-bottom:16px; line-height:1.7; }
+  .ci-legend { display:flex; align-items:center; gap:10px; margin-bottom:20px; padding:10px 14px; background:var(--surface); border:1px solid var(--border); border-radius:6px; font-size:12px; color:var(--muted); line-height:1.5; }
+  .ci-icon { flex-shrink:0; width:14px; height:20px; position:relative; }
+  .ci-icon::before { content:''; position:absolute; left:50%; top:0; transform:translateX(-50%); width:2px; height:100%; background:#888; border-radius:1px; }
+
+  /* CHART */
+  .chart-header { display:grid; grid-template-columns:30px 32px 1fr 96px; gap:8px; align-items:center; padding:0 10px 8px; border-bottom:2px solid var(--border); margin-bottom:4px; }
+  .chart-header span { font-size:13px; font-weight:700; color:var(--dark); font-family:var(--body); letter-spacing:0.02em; text-transform:uppercase; }
+  .chart-header .h-score { text-align:right; }
+  .chart-rows { display:flex; flex-direction:column; gap:2px; }
+  .chart-row { display:grid; grid-template-columns:30px 32px 1fr 96px; gap:8px; align-items:center; padding:6px 10px; border-radius:6px; cursor:pointer; transition:background 0.13s; }
+  .chart-row:hover { background:var(--surface2); }
+  .chart-row.top1 { background:rgba(255,215,0,0.07); }
+  .chart-row.top2 { background:rgba(192,192,192,0.07); }
+  .chart-row.top3 { background:rgba(205,127,50,0.07); }
+  .chart-row.top1:hover { background:rgba(255,215,0,0.13); }
+  .chart-row.top2:hover { background:rgba(192,192,192,0.13); }
+  .chart-row.top3:hover { background:rgba(205,127,50,0.13); }
+  .row-rank { font-family:var(--mono); font-size:11px; color:var(--muted); text-align:center; display:flex; flex-direction:column; align-items:center; gap:1px; }
+  .row-rank .trophy { font-size:14px; line-height:1; }
+  .row-rank .rank-num { font-size:11px; }
+  .rank-num-large { font-family:var(--display); font-size:22px!important; line-height:1; }
+  .row-flag { width:28px; height:20px; border-radius:3px; object-fit:cover; display:block; border:1px solid rgba(0,0,0,0.08); }
+  .row-bar-wrap { position:relative; height:26px; display:flex; align-items:center; }
+  .row-bar { height:26px; border-radius:4px; position:relative; overflow:hidden; flex-shrink:0; min-width:4px; }
+  .row-bar::after { content:''; position:absolute; inset:0; background:repeating-linear-gradient(90deg,transparent 0px,transparent 5px,rgba(255,255,255,0.15) 5px,rgba(255,255,255,0.15) 6px); }
+  .row-nation { position:absolute; left:0; font-size:12px; font-weight:600; white-space:nowrap; z-index:2; padding:0 8px; line-height:26px; pointer-events:none; color:#fff; text-shadow:0 1px 3px rgba(0,0,0,0.4); }
+  .row-nation.outside { color:var(--dark); text-shadow:none; left:var(--bar-pct); padding-left:6px; }
+  .chart-row.top1 .row-nation,.chart-row.top2 .row-nation,.chart-row.top3 .row-nation { font-size:13px; font-weight:700; }
+  .ci-marker { position:absolute; top:50%; transform:translateY(-50%); width:2px; height:18px; background:rgba(0,0,0,0.45); border-radius:1px; z-index:3; }
+  .row-score-wrap { display:flex; flex-direction:row; align-items:center; justify-content:flex-end; gap:5px; }
+  .row-score-val { font-family:var(--body); font-size:13px; font-weight:600; color:var(--text); white-space:nowrap; }
+  .row-tier-badge { display:inline-block; font-size:9px; font-family:var(--mono); letter-spacing:0.06em; padding:1px 5px; border-radius:3px; }
+  .tier-label-row { display:flex; align-items:center; gap:10px; margin:12px 0 4px; padding:0 10px; }
+  .tier-label-text { font-family:var(--mono); font-size:10px; letter-spacing:0.14em; text-transform:uppercase; white-space:nowrap; font-weight:600; }
+  .tier-label-line { flex:1; height:1px; background:var(--border); }
+
+  /* TOOLTIP */
+  .tooltip { position:fixed; background:#fff; border:1px solid var(--border); border-radius:10px; padding:14px 16px; font-size:12px; pointer-events:none; z-index:999; min-width:220px; box-shadow:0 8px 32px rgba(0,0,0,0.14); display:none; }
+  .tooltip-nation { font-weight:700; font-size:14px; margin-bottom:10px; color:var(--dark); }
+  .tooltip-row { display:flex; justify-content:space-between; gap:16px; margin-bottom:5px; color:var(--muted); }
+  .tooltip-row span:last-child { font-family:var(--mono); color:var(--dark); }
+  .tooltip-divider { border:none; border-top:1px solid var(--border); margin:8px 0; }
+  .tooltip-bar-wrap { display:flex; flex-direction:column; gap:6px; }
+  .tooltip-comp-row { display:flex; align-items:center; gap:8px; }
+  .tooltip-comp-label { font-size:11px; color:var(--muted); width:90px; flex-shrink:0; }
+  .tooltip-comp-bar-bg { flex:1; height:6px; background:var(--surface2); border-radius:3px; overflow:hidden; }
+  .tooltip-comp-bar { height:100%; border-radius:3px; }
+  .tooltip-comp-val { font-family:var(--mono); font-size:11px; color:var(--dark); width:38px; text-align:right; }
+  .tooltip-caveat { font-size:10px; color:var(--muted); margin-top:8px; font-style:italic; padding-top:8px; border-top:1px solid var(--border); }
+
+  /* METHODOLOGY */
+  .methodology { max-width:880px; margin:0 auto; padding:0 20px 52px; }
+  .meth-toggle { display:flex; align-items:center; justify-content:space-between; padding:16px 20px; background:var(--surface); border:1px solid var(--border); border-radius:8px; cursor:pointer; user-select:none; transition:background 0.13s; }
+  .meth-toggle:hover { background:var(--surface2); }
+  .meth-toggle-title { font-family:var(--display); font-size:20px; letter-spacing:0.05em; color:var(--dark); }
+  .meth-toggle-icon { font-size:16px; color:var(--muted); transition:transform 0.2s; }
+  .meth-toggle.open .meth-toggle-icon { transform:rotate(180deg); }
+  .meth-body { display:none; padding:24px 20px; background:var(--surface); border:1px solid var(--border); border-top:none; border-radius:0 0 8px 8px; }
+  .meth-body.open { display:block; }
+  .meth-lang-note { background:rgba(10,191,163,0.07); border:1px solid rgba(10,191,163,0.25); border-radius:6px; padding:10px 14px; font-size:12px; color:var(--muted); margin-bottom:20px; line-height:1.6; }
+  .meth-step { margin-bottom:20px; padding-bottom:20px; border-bottom:1px solid var(--border); }
+  .meth-step:last-child { border-bottom:none; margin-bottom:0; padding-bottom:0; }
+  .meth-step-title { font-family:var(--mono); font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--t1); margin-bottom:8px; font-weight:600; }
+  .meth-step p { font-size:13px; color:var(--muted); line-height:1.75; }
+  .meth-step p + p { margin-top:8px; }
+  .meth-step strong { color:var(--dark); font-weight:600; }
+
+  /* FOOTER */
+  .footer { text-align:center; padding:28px 24px; border-top:1px solid var(--border); background:var(--dark); }
+  .footer-brand { font-family:var(--display); font-size:22px; letter-spacing:0.08em; color:#fff; }
+  .footer-brand span { color:var(--t1); }
+
+  @media(max-width:600px){
+    .chart-header,.chart-row { grid-template-columns:22px 26px 1fr 72px; gap:5px; padding:5px 6px; }
+    .row-nation { font-size:10px; }
+    .hero-bottom { gap:28px; }
+    .stat-num { font-size:40px; }
+    .lang-bar { gap:10px; }
+    .lang-disclaimer { text-align:center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- LANG BAR -->
+<div class="lang-bar">
+  <span class="lang-bar-emoji">🎵</span>
+  <span class="lang-bar-label">View in another language:</span>
+  <select class="lang-select" id="lang-select" onchange="setLanguage(this.value)"></select>
+  <div class="lang-disclaimer" id="lang-disclaimer">This study was conducted in English. The methodology is available in English only. Minor inaccuracies in translation are possible.</div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <canvas class="waveform-canvas" id="waveCanvas"></canvas>
+  <p class="eyebrow" id="eyebrow"></p>
+  <h1 class="hero-title"><span id="title-main"></span><span id="title-accent"></span></h1>
+  <p class="hero-sub" id="hero-sub"></p>
+  <div class="hero-bottom">
+    <div class="stat-block">
+      <span class="stat-num">48</span>
+      <span class="stat-label" id="stat-nations"></span>
+    </div>
+    <div class="stat-block">
+      <span class="stat-num">4</span>
+      <span class="stat-label" id="stat-tiers"></span>
+    </div>
+    <div class="tier-pills">
+      <div class="tier-pill">
+        <div class="tier-pill-dot" style="background:var(--t1)"></div>
+        <div class="tier-pill-info">
+          <span class="tier-pill-name" style="color:var(--t1)" id="t1-name"></span>
+          <span class="tier-pill-desc" id="t1-desc"></span>
+        </div>
+      </div>
+      <div class="tier-pill">
+        <div class="tier-pill-dot" style="background:#9d94f0"></div>
+        <div class="tier-pill-info">
+          <span class="tier-pill-name" style="color:#9d94f0" id="t2-name"></span>
+          <span class="tier-pill-desc" id="t2-desc"></span>
+        </div>
+      </div>
+      <div class="tier-pill">
+        <div class="tier-pill-dot" style="background:var(--t3)"></div>
+        <div class="tier-pill-info">
+          <span class="tier-pill-name" style="color:var(--t3)" id="t3-name"></span>
+          <span class="tier-pill-desc" id="t3-desc"></span>
+        </div>
+      </div>
+      <div class="tier-pill">
+        <div class="tier-pill-dot" style="background:var(--t4)"></div>
+        <div class="tier-pill-info">
+          <span class="tier-pill-name" style="color:var(--t4)" id="t4-name"></span>
+          <span class="tier-pill-desc" id="t4-desc"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RANKING -->
+<div class="section">
+  <h2 class="section-title" id="ranking-title"></h2>
+  <p class="section-desc" id="ranking-desc"></p>
+  <div class="ci-legend">
+    <div class="ci-icon"></div>
+    <span id="ci-text"></span>
+  </div>
+  <div class="chart-header">
+    <span id="col-rank">#</span>
+    <span></span>
+    <span id="col-nation"></span>
+    <span class="h-score" id="col-score"></span>
+  </div>
+  <div class="chart-rows" id="chartRows"></div>
+</div>
+
+<!-- METHODOLOGY -->
+<div class="methodology">
+  <div class="meth-toggle" id="methToggle">
+    <span class="meth-toggle-title" id="meth-title">Methodology</span>
+    <span class="meth-toggle-icon">▼</span>
+  </div>
+  <div class="meth-body" id="methBody">
+    <div class="meth-lang-note" id="meth-lang-note"></div>
+    <div class="meth-step">
+      <div class="meth-step-title">Scope</div>
+      <p>One anthem clip was collected per nation from 2026 World Cup matches - covering all 48 competing nations. The score measures how precisely supporters and players sang their national anthem in tune, and how consistently they sang throughout it. Six nations had a professional artist perform at their opening match rather than the supporters and players. Each of these was replaced with a rendition from a later match featuring supporters and players singing.</p>
+    </div>
+    <div class="meth-step">
+      <div class="meth-step-title">Audio Processing</div>
+      <p>Each clip was trimmed to the sung portion only. Demucs - a professional-grade audio separation tool - isolated the vocal track from crowd noise, the stadium public address system, and the live band. Pitch was then extracted from the isolated vocals using the pyin algorithm, producing 43 pitch readings per second. Each reading was assigned a confidence score, so moments where the microphone panned away or the signal was weak were automatically down-weighted.</p>
+    </div>
+    <div class="meth-step">
+      <div class="meth-step-title">Four Components Scored</div>
+      <p><strong>Pitch accuracy (40%)</strong> - the percentage of sung moments that land within one fifth of a semitone of a note fitting the supporters and players' own tuning. Nations singing slightly sharp or flat of standard concert pitch are not penalized.</p>
+      <p><strong>Commitment (40%)</strong> - the fraction of the clip's duration carrying detected singing. Supporters and players who sing every word score higher than those who trail off or mumble.</p>
+      <p><strong>Melodic richness (10%)</strong> - whether the singing contains genuine melodic movement. Both a monotone drone and random noise score zero; real melodic variety scores one.</p>
+      <p><strong>Pitch stability (10%)</strong> - how steadily singers hold their notes between consecutive moments, rather than sliding or wavering off pitch.</p>
+    </div>
+    <div class="meth-step">
+      <div class="meth-step-title">Tiers Explained</div>
+      <p>Alongside the individual rankings, nations are grouped into four tiers based on their overall pitch performance. The tiers are an additional layer of context on top of the ranking - they indicate which nations are genuinely performing at a higher or lower level of pitch accuracy. Tier 1 nations are the most in-tune in the analysis, their scores clearly and consistently higher than those in lower tiers. Tier 2 nations perform above the midpoint of the field, Tier 3 below it, and Tier 4 contains the lowest-scoring nations. Within each tier, the individual ranking still holds.</p>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-brand">Action<span>Network</span>.com</div>
+</footer>
+
+<div class="tooltip" id="tooltip"></div>
+
+<script>
+// ── TRANSLATIONS ──
+const T = {
+  en: {
+    lang:"English", flag:"🇬🇧", dir:"ltr", font:"",
+    eyebrow:"2026 World Cup - National Anthem Analysis - All 48 Nations",
+    title_main:"Pitch-", title_accent:"Perfect",
+    subtitle:"Which nation's supporters and players sang their national anthem most in tune at the 2026 World Cup - all 48 nations ranked by anthem-singing ability.",
+    stat_nations:"Nations Analyzed", stat_tiers:"Statistical Tiers",
+    t1_name:"Tier 1 - The best", t1_desc:"Top-ranked, scores clearly above the rest",
+    t2_name:"Tier 2 - Above average", t2_desc:"Mostly in tune, upper half of the field",
+    t3_name:"Tier 3 - Below average", t3_desc:"Passion there, pitch accuracy falls short",
+    t4_name:"Tier 4 - Bottom ranked", t4_desc:"Lowest-scoring nations in the analysis",
+    ranking_title:"The Full Ranking",
+    ranking_desc:"Each nation is scored on four measures: pitch accuracy (40%), commitment (40%), melodic richness (10%), and pitch stability (10%). Scores range from 0 to 1, where 1 is the highest possible score.",
+    ci_text:"The vertical line on each bar marks the upper end of that nation's score range - how high the score could reasonably go given natural variation in the recording. This upper value is what determines which tier a nation is placed in.",
+    tier1_label:"Tier 1 - Pitch-Perfect", tier2_label:"Tier 2 - In-Tune", tier3_label:"Tier 3 - Close", tier4_label:"Tier 4 - Off-Key",
+    meth_title:"Methodology",
+    meth_note:"This study was conducted in English. The methodology is available in English only. Minor inaccuracies in other language translations are possible.",
+    comp_accuracy:"Pitch accuracy", comp_commitment:"Commitment", comp_richness:"Melodic richness", comp_stability:"Pitch stability",
+    score_range:"Score range", score_label:"Score",
+    caveat_default:"Supporters and players rendition sourced from a later group match",
+    caveat_bosnia:"Sourced from a supporter recording filmed at the stadium",
+    nations:{
+      "Japan":"Japan","Curacao":"Curaçao","Iran":"Iran","Haiti":"Haiti","Cape Verde":"Cape Verde",
+      "South Korea":"South Korea","Germany":"Germany","Algeria":"Algeria","United States":"United States",
+      "South Africa":"South Africa","Switzerland":"Switzerland","Czech Republic":"Czech Republic",
+      "Senegal":"Senegal","Qatar":"Qatar","Ivory Coast":"Ivory Coast","DR Congo":"DR Congo",
+      "Sweden":"Sweden","Jordan":"Jordan","Iraq":"Iraq","Egypt":"Egypt","Scotland":"Scotland",
+      "Saudi Arabia":"Saudi Arabia","Ghana":"Ghana","Uzbekistan":"Uzbekistan","Croatia":"Croatia",
+      "France":"France","Portugal":"Portugal","Norway":"Norway","Mexico":"Mexico",
+      "New Zealand":"New Zealand","Australia":"Australia","Morocco":"Morocco","Paraguay":"Paraguay",
+      "Belgium":"Belgium","Austria":"Austria","Uruguay":"Uruguay","Turkey":"Turkey",
+      "Bosnia & Herz.":"Bosnia & Herz.","Netherlands":"Netherlands","England":"England",
+      "Canada":"Canada","Tunisia":"Tunisia","Brazil":"Brazil","Colombia":"Colombia",
+      "Spain":"Spain","Argentina":"Argentina","Panama":"Panama","Ecuador":"Ecuador"
+    }
+  },
+  es: {
+    lang:"Español", flag:"🇪🇸", dir:"ltr", font:"",
+    eyebrow:"Copa del Mundo 2026 - Análisis de Himnos Nacionales - 48 Naciones",
+    title_main:"A Tono ", title_accent:"Perfecto",
+    subtitle:"¿Qué nación cantó su himno nacional más afinado en la Copa del Mundo 2026? Las 48 naciones clasificadas por su capacidad de canto.",
+    stat_nations:"Naciones Analizadas", stat_tiers:"Niveles Estadísticos",
+    t1_name:"Nivel 1 - Los mejores", t1_desc:"Mejor clasificados, puntuaciones claramente superiores",
+    t2_name:"Nivel 2 - Por encima de la media", t2_desc:"Mayormente afinados, mitad superior del campo",
+    t3_name:"Nivel 3 - Por debajo de la media", t3_desc:"Pasión sí, pero la afinación falla",
+    t4_name:"Nivel 4 - Últimos clasificados", t4_desc:"Las naciones con menor puntuación",
+    ranking_title:"La Clasificación Completa",
+    ranking_desc:"Cada nación se puntúa en cuatro medidas: precisión tonal (40%), compromiso (40%), riqueza melódica (10%) y estabilidad tonal (10%). Las puntuaciones van de 0 a 1, donde 1 es la máxima posible.",
+    ci_text:"La línea vertical en cada barra marca el límite superior del rango de puntuación de esa nación. Este valor determina en qué nivel se clasifica.",
+    tier1_label:"Nivel 1 - Afinación Perfecta", tier2_label:"Nivel 2 - Afinados", tier3_label:"Nivel 3 - Cerca", tier4_label:"Nivel 4 - Desafinados",
+    meth_title:"Metodología",
+    meth_note:"Este estudio se realizó en inglés. La metodología solo está disponible en inglés. Pueden existir pequeñas inexactitudes en otras traducciones.",
+    comp_accuracy:"Precisión tonal", comp_commitment:"Compromiso", comp_richness:"Riqueza melódica", comp_stability:"Estabilidad tonal",
+    score_range:"Rango de puntuación", score_label:"Puntuación",
+    caveat_default:"Versión de aficionados de un partido posterior",
+    caveat_bosnia:"Grabación de un aficionado en el estadio",
+    nations:{
+      "Japan":"Japón","Curacao":"Curazao","Iran":"Irán","Haiti":"Haití","Cape Verde":"Cabo Verde",
+      "South Korea":"Corea del Sur","Germany":"Alemania","Algeria":"Argelia","United States":"Estados Unidos",
+      "South Africa":"Sudáfrica","Switzerland":"Suiza","Czech Republic":"República Checa",
+      "Senegal":"Senegal","Qatar":"Catar","Ivory Coast":"Costa de Marfil","DR Congo":"R.D. Congo",
+      "Sweden":"Suecia","Jordan":"Jordania","Iraq":"Irak","Egypt":"Egipto","Scotland":"Escocia",
+      "Saudi Arabia":"Arabia Saudí","Ghana":"Ghana","Uzbekistan":"Uzbekistán","Croatia":"Croacia",
+      "France":"Francia","Portugal":"Portugal","Norway":"Noruega","Mexico":"México",
+      "New Zealand":"Nueva Zelanda","Australia":"Australia","Morocco":"Marruecos","Paraguay":"Paraguay",
+      "Belgium":"Bélgica","Austria":"Austria","Uruguay":"Uruguay","Turkey":"Turquía",
+      "Bosnia & Herz.":"Bosnia y Herz.","Netherlands":"Países Bajos","England":"Inglaterra",
+      "Canada":"Canadá","Tunisia":"Túnez","Brazil":"Brasil","Colombia":"Colombia",
+      "Spain":"España","Argentina":"Argentina","Panama":"Panamá","Ecuador":"Ecuador"
+    }
+  },
+  pt: {
+    lang:"Português", flag:"🇧🇷", dir:"ltr", font:"",
+    eyebrow:"Copa do Mundo 2026 - Análise dos Hinos Nacionais - 48 Nações",
+    title_main:"Afinação ", title_accent:"Perfeita",
+    subtitle:"Qual nação cantou seu hino nacional mais afinado na Copa do Mundo 2026? As 48 nações classificadas pela capacidade de canto.",
+    stat_nations:"Nações Analisadas", stat_tiers:"Níveis Estatísticos",
+    t1_name:"Nível 1 - Os melhores", t1_desc:"Melhor classificados, pontuações claramente superiores",
+    t2_name:"Nível 2 - Acima da média", t2_desc:"Maioritariamente afinados, metade superior do campo",
+    t3_name:"Nível 3 - Abaixo da média", t3_desc:"Paixão sim, mas afinação aquém",
+    t4_name:"Nível 4 - Últimos classificados", t4_desc:"Nações com menor pontuação na análise",
+    ranking_title:"A Classificação Completa",
+    ranking_desc:"Cada nação é pontuada em quatro medidas: precisão tonal (40%), comprometimento (40%), riqueza melódica (10%) e estabilidade tonal (10%). As pontuações variam de 0 a 1, onde 1 é a máxima possível.",
+    ci_text:"A linha vertical em cada barra marca o limite superior do intervalo de pontuação daquela nação. Este valor determina em que nível ela é colocada.",
+    tier1_label:"Nível 1 - Afinação Perfeita", tier2_label:"Nível 2 - Afinados", tier3_label:"Nível 3 - Perto", tier4_label:"Nível 4 - Desafinados",
+    meth_title:"Metodologia",
+    meth_note:"Este estudo foi conduzido em inglês. A metodologia está disponível apenas em inglês. Podem ocorrer pequenas imprecisões nas traduções.",
+    comp_accuracy:"Precisão tonal", comp_commitment:"Comprometimento", comp_richness:"Riqueza melódica", comp_stability:"Estabilidade tonal",
+    score_range:"Intervalo de pontuação", score_label:"Pontuação",
+    caveat_default:"Versão dos adeptos de um jogo posterior",
+    caveat_bosnia:"Gravação de um adepto no estádio",
+    nations:{
+      "Japan":"Japão","Curacao":"Curaçao","Iran":"Irã","Haiti":"Haiti","Cape Verde":"Cabo Verde",
+      "South Korea":"Coreia do Sul","Germany":"Alemanha","Algeria":"Argélia","United States":"Estados Unidos",
+      "South Africa":"África do Sul","Switzerland":"Suíça","Czech Republic":"República Tcheca",
+      "Senegal":"Senegal","Qatar":"Catar","Ivory Coast":"Costa do Marfim","DR Congo":"R.D. Congo",
+      "Sweden":"Suécia","Jordan":"Jordânia","Iraq":"Iraque","Egypt":"Egito","Scotland":"Escócia",
+      "Saudi Arabia":"Arábia Saudita","Ghana":"Gana","Uzbekistan":"Uzbequistão","Croatia":"Croácia",
+      "France":"França","Portugal":"Portugal","Norway":"Noruega","Mexico":"México",
+      "New Zealand":"Nova Zelândia","Australia":"Austrália","Morocco":"Marrocos","Paraguay":"Paraguai",
+      "Belgium":"Bélgica","Austria":"Áustria","Uruguay":"Uruguai","Turkey":"Turquia",
+      "Bosnia & Herz.":"Bósnia e Herz.","Netherlands":"Países Baixos","England":"Inglaterra",
+      "Canada":"Canadá","Tunisia":"Tunísia","Brazil":"Brasil","Colombia":"Colômbia",
+      "Spain":"Espanha","Argentina":"Argentina","Panama":"Panamá","Ecuador":"Equador"
+    }
+  },
+  fr: {
+    lang:"Français", flag:"🇫🇷", dir:"ltr", font:"",
+    eyebrow:"Coupe du Monde 2026 - Analyse des Hymnes Nationaux - 48 Nations",
+    title_main:"En Mesure ", title_accent:"Parfaite",
+    subtitle:"Quelle nation a chanté son hymne national le plus juste à la Coupe du Monde 2026 ? Les 48 nations classées selon leur capacité vocale.",
+    stat_nations:"Nations Analysées", stat_tiers:"Niveaux Statistiques",
+    t1_name:"Niveau 1 - Les meilleurs", t1_desc:"Mieux classés, scores nettement supérieurs",
+    t2_name:"Niveau 2 - Au-dessus de la moyenne", t2_desc:"Majoritairement justes, moitié supérieure du classement",
+    t3_name:"Niveau 3 - En dessous de la moyenne", t3_desc:"De la passion, mais la justesse laisse à désirer",
+    t4_name:"Niveau 4 - Derniers du classement", t4_desc:"Les nations avec les scores les plus bas",
+    ranking_title:"Le Classement Complet",
+    ranking_desc:"Chaque nation est évaluée sur quatre critères : justesse vocale (40%), engagement (40%), richesse mélodique (10%) et stabilité vocale (10%). Les scores vont de 0 à 1, où 1 est le maximum.",
+    ci_text:"La ligne verticale sur chaque barre indique la limite supérieure de l'intervalle de score de cette nation. C'est cette valeur qui détermine son niveau.",
+    tier1_label:"Niveau 1 - Parfaitement Juste", tier2_label:"Niveau 2 - En Voix", tier3_label:"Niveau 3 - Proche", tier4_label:"Niveau 4 - Faux",
+    meth_title:"Méthodologie",
+    meth_note:"Cette étude a été menée en anglais. La méthodologie n'est disponible qu'en anglais. De légères inexactitudes dans les traductions sont possibles.",
+    comp_accuracy:"Justesse vocale", comp_commitment:"Engagement", comp_richness:"Richesse mélodique", comp_stability:"Stabilité vocale",
+    score_range:"Plage de score", score_label:"Score",
+    caveat_default:"Version des supporters issue d'un match de groupe ultérieur",
+    caveat_bosnia:"Enregistrement d'un supporter filmé depuis les tribunes",
+    nations:{
+      "Japan":"Japon","Curacao":"Curaçao","Iran":"Iran","Haiti":"Haïti","Cape Verde":"Cap-Vert",
+      "South Korea":"Corée du Sud","Germany":"Allemagne","Algeria":"Algérie","United States":"États-Unis",
+      "South Africa":"Afrique du Sud","Switzerland":"Suisse","Czech Republic":"République tchèque",
+      "Senegal":"Sénégal","Qatar":"Qatar","Ivory Coast":"Côte d'Ivoire","DR Congo":"R.D. Congo",
+      "Sweden":"Suède","Jordan":"Jordanie","Iraq":"Irak","Egypt":"Égypte","Scotland":"Écosse",
+      "Saudi Arabia":"Arabie Saoudite","Ghana":"Ghana","Uzbekistan":"Ouzbékistan","Croatia":"Croatie",
+      "France":"France","Portugal":"Portugal","Norway":"Norvège","Mexico":"Mexique",
+      "New Zealand":"Nouvelle-Zélande","Australia":"Australie","Morocco":"Maroc","Paraguay":"Paraguay",
+      "Belgium":"Belgique","Austria":"Autriche","Uruguay":"Uruguay","Turkey":"Turquie",
+      "Bosnia & Herz.":"Bosnie-Herz.","Netherlands":"Pays-Bas","England":"Angleterre",
+      "Canada":"Canada","Tunisia":"Tunisie","Brazil":"Brésil","Colombia":"Colombie",
+      "Spain":"Espagne","Argentina":"Argentine","Panama":"Panama","Ecuador":"Équateur"
+    }
+  },
+  de: {
+    lang:"Deutsch", flag:"🇩🇪", dir:"ltr", font:"",
+    eyebrow:"WM 2026 - Analyse der Nationalhymnen - 48 Nationen",
+    title_main:"Stimmlich ", title_accent:"Treffsicher",
+    subtitle:"Welche Nation sang ihre Nationalhymne bei der WM 2026 am treffsichersten? Alle 48 Nationen nach Gesangsvermögen gerankt.",
+    stat_nations:"Analysierte Nationen", stat_tiers:"Statistische Stufen",
+    t1_name:"Stufe 1 - Die Besten", t1_desc:"Bestplatziert, Werte klar über dem Rest",
+    t2_name:"Stufe 2 - Überdurchschnittlich", t2_desc:"Überwiegend treffsicher, obere Hälfte",
+    t3_name:"Stufe 3 - Unterdurchschnittlich", t3_desc:"Leidenschaft ja, Treffsicherheit mangelhaft",
+    t4_name:"Stufe 4 - Schlusslicht", t4_desc:"Die Nationen mit den niedrigsten Werten",
+    ranking_title:"Das Gesamtranking",
+    ranking_desc:"Jede Nation wird nach vier Kriterien bewertet: Tongenauigkeit (40%), Einsatz (40%), melodische Vielfalt (10%) und Tonhaltung (10%). Die Werte reichen von 0 bis 1, wobei 1 das Maximum darstellt.",
+    ci_text:"Die senkrechte Linie auf jedem Balken markiert das obere Ende des Punktebereichs einer Nation. Dieser Wert bestimmt, in welche Stufe sie eingeteilt wird.",
+    tier1_label:"Stufe 1 - Treffsicher", tier2_label:"Stufe 2 - Gut", tier3_label:"Stufe 3 - Knapp", tier4_label:"Stufe 4 - Ungenau",
+    meth_title:"Methodik",
+    meth_note:"Diese Studie wurde auf Englisch durchgeführt. Die Methodik ist nur auf Englisch verfügbar. Kleinere Ungenauigkeiten in anderen Übersetzungen sind möglich.",
+    comp_accuracy:"Tongenauigkeit", comp_commitment:"Einsatz", comp_richness:"Melodische Vielfalt", comp_stability:"Tonhaltung",
+    score_range:"Punktebereich", score_label:"Punktzahl",
+    caveat_default:"Fan-Version aus einem späteren Gruppenspiel",
+    caveat_bosnia:"Aufnahme eines Fans aus dem Stadion",
+    nations:{
+      "Japan":"Japan","Curacao":"Curaçao","Iran":"Iran","Haiti":"Haiti","Cape Verde":"Kap Verde",
+      "South Korea":"Südkorea","Germany":"Deutschland","Algeria":"Algerien","United States":"Vereinigte Staaten",
+      "South Africa":"Südafrika","Switzerland":"Schweiz","Czech Republic":"Tschechische Republik",
+      "Senegal":"Senegal","Qatar":"Katar","Ivory Coast":"Elfenbeinküste","DR Congo":"D.R. Kongo",
+      "Sweden":"Schweden","Jordan":"Jordanien","Iraq":"Irak","Egypt":"Ägypten","Scotland":"Schottland",
+      "Saudi Arabia":"Saudi-Arabien","Ghana":"Ghana","Uzbekistan":"Usbekistan","Croatia":"Kroatien",
+      "France":"Frankreich","Portugal":"Portugal","Norway":"Norwegen","Mexico":"Mexiko",
+      "New Zealand":"Neuseeland","Australia":"Australien","Morocco":"Marokko","Paraguay":"Paraguay",
+      "Belgium":"Belgien","Austria":"Österreich","Uruguay":"Uruguay","Turkey":"Türkei",
+      "Bosnia & Herz.":"Bosnien u. Herz.","Netherlands":"Niederlande","England":"England",
+      "Canada":"Kanada","Tunisia":"Tunesien","Brazil":"Brasilien","Colombia":"Kolumbien",
+      "Spain":"Spanien","Argentina":"Argentinien","Panama":"Panama","Ecuador":"Ecuador"
+    }
+  },
+  nl: {
+    lang:"Nederlands", flag:"🇳🇱", dir:"ltr", font:"",
+    eyebrow:"WK 2026 - Analyse Volksliederen - 48 Naties",
+    title_main:"Toonzuiver ", title_accent:"Perfectie",
+    subtitle:"Welke natie zong haar volkslied het zuiverst op het WK 2026? Alle 48 naties gerangschikt op zangvermogen.",
+    stat_nations:"Geanalyseerde Naties", stat_tiers:"Statistische Niveaus",
+    t1_name:"Niveau 1 - De besten", t1_desc:"Hoogst gerangschikt, scores duidelijk boven de rest",
+    t2_name:"Niveau 2 - Bovengemiddeld", t2_desc:"Grotendeels zuiver, bovenste helft",
+    t3_name:"Niveau 3 - Ondergemiddeld", t3_desc:"Passie ja, toonzuiverheid tekortkomend",
+    t4_name:"Niveau 4 - Hekkensluiter", t4_desc:"Naties met de laagste scores in de analyse",
+    ranking_title:"De Volledige Ranglijst",
+    ranking_desc:"Elke natie wordt beoordeeld op vier maatstaven: toonzuiverheid (40%), inzet (40%), melodische rijkdom (10%) en toonvastheid (10%). Scores lopen van 0 tot 1, waarbij 1 het hoogst haalbare is.",
+    ci_text:"De verticale lijn op elke balk geeft het bovenste einde van het scoregebied van die natie aan. Deze waarde bepaalt in welk niveau de natie wordt ingedeeld.",
+    tier1_label:"Niveau 1 - Toonzuiver", tier2_label:"Niveau 2 - Goed", tier3_label:"Niveau 3 - Dichtbij", tier4_label:"Niveau 4 - Vals",
+    meth_title:"Methodologie",
+    meth_note:"Dit onderzoek werd uitgevoerd in het Engels. De methodologie is alleen beschikbaar in het Engels. Kleine onnauwkeurigheden in andere vertalingen zijn mogelijk.",
+    comp_accuracy:"Toonzuiverheid", comp_commitment:"Inzet", comp_richness:"Melodische rijkdom", comp_stability:"Toonvastheid",
+    score_range:"Scorebereik", score_label:"Score",
+    caveat_default:"Fanversie van een later groepsduel",
+    caveat_bosnia:"Opname van een fan in het stadion",
+    nations:{
+      "Japan":"Japan","Curacao":"Curaçao","Iran":"Iran","Haiti":"Haïti","Cape Verde":"Kaapverdië",
+      "South Korea":"Zuid-Korea","Germany":"Duitsland","Algeria":"Algerije","United States":"Verenigde Staten",
+      "South Africa":"Zuid-Afrika","Switzerland":"Zwitserland","Czech Republic":"Tsjechië",
+      "Senegal":"Senegal","Qatar":"Qatar","Ivory Coast":"Ivoorkust","DR Congo":"D.R. Congo",
+      "Sweden":"Zweden","Jordan":"Jordanië","Iraq":"Irak","Egypt":"Egypte","Scotland":"Schotland",
+      "Saudi Arabia":"Saudi-Arabië","Ghana":"Ghana","Uzbekistan":"Oezbekistan","Croatia":"Kroatië",
+      "France":"Frankrijk","Portugal":"Portugal","Norway":"Noorwegen","Mexico":"Mexico",
+      "New Zealand":"Nieuw-Zeeland","Australia":"Australië","Morocco":"Marokko","Paraguay":"Paraguay",
+      "Belgium":"België","Austria":"Oostenrijk","Uruguay":"Uruguay","Turkey":"Turkije",
+      "Bosnia & Herz.":"Bosnië en Herz.","Netherlands":"Nederland","England":"Engeland",
+      "Canada":"Canada","Tunisia":"Tunesië","Brazil":"Brazilië","Colombia":"Colombia",
+      "Spain":"Spanje","Argentina":"Argentinië","Panama":"Panama","Ecuador":"Ecuador"
+    }
+  },
+  sv: {
+    lang:"Svenska", flag:"🇸🇪", dir:"ltr", font:"",
+    eyebrow:"VM 2026 - Analys av Nationalsånger - 48 Nationer",
+    title_main:"Tonrent ", title_accent:"Mästerskap",
+    subtitle:"Vilken nation sjöng sin nationalsång mest tonrent i VM 2026? Alla 48 nationer rankade efter sångförmåga.",
+    stat_nations:"Analyserade Nationer", stat_tiers:"Statistiska Nivåer",
+    t1_name:"Nivå 1 - De bästa", t1_desc:"Högst rankade, poäng klart över övriga",
+    t2_name:"Nivå 2 - Över genomsnittet", t2_desc:"Mestadels tonrent, övre halvan",
+    t3_name:"Nivå 3 - Under genomsnittet", t3_desc:"Passion finns, men tonfallet brister",
+    t4_name:"Nivå 4 - Sämst", t4_desc:"Nationer med lägst poäng i analysen",
+    ranking_title:"Fullständig Rankning",
+    ranking_desc:"Varje nation bedöms på fyra mått: tontäckning (40%), engagemang (40%), melodisk rikedom (10%) och tonstabilitet (10%). Poängen går från 0 till 1, där 1 är högst möjligt.",
+    ci_text:"Den vertikala linjen på varje stapel markerar den övre gränsen för nationens poängintervall. Detta värde avgör vilken nivå nationen placeras i.",
+    tier1_label:"Nivå 1 - Tonrent", tier2_label:"Nivå 2 - Bra", tier3_label:"Nivå 3 - Nära", tier4_label:"Nivå 4 - Falskt",
+    meth_title:"Metodik",
+    meth_note:"Denna studie genomfördes på engelska. Metodiken finns endast tillgänglig på engelska. Mindre felaktigheter i översättningar kan förekomma.",
+    comp_accuracy:"Tontäckning", comp_commitment:"Engagemang", comp_richness:"Melodisk rikedom", comp_stability:"Tonstabilitet",
+    score_range:"Poängintervall", score_label:"Poäng",
+    caveat_default:"Fanversion från en senare gruppmatch",
+    caveat_bosnia:"Inspelning av en fan på stadion",
+    nations:{
+      "Japan":"Japan","Curacao":"Curaçao","Iran":"Iran","Haiti":"Haiti","Cape Verde":"Kap Verde",
+      "South Korea":"Sydkorea","Germany":"Tyskland","Algeria":"Algeriet","United States":"USA",
+      "South Africa":"Sydafrika","Switzerland":"Schweiz","Czech Republic":"Tjeckien",
+      "Senegal":"Senegal","Qatar":"Qatar","Ivory Coast":"Elfenbenskusten","DR Congo":"D.R. Kongo",
+      "Sweden":"Sverige","Jordan":"Jordanien","Iraq":"Irak","Egypt":"Egypten","Scotland":"Skottland",
+      "Saudi Arabia":"Saudiarabien","Ghana":"Ghana","Uzbekistan":"Uzbekistan","Croatia":"Kroatien",
+      "France":"Frankrike","Portugal":"Portugal","Norway":"Norge","Mexico":"Mexiko",
+      "New Zealand":"Nya Zeeland","Australia":"Australien","Morocco":"Marocko","Paraguay":"Paraguay",
+      "Belgium":"Belgien","Austria":"Österrike","Uruguay":"Uruguay","Turkey":"Turkiet",
+      "Bosnia & Herz.":"Bosnien och Herz.","Netherlands":"Nederländerna","England":"England",
+      "Canada":"Kanada","Tunisia":"Tunisien","Brazil":"Brasilien","Colombia":"Colombia",
+      "Spain":"Spanien","Argentina":"Argentina","Panama":"Panama","Ecuador":"Ecuador"
+    }
+  },
+  no: {
+    lang:"Norsk", flag:"🇳🇴", dir:"ltr", font:"",
+    eyebrow:"VM 2026 - Analyse av Nasjonalsanger - 48 Nasjoner",
+    title_main:"Tonalt ", title_accent:"Perfekt",
+    subtitle:"Hvilken nasjon sang nasjonalsangen sin mest stemmereint i VM 2026? Alle 48 nasjoner rangert etter sangferdighet.",
+    stat_nations:"Analyserte Nasjoner", stat_tiers:"Statistiske Nivåer",
+    t1_name:"Nivå 1 - De beste", t1_desc:"Høyest rangert, poeng klart over resten",
+    t2_name:"Nivå 2 - Over gjennomsnittet", t2_desc:"Stort sett stemmereint, øvre halvdel",
+    t3_name:"Nivå 3 - Under gjennomsnittet", t3_desc:"Lidenskap ja, men tonen svikter",
+    t4_name:"Nivå 4 - Lavest rangert", t4_desc:"Nasjoner med lavest poeng i analysen",
+    ranking_title:"Full Rangering",
+    ranking_desc:"Hver nasjon vurderes på fire mål: tonetreff (40%), innsats (40%), melodisk rikdom (10%) og tonstabilitet (10%). Poengene går fra 0 til 1, der 1 er høyest mulig.",
+    ci_text:"Den vertikale linjen på hver stolpe markerer øvre ende av nasjonens poengintervall. Denne verdien avgjør hvilket nivå nasjonen plasseres i.",
+    tier1_label:"Nivå 1 - Tonerent", tier2_label:"Nivå 2 - Bra", tier3_label:"Nivå 3 - Nær", tier4_label:"Nivå 4 - Falskt",
+    meth_title:"Metode",
+    meth_note:"Denne studien ble gjennomført på engelsk. Metoden er kun tilgjengelig på engelsk. Mindre unøyaktigheter i oversettelser kan forekomme.",
+    comp_accuracy:"Tonetreff", comp_commitment:"Innsats", comp_richness:"Melodisk rikdom", comp_stability:"Tonstabilitet",
+    score_range:"Poengintervall", score_label:"Poeng",
+    caveat_default:"Fanversjon fra en senere gruppekamp",
+    caveat_bosnia:"Opptak fra en fan på stadion",
+    nations:{
+      "Japan":"Japan","Curacao":"Curaçao","Iran":"Iran","Haiti":"Haiti","Cape Verde":"Kapp Verde",
+      "South Korea":"Sør-Korea","Germany":"Tyskland","Algeria":"Algerie","United States":"USA",
+      "South Africa":"Sør-Afrika","Switzerland":"Sveits","Czech Republic":"Tsjekkia",
+      "Senegal":"Senegal","Qatar":"Qatar","Ivory Coast":"Elfenbenskysten","DR Congo":"D.R. Kongo",
+      "Sweden":"Sverige","Jordan":"Jordan","Iraq":"Irak","Egypt":"Egypt","Scotland":"Skottland",
+      "Saudi Arabia":"Saudi-Arabia","Ghana":"Ghana","Uzbekistan":"Usbekistan","Croatia":"Kroatia",
+      "France":"Frankrike","Portugal":"Portugal","Norway":"Norge","Mexico":"Mexico",
+      "New Zealand":"New Zealand","Australia":"Australia","Morocco":"Marokko","Paraguay":"Paraguay",
+      "Belgium":"Belgia","Austria":"Østerrike","Uruguay":"Uruguay","Turkey":"Tyrkia",
+      "Bosnia & Herz.":"Bosnia og Herz.","Netherlands":"Nederland","England":"England",
+      "Canada":"Canada","Tunisia":"Tunisia","Brazil":"Brasil","Colombia":"Colombia",
+      "Spain":"Spania","Argentina":"Argentina","Panama":"Panama","Ecuador":"Ecuador"
+    }
+  },
+  cs: {
+    lang:"Čeština", flag:"🇨🇿", dir:"ltr", font:"",
+    eyebrow:"MS 2026 - Analýza Národních Hymen - 48 Národů",
+    title_main:"Čistě ", title_accent:"Intonováno",
+    subtitle:"Který národ zpíval svou národní hymnu nejčistěji na MS 2026? Všech 48 národů seřazených podle pěveckých schopností.",
+    stat_nations:"Analyzovaných Národů", stat_tiers:"Statistické Úrovně",
+    t1_name:"Úroveň 1 - Nejlepší", t1_desc:"Nejlépe umístění, skóre jasně nad ostatními",
+    t2_name:"Úroveň 2 - Nadprůměrní", t2_desc:"Převážně čistě, horní polovina pole",
+    t3_name:"Úroveň 3 - Podprůměrní", t3_desc:"Vášeň ano, intonace pokulhává",
+    t4_name:"Úroveň 4 - Nejhorší", t4_desc:"Národy s nejnižším skóre v analýze",
+    ranking_title:"Celkové Pořadí",
+    ranking_desc:"Každý národ je hodnocen ve čtyřech oblastech: přesnost intonace (40%), zapojení (40%), melodická bohatost (10%) a stabilita tónu (10%). Skóre se pohybuje od 0 do 1, kde 1 je nejvyšší možné.",
+    ci_text:"Svislá čára na každém sloupci označuje horní hranici rozsahu skóre daného národa. Tato hodnota určuje, do které úrovně národ patří.",
+    tier1_label:"Úroveň 1 - Čistá intonace", tier2_label:"Úroveň 2 - Dobře", tier3_label:"Úroveň 3 - Blízko", tier4_label:"Úroveň 4 - Falešně",
+    meth_title:"Metodologie",
+    meth_note:"Tato studie byla provedena v angličtině. Metodologie je dostupná pouze v angličtině. Drobné nepřesnosti v překladech jsou možné.",
+    comp_accuracy:"Přesnost intonace", comp_commitment:"Zapojení", comp_richness:"Melodická bohatost", comp_stability:"Stabilita tónu",
+    score_range:"Rozsah skóre", score_label:"Skóre",
+    caveat_default:"Fanverze z pozdějšího skupinového zápasu",
+    caveat_bosnia:"Nahrávka fanouška z tribuny",
+    nations:{
+      "Japan":"Japonsko","Curacao":"Curaçao","Iran":"Írán","Haiti":"Haiti","Cape Verde":"Kapverdy",
+      "South Korea":"Jižní Korea","Germany":"Německo","Algeria":"Alžírsko","United States":"Spojené státy",
+      "South Africa":"Jihoafrická republika","Switzerland":"Švýcarsko","Czech Republic":"Česká republika",
+      "Senegal":"Senegal","Qatar":"Katar","Ivory Coast":"Pobřeží slonoviny","DR Congo":"D.R. Kongo",
+      "Sweden":"Švédsko","Jordan":"Jordánsko","Iraq":"Irák","Egypt":"Egypt","Scotland":"Skotsko",
+      "Saudi Arabia":"Saúdská Arábie","Ghana":"Ghana","Uzbekistan":"Uzbekistán","Croatia":"Chorvatsko",
+      "France":"Francie","Portugal":"Portugalsko","Norway":"Norsko","Mexico":"Mexiko",
+      "New Zealand":"Nový Zéland","Australia":"Austrálie","Morocco":"Maroko","Paraguay":"Paraguay",
+      "Belgium":"Belgie","Austria":"Rakousko","Uruguay":"Uruguay","Turkey":"Turecko",
+      "Bosnia & Herz.":"Bosna a Herz.","Netherlands":"Nizozemsko","England":"Anglie",
+      "Canada":"Kanada","Tunisia":"Tunisko","Brazil":"Brazílie","Colombia":"Kolumbie",
+      "Spain":"Španělsko","Argentina":"Argentina","Panama":"Panama","Ecuador":"Ekvádor"
+    }
+  },
+  hr: {
+    lang:"Hrvatski", flag:"🇭🇷", dir:"ltr", font:"",
+    eyebrow:"SP 2026 - Analiza Nacionalnih Himni - 48 Nacija",
+    title_main:"Savršena ", title_accent:"Intonacija",
+    subtitle:"Koja je nacija otpjevala svoju nacionalnu himnu najtočnije na SP-u 2026? Svih 48 nacija rangirano prema pjevačkim sposobnostima.",
+    stat_nations:"Analiziranih Nacija", stat_tiers:"Statistički Stupnjevi",
+    t1_name:"Stupanj 1 - Najbolji", t1_desc:"Najviše rangirani, rezultati jasno iznad ostalih",
+    t2_name:"Stupanj 2 - Iznadprosječni", t2_desc:"Uglavnom intonativno, gornja polovica",
+    t3_name:"Stupanj 3 - Ispodprosječni", t3_desc:"Strast da, ali intonacija zakazuje",
+    t4_name:"Stupanj 4 - Posljednji", t4_desc:"Nacije s najnižim rezultatima u analizi",
+    ranking_title:"Potpuni Poredak",
+    ranking_desc:"Svaka nacija ocjenjuje se prema četiri mjere: točnost intonacije (40%), predanost (40%), melodijsko bogatstvo (10%) i stabilnost tona (10%). Rezultati idu od 0 do 1, gdje je 1 najviši mogući.",
+    ci_text:"Okomita crta na svakom stupcu označava gornji kraj raspona rezultata te nacije. Ta vrijednost određuje u koji stupanj nacija pripada.",
+    tier1_label:"Stupanj 1 - Savršena Intonacija", tier2_label:"Stupanj 2 - Dobro", tier3_label:"Stupanj 3 - Blizu", tier4_label:"Stupanj 4 - Falš",
+    meth_title:"Metodologija",
+    meth_note:"Ova studija provedena je na engleskom. Metodologija je dostupna samo na engleskom. Manje netočnosti u prijevodima moguće su.",
+    comp_accuracy:"Točnost intonacije", comp_commitment:"Predanost", comp_richness:"Melodijsko bogatstvo", comp_stability:"Stabilnost tona",
+    score_range:"Raspon rezultata", score_label:"Rezultat",
+    caveat_default:"Navijačka verzija iz kasnijeg grupnog susreta",
+    caveat_bosnia:"Snimka navijača s tribina",
+    nations:{
+      "Japan":"Japan","Curacao":"Curaçao","Iran":"Iran","Haiti":"Haiti","Cape Verde":"Zelenortski Otoci",
+      "South Korea":"Južna Koreja","Germany":"Njemačka","Algeria":"Alžir","United States":"SAD",
+      "South Africa":"Južna Afrika","Switzerland":"Švicarska","Czech Republic":"Češka",
+      "Senegal":"Senegal","Qatar":"Katar","Ivory Coast":"Obala Bjelokosti","DR Congo":"D.R. Kongo",
+      "Sweden":"Švedska","Jordan":"Jordan","Iraq":"Irak","Egypt":"Egipat","Scotland":"Škotska",
+      "Saudi Arabia":"Saudijska Arabija","Ghana":"Gana","Uzbekistan":"Uzbekistan","Croatia":"Hrvatska",
+      "France":"Francuska","Portugal":"Portugal","Norway":"Norveška","Mexico":"Meksiko",
+      "New Zealand":"Novi Zeland","Australia":"Australija","Morocco":"Maroko","Paraguay":"Paragvaj",
+      "Belgium":"Belgija","Austria":"Austrija","Uruguay":"Urugvaj","Turkey":"Turska",
+      "Bosnia & Herz.":"Bosna i Herz.","Netherlands":"Nizozemska","England":"Engleska",
+      "Canada":"Kanada","Tunisia":"Tunis","Brazil":"Brazil","Colombia":"Kolumbija",
+      "Spain":"Španjolska","Argentina":"Argentina","Panama":"Panama","Ecuador":"Ekvador"
+    }
+  },
+  bs: {
+    lang:"Bosanski", flag:"🇧🇦", dir:"ltr", font:"",
+    eyebrow:"SP 2026 - Analiza Nacionalnih Himni - 48 Nacija",
+    title_main:"Savršena ", title_accent:"Intonacija",
+    subtitle:"Koja je nacija otpjevala svoju nacionalnu himnu najtačnije na SP-u 2026? Svih 48 nacija rangirano prema pjevačkim sposobnostima.",
+    stat_nations:"Analiziranih Nacija", stat_tiers:"Statistički Nivoi",
+    t1_name:"Nivo 1 - Najbolji", t1_desc:"Najviše rangirani, rezultati jasno iznad ostalih",
+    t2_name:"Nivo 2 - Iznadprosječni", t2_desc:"Uglavnom intonativno, gornja polovina",
+    t3_name:"Nivo 3 - Ispodprosječni", t3_desc:"Strast da, ali intonacija zakazuje",
+    t4_name:"Nivo 4 - Posljednji", t4_desc:"Nacije s najnižim rezultatima u analizi",
+    ranking_title:"Potpuni Poredak",
+    ranking_desc:"Svaka nacija ocjenjuje se prema četiri mjere: tačnost intonacije (40%), predanost (40%), melodijsko bogatstvo (10%) i stabilnost tona (10%). Rezultati idu od 0 do 1, gdje je 1 najviši mogući.",
+    ci_text:"Vertikalna linija na svakom stupu označava gornji kraj raspona rezultata te nacije. Ta vrijednost određuje u koji nivo nacija spada.",
+    tier1_label:"Nivo 1 - Savršena Intonacija", tier2_label:"Nivo 2 - Dobro", tier3_label:"Nivo 3 - Blizu", tier4_label:"Nivo 4 - Falš",
+    meth_title:"Metodologija",
+    meth_note:"Ova studija provedena je na engleskom. Metodologija je dostupna samo na engleskom. Manje netačnosti u prijevodima su moguće.",
+    comp_accuracy:"Tačnost intonacije", comp_commitment:"Predanost", comp_richness:"Melodijsko bogatstvo", comp_stability:"Stabilnost tona",
+    score_range:"Raspon rezultata", score_label:"Rezultat",
+    caveat_default:"Navijačka verzija iz kasnijeg grupnog susreta",
+    caveat_bosnia:"Snimak navijača s tribina",
+    nations:{
+      "Japan":"Japan","Curacao":"Curaçao","Iran":"Iran","Haiti":"Haiti","Cape Verde":"Zelenortska Ostrva",
+      "South Korea":"Južna Koreja","Germany":"Njemačka","Algeria":"Alžir","United States":"SAD",
+      "South Africa":"Južna Afrika","Switzerland":"Švicarska","Czech Republic":"Češka",
+      "Senegal":"Senegal","Qatar":"Katar","Ivory Coast":"Obala Slonovače","DR Congo":"D.R. Kongo",
+      "Sweden":"Švedska","Jordan":"Jordan","Iraq":"Irak","Egypt":"Egipat","Scotland":"Škotska",
+      "Saudi Arabia":"Saudijska Arabija","Ghana":"Gana","Uzbekistan":"Uzbekistan","Croatia":"Hrvatska",
+      "France":"Francuska","Portugal":"Portugal","Norway":"Norveška","Mexico":"Meksiko",
+      "New Zealand":"Novi Zeland","Australia":"Australija","Morocco":"Maroko","Paraguay":"Paragvaj",
+      "Belgium":"Belgija","Austria":"Austrija","Uruguay":"Urugvaj","Turkey":"Turska",
+      "Bosnia & Herz.":"Bosna i Herz.","Netherlands":"Nizozemska","England":"Engleska",
+      "Canada":"Kanada","Tunisia":"Tunis","Brazil":"Brazil","Colombia":"Kolumbija",
+      "Spain":"Španija","Argentina":"Argentina","Panama":"Panama","Ecuador":"Ekvador"
+    }
+  },
+  ar: {
+    lang:"العربية", flag:"🇸🇦", dir:"rtl", font:"https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap",
+    eyebrow:"كأس العالم 2026 - تحليل النشيد الوطني - 48 أمة",
+    title_main:"دقة ", title_accent:"الأداء",
+    subtitle:"أي أمة أدّت نشيدها الوطني بأعلى دقة في كأس العالم 2026؟ جميع الـ 48 أمة مرتبة وفق مستوى الأداء الغنائي.",
+    stat_nations:"أمة خضعت للتحليل", stat_tiers:"المستويات الإحصائية",
+    t1_name:"المستوى 1 - الأفضل", t1_desc:"الأعلى تصنيفاً، درجات تفوق بوضوح البقية",
+    t2_name:"المستوى 2 - فوق المتوسط", t2_desc:"أداء منسجم في الغالب، النصف العلوي",
+    t3_name:"المستوى 3 - دون المتوسط", t3_desc:"حماس نعم، لكن الدقة الصوتية قاصرة",
+    t4_name:"المستوى 4 - الأدنى تصنيفاً", t4_desc:"الأمم ذات أدنى الدرجات في التحليل",
+    ranking_title:"الترتيب الكامل",
+    ranking_desc:"تُقيَّم كل أمة وفق أربعة معايير: الدقة الصوتية (40%)، الالتزام بالأداء (40%)، الثراء اللحني (10%)، وثبات النغمة (10%). تتراوح الدرجات بين 0 و1، حيث 1 هي أعلى درجة ممكنة.",
+    ci_text:"يشير الخط العمودي على كل شريط إلى الحد الأعلى لنطاق درجة تلك الأمة. هذه القيمة هي التي تحدد المستوى الذي تُوضع فيه الأمة.",
+    tier1_label:"المستوى 1 - أداء مثالي", tier2_label:"المستوى 2 - منسجم", tier3_label:"المستوى 3 - قريب", tier4_label:"المستوى 4 - خارج النغمة",
+    meth_title:"المنهجية",
+    meth_note:"أُجريت هذه الدراسة باللغة الإنجليزية. المنهجية متاحة باللغة الإنجليزية فقط. قد تكون هناك أخطاء طفيفة في الترجمات.",
+    comp_accuracy:"الدقة الصوتية", comp_commitment:"الالتزام بالأداء", comp_richness:"الثراء اللحني", comp_stability:"ثبات النغمة",
+    score_range:"نطاق الدرجة", score_label:"الدرجة",
+    caveat_default:"نسخة الجماهير من مباراة لاحقة في المجموعات",
+    caveat_bosnia:"تسجيل مشجع من مدرجات الملعب",
+    nations:{
+      "Japan":"اليابان","Curacao":"كوراساو","Iran":"إيران","Haiti":"هايتي","Cape Verde":"الرأس الأخضر",
+      "South Korea":"كوريا الجنوبية","Germany":"ألمانيا","Algeria":"الجزائر","United States":"الولايات المتحدة",
+      "South Africa":"جنوب أفريقيا","Switzerland":"سويسرا","Czech Republic":"التشيك",
+      "Senegal":"السنغال","Qatar":"قطر","Ivory Coast":"ساحل العاج","DR Congo":"الكونغو الديمقراطية",
+      "Sweden":"السويد","Jordan":"الأردن","Iraq":"العراق","Egypt":"مصر","Scotland":"اسكتلندا",
+      "Saudi Arabia":"المملكة العربية السعودية","Ghana":"غانا","Uzbekistan":"أوزبكستان","Croatia":"كرواتيا",
+      "France":"فرنسا","Portugal":"البرتغال","Norway":"النرويج","Mexico":"المكسيك",
+      "New Zealand":"نيوزيلندا","Australia":"أستراليا","Morocco":"المغرب","Paraguay":"باراغواي",
+      "Belgium":"بلجيكا","Austria":"النمسا","Uruguay":"أوروغواي","Turkey":"تركيا",
+      "Bosnia & Herz.":"البوسنة والهرسك","Netherlands":"هولندا","England":"إنجلترا",
+      "Canada":"كندا","Tunisia":"تونس","Brazil":"البرازيل","Colombia":"كولومبيا",
+      "Spain":"إسبانيا","Argentina":"الأرجنتين","Panama":"بنما","Ecuador":"الإكوادور"
+    }
+  },
+  fa: {
+    lang:"فارسی", flag:"🇮🇷", dir:"rtl", font:"https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700;800&display=swap",
+    eyebrow:"جام جهانی ۲۰۲۶ - تحلیل سرودهای ملی - ۴۸ کشور",
+    title_main:"اجرای ", title_accent:"بی‌نقص",
+    subtitle:"کدام کشور سرود ملی خود را با بیشترین دقت در جام جهانی ۲۰۲۶ خواند؟ رتبه‌بندی همه ۴۸ کشور بر اساس توانایی آواز.",
+    stat_nations:"کشور تحلیل‌شده", stat_tiers:"سطوح آماری",
+    t1_name:"سطح ۱ - بهترین‌ها", t1_desc:"رتبه برتر، امتیازات به‌وضوح بالاتر از بقیه",
+    t2_name:"سطح ۲ - بالاتر از متوسط", t2_desc:"عمدتاً دقیق، نیمه بالایی جدول",
+    t3_name:"سطح ۳ - پایین‌تر از متوسط", t3_desc:"اشتیاق هست، اما دقت صوتی کم است",
+    t4_name:"سطح ۴ - پایین‌ترین رتبه", t4_desc:"کشورهایی با کمترین امتیاز در تحلیل",
+    ranking_title:"رتبه‌بندی کامل",
+    ranking_desc:"هر کشور بر اساس چهار معیار امتیازدهی می‌شود: دقت صوتی (۴۰٪)، تعهد (۴۰٪)، غنای ملودیک (۱۰٪) و پایداری نت (۱۰٪). امتیازها از ۰ تا ۱ هستند و ۱ بیشترین امتیاز ممکن است.",
+    ci_text:"خط عمودی روی هر میله، بالاترین حد بازه امتیاز آن کشور را نشان می‌دهد. این مقدار تعیین می‌کند کشور در کدام سطح قرار می‌گیرد.",
+    tier1_label:"سطح ۱ - اجرای عالی", tier2_label:"سطح ۲ - خوب", tier3_label:"سطح ۳ - نزدیک", tier4_label:"سطح ۴ - ناکوک",
+    meth_title:"روش‌شناسی",
+    meth_note:"این مطالعه به زبان انگلیسی انجام شده است. روش‌شناسی تنها به انگلیسی در دسترس است. ممکن است اشتباهات جزئی در ترجمه‌ها وجود داشته باشد.",
+    comp_accuracy:"دقت صوتی", comp_commitment:"تعهد", comp_richness:"غنای ملودیک", comp_stability:"پایداری نت",
+    score_range:"بازه امتیاز", score_label:"امتیاز",
+    caveat_default:"نسخه هواداران از یک بازی گروهی بعدی",
+    caveat_bosnia:"ضبط هوادار از سکوهای استادیوم",
+    nations:{
+      "Japan":"ژاپن","Curacao":"کوراسائو","Iran":"ایران","Haiti":"هائیتی","Cape Verde":"کیپ ورد",
+      "South Korea":"کره جنوبی","Germany":"آلمان","Algeria":"الجزایر","United States":"ایالات متحده",
+      "South Africa":"آفریقای جنوبی","Switzerland":"سوئیس","Czech Republic":"جمهوری چک",
+      "Senegal":"سنگال","Qatar":"قطر","Ivory Coast":"ساحل عاج","DR Congo":"کنگو دموکراتیک",
+      "Sweden":"سوئد","Jordan":"اردن","Iraq":"عراق","Egypt":"مصر","Scotland":"اسکاتلند",
+      "Saudi Arabia":"عربستان سعودی","Ghana":"غنا","Uzbekistan":"ازبکستان","Croatia":"کرواسی",
+      "France":"فرانسه","Portugal":"پرتغال","Norway":"نروژ","Mexico":"مکزیک",
+      "New Zealand":"نیوزیلند","Australia":"استرالیا","Morocco":"مراکش","Paraguay":"پاراگوئه",
+      "Belgium":"بلژیک","Austria":"اتریش","Uruguay":"اروگوئه","Turkey":"ترکیه",
+      "Bosnia & Herz.":"بوسنی و هرز.","Netherlands":"هلند","England":"انگلستان",
+      "Canada":"کانادا","Tunisia":"تونس","Brazil":"برزیل","Colombia":"کلمبیا",
+      "Spain":"اسپانیا","Argentina":"آرژانتین","Panama":"پاناما","Ecuador":"اکوادور"
+    }
+  },
+  ja: {
+    lang:"日本語", flag:"🇯🇵", dir:"ltr", font:"https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600;700;800&display=swap",
+    eyebrow:"2026年ワールドカップ・国家斉唱分析・全48カ国",
+    title_main:"音程完璧 ", title_accent:"ランキング",
+    subtitle:"2026年ワールドカップで、どの国のサポーターと選手が最も正確に国歌を歌ったか？全48カ国を歌唱力で順位付け。",
+    stat_nations:"分析カ国数", stat_tiers:"統計的ティア",
+    t1_name:"ティア1 - 最優秀", t1_desc:"最上位、他を明確に上回るスコア",
+    t2_name:"ティア2 - 平均以上", t2_desc:"概ね音程が合っており、上半分",
+    t3_name:"ティア3 - 平均以下", t3_desc:"情熱はあるが音程精度が不足",
+    t4_name:"ティア4 - 最下位", t4_desc:"分析中で最も低いスコアの国々",
+    ranking_title:"総合ランキング",
+    ranking_desc:"各国は4つの基準で採点されます：音程精度(40%)、参加度(40%)、メロディの豊かさ(10%)、音程安定性(10%)。スコアは0から1で、1が最高値です。",
+    ci_text:"各バーの縦線は、そのスコアの上限を示しています。この値がティアの決定に使われます。",
+    tier1_label:"ティア1 - 完璧な音程", tier2_label:"ティア2 - 良好", tier3_label:"ティア3 - 惜しい", tier4_label:"ティア4 - 音程外れ",
+    meth_title:"方法論",
+    meth_note:"この調査は英語で実施されました。方法論は英語でのみ提供されます。他言語の翻訳に若干の不正確さが生じる可能性があります。",
+    comp_accuracy:"音程精度", comp_commitment:"参加度", comp_richness:"メロディの豊かさ", comp_stability:"音程安定性",
+    score_range:"スコア範囲", score_label:"スコア",
+    caveat_default:"後のグループ戦のファン歌唱版",
+    caveat_bosnia:"スタジアムのファンによる録音",
+    nations:{
+      "Japan":"日本","Curacao":"キュラソー","Iran":"イラン","Haiti":"ハイチ","Cape Verde":"カーボベルデ",
+      "South Korea":"韓国","Germany":"ドイツ","Algeria":"アルジェリア","United States":"アメリカ合衆国",
+      "South Africa":"南アフリカ","Switzerland":"スイス","Czech Republic":"チェコ",
+      "Senegal":"セネガル","Qatar":"カタール","Ivory Coast":"コートジボワール","DR Congo":"コンゴ民主共和国",
+      "Sweden":"スウェーデン","Jordan":"ヨルダン","Iraq":"イラク","Egypt":"エジプト","Scotland":"スコットランド",
+      "Saudi Arabia":"サウジアラビア","Ghana":"ガーナ","Uzbekistan":"ウズベキスタン","Croatia":"クロアチア",
+      "France":"フランス","Portugal":"ポルトガル","Norway":"ノルウェー","Mexico":"メキシコ",
+      "New Zealand":"ニュージーランド","Australia":"オーストラリア","Morocco":"モロッコ","Paraguay":"パラグアイ",
+      "Belgium":"ベルギー","Austria":"オーストリア","Uruguay":"ウルグアイ","Turkey":"トルコ",
+      "Bosnia & Herz.":"ボスニア・ヘルツ.","Netherlands":"オランダ","England":"イングランド",
+      "Canada":"カナダ","Tunisia":"チュニジア","Brazil":"ブラジル","Colombia":"コロンビア",
+      "Spain":"スペイン","Argentina":"アルゼンチン","Panama":"パナマ","Ecuador":"エクアドル"
+    }
+  },
+  ko: {
+    lang:"한국어", flag:"🇰🇷", dir:"ltr", font:"https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;800&display=swap",
+    eyebrow:"2026 월드컵 - 국가 분석 - 48개국",
+    title_main:"완벽한 ", title_accent:"음정",
+    subtitle:"2026 월드컵에서 어느 나라의 서포터와 선수들이 국가를 가장 정확하게 불렀을까? 48개국 전체를 노래 실력으로 순위 매기기.",
+    stat_nations:"분석 국가 수", stat_tiers:"통계적 티어",
+    t1_name:"티어 1 - 최우수", t1_desc:"최상위권, 점수가 나머지보다 명확히 높음",
+    t2_name:"티어 2 - 평균 이상", t2_desc:"대체로 음정 정확, 상위 절반",
+    t3_name:"티어 3 - 평균 이하", t3_desc:"열정은 있지만 음정 정확도가 부족",
+    t4_name:"티어 4 - 최하위", t4_desc:"분석에서 가장 낮은 점수의 국가들",
+    ranking_title:"전체 순위",
+    ranking_desc:"각 국가는 4가지 기준으로 채점됩니다: 음정 정확도(40%), 참여도(40%), 멜로디 풍부함(10%), 음정 안정성(10%). 점수는 0에서 1 사이이며 1이 최고점입니다.",
+    ci_text:"각 막대의 세로선은 해당 국가 점수 범위의 상한선을 나타냅니다. 이 값이 티어 배정을 결정합니다.",
+    tier1_label:"티어 1 - 완벽한 음정", tier2_label:"티어 2 - 양호", tier3_label:"티어 3 - 아슬아슬", tier4_label:"티어 4 - 음치",
+    meth_title:"방법론",
+    meth_note:"이 연구는 영어로 진행되었습니다. 방법론은 영어로만 제공됩니다. 다른 언어 번역에 소소한 오류가 있을 수 있습니다.",
+    comp_accuracy:"음정 정확도", comp_commitment:"참여도", comp_richness:"멜로디 풍부함", comp_stability:"음정 안정성",
+    score_range:"점수 범위", score_label:"점수",
+    caveat_default:"이후 조별 경기의 팬 버전",
+    caveat_bosnia:"경기장에서 팬이 촬영한 영상",
+    nations:{
+      "Japan":"일본","Curacao":"퀴라소","Iran":"이란","Haiti":"아이티","Cape Verde":"카보베르데",
+      "South Korea":"대한민국","Germany":"독일","Algeria":"알제리","United States":"미국",
+      "South Africa":"남아프리카공화국","Switzerland":"스위스","Czech Republic":"체코",
+      "Senegal":"세네갈","Qatar":"카타르","Ivory Coast":"코트디부아르","DR Congo":"콩고 민주공화국",
+      "Sweden":"스웨덴","Jordan":"요르단","Iraq":"이라크","Egypt":"이집트","Scotland":"스코틀랜드",
+      "Saudi Arabia":"사우디아라비아","Ghana":"가나","Uzbekistan":"우즈베키스탄","Croatia":"크로아티아",
+      "France":"프랑스","Portugal":"포르투갈","Norway":"노르웨이","Mexico":"멕시코",
+      "New Zealand":"뉴질랜드","Australia":"호주","Morocco":"모로코","Paraguay":"파라과이",
+      "Belgium":"벨기에","Austria":"오스트리아","Uruguay":"우루과이","Turkey":"터키",
+      "Bosnia & Herz.":"보스니아 헤르츠.","Netherlands":"네덜란드","England":"잉글랜드",
+      "Canada":"캐나다","Tunisia":"튀니지","Brazil":"브라질","Colombia":"콜롬비아",
+      "Spain":"스페인","Argentina":"아르헨티나","Panama":"파나마","Ecuador":"에콰도르"
+    }
+  },
+  uz: {
+    lang:"O'zbek", flag:"🇺🇿", dir:"ltr", font:"",
+    eyebrow:"2026 JCh - Milliy Madhiyalar Tahlili - 48 Millat",
+    title_main:"Mukammal ", title_accent:"Ohang",
+    subtitle:"2026 JChda qaysi millat o'z madhiyasini eng aniq kuyladi? 48 ta millat qo'shiq aytish qobiliyati bo'yicha reytingda.",
+    stat_nations:"Tahlil Qilingan Millatlar", stat_tiers:"Statistik Darajalar",
+    t1_name:"1-daraja - Eng yaxshi", t1_desc:"Eng yuqori o'rin, ko'rsatkichlar boshqalardan ustun",
+    t2_name:"2-daraja - O'rtacha yuqori", t2_desc:"Asosan aniq, yuqori yarmi",
+    t3_name:"3-daraja - O'rtacha past", t3_desc:"Ishtiyoq bor, lekin aniqlik yetishmaydi",
+    t4_name:"4-daraja - Eng past", t4_desc:"Tahlildagi eng past ko'rsatkichli millatlar",
+    ranking_title:"To'liq Reyting",
+    ranking_desc:"Har bir millat to'rtta ko'rsatkich bo'yicha baholanadi: ohang aniqligi (40%), ishtirok (40%), melodik boylik (10%), ohang barqarorligi (10%). Ko'rsatkichlar 0 dan 1 gacha, 1 eng yuqori.",
+    ci_text:"Har bir ustundagi vertikal chiziq o'sha millatning ko'rsatkich diapazonining yuqori chegarasini belgilaydi. Bu qiymat qaysi darajaga kirishi kerakligini aniqlaydi.",
+    tier1_label:"1-daraja - Mukammal Ohang", tier2_label:"2-daraja - Yaxshi", tier3_label:"3-daraja - Yaqin", tier4_label:"4-daraja - Noaniq",
+    meth_title:"Metodologiya",
+    meth_note:"Bu tadqiqot ingliz tilida o'tkazildi. Metodologiya faqat ingliz tilida mavjud. Tarjimalarda kichik xatolar bo'lishi mumkin.",
+    comp_accuracy:"Ohang aniqligi", comp_commitment:"Ishtirok", comp_richness:"Melodik boylik", comp_stability:"Ohang barqarorligi",
+    score_range:"Ko'rsatkich diapazoni", score_label:"Ko'rsatkich",
+    caveat_default:"Keyingi guruh matchidan muxlislar versiyasi",
+    caveat_bosnia:"Stadiondan muxlisning yozuvi",
+    nations:{
+      "Japan":"Yaponiya","Curacao":"Kyurasao","Iran":"Eron","Haiti":"Gaiti","Cape Verde":"Kabo-Verde",
+      "South Korea":"Janubiy Koreya","Germany":"Germaniya","Algeria":"Jazoir","United States":"AQSh",
+      "South Africa":"Janubiy Afrika","Switzerland":"Shveytsariya","Czech Republic":"Chexiya",
+      "Senegal":"Senegal","Qatar":"Qatar","Ivory Coast":"Fil Suyagi Qirgʻoq","DR Congo":"Kongo DR",
+      "Sweden":"Shvetsiya","Jordan":"Iordaniya","Iraq":"Iroq","Egypt":"Misr","Scotland":"Shotlandiya",
+      "Saudi Arabia":"Saudiya Arabistoni","Ghana":"Gana","Uzbekistan":"O'zbekiston","Croatia":"Xorvatiya",
+      "France":"Fransiya","Portugal":"Portugaliya","Norway":"Norvegiya","Mexico":"Meksika",
+      "New Zealand":"Yangi Zelandiya","Australia":"Avstraliya","Morocco":"Marokash","Paraguay":"Paragvay",
+      "Belgium":"Belgiya","Austria":"Avstriya","Uruguay":"Urugvay","Turkey":"Turkiya",
+      "Bosnia & Herz.":"Bosniya va Herz.","Netherlands":"Niderlandiya","England":"Angliya",
+      "Canada":"Kanada","Tunisia":"Tunis","Brazil":"Braziliya","Colombia":"Kolumbiya",
+      "Spain":"Ispaniya","Argentina":"Argentina","Panama":"Panama","Ecuador":"Ekvador"
+    }
+  },
+  tr: {
+    lang:"Türkçe", flag:"🇹🇷", dir:"ltr", font:"",
+    eyebrow:"2026 Dünya Kupası - Milli Marş Analizi - 48 Millet",
+    title_main:"Kusursuz ", title_accent:"Entonasyon",
+    subtitle:"2026 Dünya Kupası'nda hangi milletin taraftarları ve oyuncuları milli marşlarını en doğru sesti ile söyledi? Tüm 48 millet şarkı söyleme yeteneğine göre sıralandı.",
+    stat_nations:"Analiz Edilen Millet", stat_tiers:"İstatistiksel Kademeler",
+    t1_name:"Kademe 1 - En İyiler", t1_desc:"En yüksek sıralama, puanlar geri kalanın açık üstünde",
+    t2_name:"Kademe 2 - Ortalamanın Üstü", t2_desc:"Büyük ölçüde doğru ses, üst yarı",
+    t3_name:"Kademe 3 - Ortalamanın Altı", t3_desc:"Tutku var ama entonasyon yetersiz",
+    t4_name:"Kademe 4 - En Alt Sıra", t4_desc:"Analizde en düşük puanlı milletler",
+    ranking_title:"Tam Sıralama",
+    ranking_desc:"Her millet dört ölçüte göre puanlanır: ses doğruluğu (40%), katılım (40%), melodik zenginlik (10%) ve ses kararlılığı (10%). Puanlar 0 ile 1 arasında olup 1 en yüksek puandır.",
+    ci_text:"Her çubuk üzerindeki dikey çizgi, o milletin puan aralığının üst sınırını gösterir. Bu değer, milletin hangi kademeye yerleştirileceğini belirler.",
+    tier1_label:"Kademe 1 - Kusursuz Entonasyon", tier2_label:"Kademe 2 - İyi", tier3_label:"Kademe 3 - Yakın", tier4_label:"Kademe 4 - Yanlış Ses",
+    meth_title:"Metodoloji",
+    meth_note:"Bu çalışma İngilizce olarak yürütülmüştür. Metodoloji yalnızca İngilizce olarak mevcuttur. Diğer dil çevirilerinde küçük hatalar olabilir.",
+    comp_accuracy:"Ses doğruluğu", comp_commitment:"Katılım", comp_richness:"Melodik zenginlik", comp_stability:"Ses kararlılığı",
+    score_range:"Puan aralığı", score_label:"Puan",
+    caveat_default:"Sonraki grup maçından taraftar versiyonu",
+    caveat_bosnia:"Stadyumdan bir taraftarın kaydı",
+    nations:{
+      "Japan":"Japonya","Curacao":"Curaçao","Iran":"İran","Haiti":"Haiti","Cape Verde":"Yeşil Burun Adaları",
+      "South Korea":"Güney Kore","Germany":"Almanya","Algeria":"Cezayir","United States":"Amerika Birleşik Devletleri",
+      "South Africa":"Güney Afrika","Switzerland":"İsviçre","Czech Republic":"Çek Cumhuriyeti",
+      "Senegal":"Senegal","Qatar":"Katar","Ivory Coast":"Fildişi Sahili","DR Congo":"Kongo D.C.",
+      "Sweden":"İsveç","Jordan":"Ürdün","Iraq":"Irak","Egypt":"Mısır","Scotland":"İskoçya",
+      "Saudi Arabia":"Suudi Arabistan","Ghana":"Gana","Uzbekistan":"Özbekistan","Croatia":"Hırvatistan",
+      "France":"Fransa","Portugal":"Portekiz","Norway":"Norveç","Mexico":"Meksika",
+      "New Zealand":"Yeni Zelanda","Australia":"Avustralya","Morocco":"Fas","Paraguay":"Paraguay",
+      "Belgium":"Belçika","Austria":"Avusturya","Uruguay":"Uruguay","Turkey":"Türkiye",
+      "Bosnia & Herz.":"Bosna-Herz.","Netherlands":"Hollanda","England":"İngiltere",
+      "Canada":"Kanada","Tunisia":"Tunus","Brazil":"Brezilya","Colombia":"Kolombiya",
+      "Spain":"İspanya","Argentina":"Arjantin","Panama":"Panama","Ecuador":"Ekvador"
+    }
+  },
+  ht: {
+    lang:"Kreyòl Ayisyen", flag:"🇭🇹", dir:"ltr", font:"",
+    eyebrow:"Mond Kap 2026 - Analiz Imann Nasyonal yo - 48 Nasyon",
+    title_main:"Chante ", title_accent:"Pafè",
+    subtitle:"Ki nasyon sipòtè ak jwè li yo te chante imann nasyonal yo pi presi nan Mond Kap 2026? Tout 48 nasyon klase dapre kapasite chante.",
+    stat_nations:"Nasyon Analize", stat_tiers:"Nivo Estatistik",
+    t1_name:"Nivo 1 - Pi bon yo", t1_desc:"Pi wo klase, pwen klèman pi wo pase rès la",
+    t2_name:"Nivo 2 - Pi wo mwayen", t2_desc:"Souvan jis, mwatye siperyè",
+    t3_name:"Nivo 3 - Pi ba mwayen", t3_desc:"Pasyon wi, men presizyon tonalite manke",
+    t4_name:"Nivo 4 - Pi ba klase", t4_desc:"Nasyon ki gen pi ba pwen nan analiz la",
+    ranking_title:"Klasman Konplè",
+    ranking_desc:"Chak nasyon jwenn pwen sou kat mezi: presizyon tonal (40%), angajman (40%), richès melodik (10%), epi stabilite tonal (10%). Pwen yo ale de 0 a 1, kote 1 se pi wo posib.",
+    ci_text:"Liy vètikal sou chak ba montre limit siperyè nan zòn pwen nasyon an. Valè sa a detèmine ki nivo nasyon an ye.",
+    tier1_label:"Nivo 1 - Chante Pafè", tier2_label:"Nivo 2 - Bon", tier3_label:"Nivo 3 - Pre", tier4_label:"Nivo 4 - Fo",
+    meth_title:"Metodoloji",
+    meth_note:"Etid sa a te fèt an anglè. Metodoloji a disponib an anglè sèlman. Ti erè nan tradiksyon yo posib.",
+    comp_accuracy:"Presizyon tonal", comp_commitment:"Angajman", comp_richness:"Richès melodik", comp_stability:"Stabilite tonal",
+    score_range:"Zòn pwen", score_label:"Pwen",
+    caveat_default:"Vèsyon sipòtè nan yon match gwoup pita",
+    caveat_bosnia:"Anrejistreman yon sipòtè nan estàd la",
+    nations:{
+      "Japan":"Japon","Curacao":"Kiras","Iran":"Iran","Haiti":"Ayiti","Cape Verde":"Kap Vèt",
+      "South Korea":"Kore di Sid","Germany":"Almay","Algeria":"Aljeri","United States":"Etazini",
+      "South Africa":"Afrik di Sid","Switzerland":"Swis","Czech Republic":"Repiblik Tchek",
+      "Senegal":"Senegàl","Qatar":"Katà","Ivory Coast":"Kòt Divwa","DR Congo":"Kongo DR",
+      "Sweden":"Swèd","Jordan":"Jòdani","Iraq":"Irak","Egypt":"Ejip","Scotland":"Ekòs",
+      "Saudi Arabia":"Arabi Saoudit","Ghana":"Gana","Uzbekistan":"Ouzbekistan","Croatia":"Kwoasi",
+      "France":"Fransè","Portugal":"Pòtigal","Norway":"Nòvèj","Mexico":"Meksik",
+      "New Zealand":"Nouvèl Zeland","Australia":"Ostrali","Morocco":"Mawòk","Paraguay":"Paragwè",
+      "Belgium":"Bèljik","Austria":"Otrich","Uruguay":"Irigwè","Turkey":"Tiki",
+      "Bosnia & Herz.":"Bosni ak Herz.","Netherlands":"Peyi Ba","England":"Angletè",
+      "Canada":"Kanada","Tunisia":"Tinizi","Brazil":"Brezil","Colombia":"Kolonbi",
+      "Spain":"Espay","Argentina":"Ajantèn","Panama":"Panama","Ecuador":"Ekwatè"
+    }
+  },
+  it: {
+    lang:"Italiano", flag:"🇮🇹", dir:"ltr", font:"",
+    eyebrow:"Mondiali 2026 - Analisi degli Inni Nazionali - 48 Nazioni",
+    title_main:"Intonazione ", title_accent:"Perfetta",
+    subtitle:"Quale nazione ha cantato il proprio inno nazionale con maggiore precisione ai Mondiali 2026? Tutte le 48 nazioni classificate per capacita canora.",
+    stat_nations:"Nazioni Analizzate", stat_tiers:"Livelli Statistici",
+    t1_name:"Livello 1 - I migliori", t1_desc:"Meglio classificati, punteggi nettamente superiori",
+    t2_name:"Livello 2 - Sopra la media", t2_desc:"Per lo piu intonati, meta superiore del campo",
+    t3_name:"Livello 3 - Sotto la media", t3_desc:"Passione si, ma l'intonazione lascia a desiderare",
+    t4_name:"Livello 4 - Ultimi in classifica", t4_desc:"Le nazioni con i punteggi piu bassi nell'analisi",
+    ranking_title:"La Classifica Completa",
+    ranking_desc:"Ogni nazione viene valutata su quattro misure: precisione tonale (40%), impegno (40%), ricchezza melodica (10%) e stabilita tonale (10%). I punteggi vanno da 0 a 1, dove 1 e il massimo possibile.",
+    ci_text:"La linea verticale su ogni barra indica il limite superiore dell'intervallo di punteggio di quella nazione. Questo valore determina in quale livello viene collocata.",
+    tier1_label:"Livello 1 - Intonazione Perfetta", tier2_label:"Livello 2 - Intonati", tier3_label:"Livello 3 - Quasi", tier4_label:"Livello 4 - Stonati",
+    meth_title:"Metodologia",
+    meth_note:"Questo studio e stato condotto in inglese. La metodologia e disponibile solo in inglese. Potrebbero esserci lievi imprecisioni nelle traduzioni.",
+    comp_accuracy:"Precisione tonale", comp_commitment:"Impegno", comp_richness:"Ricchezza melodica", comp_stability:"Stabilita tonale",
+    score_range:"Intervallo di punteggio", score_label:"Punteggio",
+    caveat_default:"Versione del pubblico da una partita successiva del girone",
+    caveat_bosnia:"Registrazione di un tifoso dagli spalti",
+    nations:{
+      "Japan":"Giappone","Curacao":"Curacao","Iran":"Iran","Haiti":"Haiti","Cape Verde":"Capo Verde",
+      "South Korea":"Corea del Sud","Germany":"Germania","Algeria":"Algeria","United States":"Stati Uniti",
+      "South Africa":"Sudafrica","Switzerland":"Svizzera","Czech Republic":"Repubblica Ceca",
+      "Senegal":"Senegal","Qatar":"Qatar","Ivory Coast":"Costa d'Avorio","DR Congo":"R.D. Congo",
+      "Sweden":"Svezia","Jordan":"Giordania","Iraq":"Iraq","Egypt":"Egitto","Scotland":"Scozia",
+      "Saudi Arabia":"Arabia Saudita","Ghana":"Ghana","Uzbekistan":"Uzbekistan","Croatia":"Croazia",
+      "France":"Francia","Portugal":"Portogallo","Norway":"Norvegia","Mexico":"Messico",
+      "New Zealand":"Nuova Zelanda","Australia":"Australia","Morocco":"Marocco","Paraguay":"Paraguay",
+      "Belgium":"Belgio","Austria":"Austria","Uruguay":"Uruguay","Turkey":"Turchia",
+      "Bosnia & Herz.":"Bosnia ed Erz.","Netherlands":"Paesi Bassi","England":"Inghilterra",
+      "Canada":"Canada","Tunisia":"Tunisia","Brazil":"Brasile","Colombia":"Colombia",
+      "Spain":"Spagna","Argentina":"Argentina","Panama":"Panama","Ecuador":"Ecuador"
+    }
+  },
+  sr: {
+    lang:"Srpski", flag:"🇷🇸", dir:"ltr", font:"",
+    eyebrow:"SP 2026 - Analiza Nacionalnih Himni - 48 Nacija",
+    title_main:"Savrsena ", title_accent:"Intonacija",
+    subtitle:"Koja je nacija otpevala svoju nacionalnu himnu najtacnije na SP-u 2026? Svih 48 nacija rangirano prema pevackim sposobnostima.",
+    stat_nations:"Analiziranih Nacija", stat_tiers:"Statisticki Nivoi",
+    t1_name:"Nivo 1 - Najbolji", t1_desc:"Najvise rangirani, rezultati jasno iznad ostalih",
+    t2_name:"Nivo 2 - Iznadprosecni", t2_desc:"Uglavnom intonativno, gornja polovina",
+    t3_name:"Nivo 3 - Ispodprosecni", t3_desc:"Strast da, ali intonacija zakazuje",
+    t4_name:"Nivo 4 - Poslednji", t4_desc:"Nacije s najnizim rezultatima u analizi",
+    ranking_title:"Potpuni Poredak",
+    ranking_desc:"Svaka nacija ocenjuje se prema cetiri mere: tacnost intonacije (40%), predanost (40%), melodijsko bogatstvo (10%) i stabilnost tona (10%). Rezultati idu od 0 do 1, gde je 1 najvisi moguc.",
+    ci_text:"Vertikalna linija na svakom stubu oznacava gornju granicu raspona rezultata te nacije. Ta vrednost odredjuje u koji nivo nacija spada.",
+    tier1_label:"Nivo 1 - Savrsena Intonacija", tier2_label:"Nivo 2 - Dobro", tier3_label:"Nivo 3 - Blizu", tier4_label:"Nivo 4 - Fals",
+    meth_title:"Metodologija",
+    meth_note:"Ova studija sprovedena je na engleskom. Metodologija je dostupna samo na engleskom. Manje netacnosti u prevodima su moguce.",
+    comp_accuracy:"Tacnost intonacije", comp_commitment:"Predanost", comp_richness:"Melodijsko bogatstvo", comp_stability:"Stabilnost tona",
+    score_range:"Raspon rezultata", score_label:"Rezultat",
+    caveat_default:"Navijacka verzija iz kasnijeg grupnog meca",
+    caveat_bosnia:"Snimak navijaca s tribina",
+    nations:{
+      "Japan":"Japan","Curacao":"Kurasao","Iran":"Iran","Haiti":"Haiti","Cape Verde":"Zelenortska Ostrva",
+      "South Korea":"Juzna Koreja","Germany":"Nemacka","Algeria":"Alzir","United States":"SAD",
+      "South Africa":"Juzna Afrika","Switzerland":"Svajcarska","Czech Republic":"Ceska",
+      "Senegal":"Senegal","Qatar":"Katar","Ivory Coast":"Obala Slonovace","DR Congo":"D.R. Kongo",
+      "Sweden":"Svedska","Jordan":"Jordan","Iraq":"Irak","Egypt":"Egipat","Scotland":"Skotska",
+      "Saudi Arabia":"Saudijska Arabija","Ghana":"Gana","Uzbekistan":"Uzbekistan","Croatia":"Hrvatska",
+      "France":"Francuska","Portugal":"Portugalija","Norway":"Norveska","Mexico":"Meksiko",
+      "New Zealand":"Novi Zeland","Australia":"Australija","Morocco":"Maroko","Paraguay":"Paragvaj",
+      "Belgium":"Belgija","Austria":"Austrija","Uruguay":"Urugvaj","Turkey":"Turska",
+      "Bosnia & Herz.":"Bosna i Herz.","Netherlands":"Holandija","England":"Engleska",
+      "Canada":"Kanada","Tunisia":"Tunis","Brazil":"Brazil","Colombia":"Kolumbija",
+      "Spain":"Spanija","Argentina":"Argentina","Panama":"Panama","Ecuador":"Ekvador"
+    }
+  },
+  pap: {
+    lang:"Papiamentu", flag:"🇨🇼", dir:"ltr", font:"",
+    eyebrow:"Mundu Kopa 2026 - Analisis di Himnos Nashonal - 48 Nashon",
+    title_main:"Tono ", title_accent:"Perfekto",
+    subtitle:"Kua nashon a kanta su himno nashonal di mas presiso na Mundu Kopa 2026? Tur 48 nashon klasifika segun nan kapasidat di kanta.",
+    stat_nations:"Nashon Analisa", stat_tiers:"Nivel Estadistiko",
+    t1_name:"Nivel 1 - E mihornan", t1_desc:"Mas haltu ranka, puntuashon klar ariba di restante",
+    t2_name:"Nivel 2 - Riba promedio", t2_desc:"Mayormente afinado, mitar superior",
+    t3_name:"Nivel 3 - Abou di promedio", t3_desc:"Pashon tin, pero tono ta faya",
+    t4_name:"Nivel 4 - Mas abou ranka", t4_desc:"Nashonnan ku e puntuashonnan mas abou",
+    ranking_title:"E Ranking Kompleto",
+    ranking_desc:"Kada nashon wordu evalua riba kuater kriteria: presishon di tono (40%), kompromiso (40%), rikes melodiko (10%) i estabilidad di tono (10%). Puntuashonnan ta bai di 0 pa 1, kaminda 1 ta e mas haltu posibel.",
+    ci_text:"E linya vertikal riba kada barra ta mustra e limite superior di rango di puntuashon di e nashon ei. E valor aki ta determina den kua nivel e nashon ta kai.",
+    tier1_label:"Nivel 1 - Tono Perfekto", tier2_label:"Nivel 2 - Bon", tier3_label:"Nivel 3 - Serka", tier4_label:"Nivel 4 - Fo di tono",
+    meth_title:"Metodolohia",
+    meth_note:"E studio aki a wordu kondusi na Ingles. E metodolohia ta disponibel solamente na Ingles. Inkonsistenshanan menor den tradukshon ta posibel.",
+    comp_accuracy:"Presishon di tono", comp_commitment:"Kompromiso", comp_richness:"Rikes melodiko", comp_stability:"Estabilidad di tono",
+    score_range:"Rango di puntuashon", score_label:"Puntuashon",
+    caveat_default:"Vershon di fannan di un wega di grupo posterior",
+    caveat_bosnia:"Grabashon di un fan for di e gradas",
+    nations:{
+      "Japan":"Hapon","Curacao":"Korsou","Iran":"Iran","Haiti":"Haití","Cape Verde":"Kabo Verde",
+      "South Korea":"Korea di Sur","Germany":"Alemania","Algeria":"Argelia","United States":"Estadonan Uni",
+      "South Africa":"Afrika di Sur","Switzerland":"Suisa","Czech Republic":"Republika Cheko",
+      "Senegal":"Senegal","Qatar":"Katar","Ivory Coast":"Costa di Marfil","DR Congo":"Kongo D.R.",
+      "Sweden":"Suesia","Jordan":"Jordania","Iraq":"Irak","Egypt":"Egipto","Scotland":"Eskosia",
+      "Saudi Arabia":"Arabia Saudita","Ghana":"Ghana","Uzbekistan":"Uzbekistan","Croatia":"Kroasia",
+      "France":"Fransia","Portugal":"Portugal","Norway":"Noruega","Mexico":"Meksiko",
+      "New Zealand":"Nueva Zelanda","Australia":"Australia","Morocco":"Maruekos","Paraguay":"Paraguay",
+      "Belgium":"Belgika","Austria":"Austria","Uruguay":"Uruguay","Turkey":"Turkia",
+      "Bosnia & Herz.":"Bosnia i Herz.","Netherlands":"Hulanda","England":"Inglaterra",
+      "Canada":"Kanada","Tunisia":"Tunesia","Brazil":"Brasil","Colombia":"Kolombia",
+      "Spain":"Spanya","Argentina":"Argentina","Panama":"Panama","Ecuador":"Ekuador"
+    }
+  },
+  wo: {
+    lang:"Wolof", flag:"🇸🇳", dir:"ltr", font:"",
+    eyebrow:"Dunuy Kapp 2026 - Jefandikoo ci Yegel Allaaji - 48 Reew",
+    title_main:"Jur Jef ", title_accent:"bu Sell",
+    subtitle:"Fan reew la xey ak jefandikukat yi ak joujou yi jang yegel allaaj bi ci kanam bu baax ci Dunuy Kapp 2026? Reew yi 48 yep danyu xeex ci kanam ci mbir bi.",
+    stat_nations:"Reew yi Jefandikoo", stat_tiers:"Niveaux Statistik",
+    t1_name:"Niveaux 1 - Yi Baax", t1_desc:"Ci kanam ci yep, points yi dekk kanam",
+    t2_name:"Niveaux 2 - Ci kaw moyenne", t2_desc:"Baax ci kanam, ci genn ci xel bi ak yi",
+    t3_name:"Niveaux 3 - Ci suuf moyenne", t3_desc:"Mbeg am na, waaye jur jef dafa doy",
+    t4_name:"Niveaux 4 - Yi Mujj", t4_desc:"Reew yi am points yi doy ci kanam",
+    ranking_title:"Classement bi Yep",
+    ranking_desc:"Reew bu nekk jefandikoo na quatre mesure: jur jef (40%), engagement (40%), richesse melodique (10%), ak stabilite (10%). Points yi dox ci 0 ba 1, 1 moo jot kanam.",
+    ci_text:"Liggey vertikal bi ci barre bu nekk mooy feenal yoon wu kanam wi ci reew bi. Valeur bii moo xam niveaux bi reew bi dekk ci.",
+    tier1_label:"Niveaux 1 - Jur Jef bu Sell", tier2_label:"Niveaux 2 - Baax", tier3_label:"Niveaux 3 - Jot", tier4_label:"Niveaux 4 - Doy du baax",
+    meth_title:"Methodologie",
+    meth_note:"Jefandikoo bii defoon na ko ci Anglais. Methodologie bi am na ko ci Anglais rekk. Liranyu dekk mujj ci traduction yi.",
+    comp_accuracy:"Jur jef", comp_commitment:"Engagement", comp_richness:"Richesse melodique", comp_stability:"Stabilite",
+    score_range:"Rango bi", score_label:"Points",
+    caveat_default:"Version fan yi ci match groupe bi ci kanam",
+    caveat_bosnia:"Enregistrement fan ci stade bi",
+    nations:{
+      "Japan":"Japon","Curacao":"Curacao","Iran":"Iran","Haiti":"Haiti","Cape Verde":"Cap-Vert",
+      "South Korea":"Coree du Sud","Germany":"Allemagne","Algeria":"Algerie","United States":"Etats-Unis",
+      "South Africa":"Afrique du Sud","Switzerland":"Suisse","Czech Republic":"Republique tcheque",
+      "Senegal":"Senegaal","Qatar":"Qatar","Ivory Coast":"Cote d'Ivoire","DR Congo":"R.D. Congo",
+      "Sweden":"Suede","Jordan":"Jordanie","Iraq":"Irak","Egypt":"Egypte","Scotland":"Ecosse",
+      "Saudi Arabia":"Arabie Saoudite","Ghana":"Ghana","Uzbekistan":"Ouzbekistan","Croatia":"Croatie",
+      "France":"Frans","Portugal":"Portugal","Norway":"Norvege","Mexico":"Mexique",
+      "New Zealand":"Nouvelle-Zelande","Australia":"Australie","Morocco":"Maroc","Paraguay":"Paraguay",
+      "Belgium":"Belgique","Austria":"Autriche","Uruguay":"Uruguay","Turkey":"Turquie",
+      "Bosnia & Herz.":"Bosnie-Herz.","Netherlands":"Pays-Bas","England":"Angleterre",
+      "Canada":"Canada","Tunisia":"Tunisie","Brazil":"Bresil","Colombia":"Colombie",
+      "Spain":"Espagne","Argentina":"Argentine","Panama":"Panama","Ecuador":"Equateur"
+    }
+  },
+  dyu: {
+    lang:"Dioula", flag:"🇨🇮", dir:"ltr", font:"",
+    eyebrow:"Duni Kope 2026 - Jate ka Donkili Fanba - 48 Jamana",
+    title_main:"Donkili ", title_accent:"Nyuman",
+    subtitle:"Jamanajoni ye a ka donkili fanba don ka nyi ka temene Duni Kope 2026 la? Jamana 48 bee jatelen u ka donkili baara la.",
+    stat_nations:"Jamana Jatelen", stat_tiers:"Donkili Fen",
+    t1_name:"Nivo 1 - Nyumanw", t1_desc:"Nyuman ka temene werew kan",
+    t2_name:"Nivo 2 - Mogo caman ta kan", t2_desc:"Ka nyi, fila sen ye",
+    t3_name:"Nivo 3 - Ka dogoman", t3_desc:"Son be, nga donkili ka nyi dogoman",
+    t4_name:"Nivo 4 - Dogoman", t4_desc:"Jamana minw degeman ka dogo",
+    ranking_title:"Jatelen Bee",
+    ranking_desc:"Jamana o jamana jatelen baara naani fe: donkili nyuman (40%), son (40%), donkili nafama (10%), ni tooro (10%). Dege be taa 0 ka se 1 ma, 1 ka bon.",
+    ci_text:"Sinye taamanya min be barre kan, o ye jamana ka dege ka bon fenkoy yira. O ko le be soro nivo min na.",
+    tier1_label:"Nivo 1 - Donkili Nyuman", tier2_label:"Nivo 2 - Ka nyi", tier3_label:"Nivo 3 - Ka don", tier4_label:"Nivo 4 - Ka dogo",
+    meth_title:"Haminanko",
+    meth_note:"Nyine nin kera Angileka na. Haminanko be soro Angileka na doron. Kuma yelemako fitini be se ka ke.",
+    comp_accuracy:"Donkili nyuman", comp_commitment:"Son", comp_richness:"Donkili nafama", comp_stability:"Tooro",
+    score_range:"Dege temene", score_label:"Dege",
+    caveat_default:"Fan ta ka kuma tuma were match la",
+    caveat_bosnia:"Fan ta ka jiridon stade kono",
+    nations:{
+      "Japan":"Japon","Curacao":"Curacao","Iran":"Iran","Haiti":"Haiti","Cape Verde":"Kap-Vere",
+      "South Korea":"Kore du Sid","Germany":"Alimanyi","Algeria":"Alizeri","United States":"Ameriki",
+      "South Africa":"Afiriki du Sid","Switzerland":"Suwisi","Czech Republic":"Cheki",
+      "Senegal":"Senegali","Qatar":"Katari","Ivory Coast":"Kotdiver","DR Congo":"Kongo DR",
+      "Sweden":"Suwedi","Jordan":"Zordani","Iraq":"Iraki","Egypt":"Ezipiti","Scotland":"Ekosi",
+      "Saudi Arabia":"Arabi Sawuditi","Ghana":"Gana","Uzbekistan":"Uzibeki","Croatia":"Kroasi",
+      "France":"Faransi","Portugal":"Poritugali","Norway":"Norvezi","Mexico":"Meksiki",
+      "New Zealand":"Nuweli Zelandi","Australia":"Ositirali","Morocco":"Maroki","Paraguay":"Paraguéè",
+      "Belgium":"Beliziki","Austria":"Otirisi","Uruguay":"Urugué","Turkey":"Tiriki",
+      "Bosnia & Herz.":"Bozini ni Herz.","Netherlands":"Pei-Basi","England":"Angilétéri",
+      "Canada":"Kanada","Tunisia":"Tunizi","Brazil":"Brezili","Colombia":"Kolombi",
+      "Spain":"Esipayi","Argentina":"Arzantini","Panama":"Panama","Ecuador":"Ekuatori"
+    }
+  },
+  ln: {
+    lang:"Lingala", flag:"🇨🇩", dir:"ltr", font:"",
+    eyebrow:"Kope ya Mokili 2026 - Botatoli ya Marche ya Etuka - Bikolo 48",
+    title_main:"Nzembo ", title_accent:"ya Solo",
+    subtitle:"Nkolo nani azalaki kobeta nzembo ya etuka na bosolo koleka na Kope ya Mokili 2026? Bikolo nyonso 48 ebokwama na malamu ya kobeta nzembo.",
+    stat_nations:"Bikolo Botatoli", stat_tiers:"Mitengo ya Statistiki",
+    t1_name:"Motendo 1 - Mi malamu", t1_desc:"Ebokwama likolo, mapointe likolo ya basusu",
+    t2_name:"Motendo 2 - Koleka malamu", t2_desc:"Malamu mingi, kati ya likolo",
+    t3_name:"Motendo 3 - Nse ya moyen", t3_desc:"Molende ezali, kasi bosolo ekose",
+    t4_name:"Motendo 4 - Mi mabe", t4_desc:"Bikolo na mapointe mabe koleka",
+    ranking_title:"Ebokwami ya Mobimba",
+    ranking_desc:"Nkolo nyonso etangama na mesure minei: bosolo ya nzembo (40%), bolandi (40%), bomeki ya nzembo (10%), na kosunga (10%). Mapointe ekei wuta 0 tii 1, 1 ezali likolo koleka.",
+    ci_text:"Mola ya vertikale na barre nyonso emonisi ndelo ya likolo ya mapointe ya nkolo yango. Valeri oyo nde etiyaka nkolo na motendo.",
+    tier1_label:"Motendo 1 - Nzembo ya Solo", tier2_label:"Motendo 2 - Malamu", tier3_label:"Motendo 3 - Pene", tier4_label:"Motendo 4 - Mabe",
+    meth_title:"Methodologie",
+    meth_note:"Etude oyo esalamaki na Anglais. Methodologie ezali kaka na Anglais. Mabunga moke na traductions ezali possiblement.",
+    comp_accuracy:"Bosolo ya nzembo", comp_commitment:"Bolandi", comp_richness:"Bomeki ya nzembo", comp_stability:"Kosunga",
+    score_range:"Ndelo ya mapointe", score_label:"Mapointe",
+    caveat_default:"Version ya bafani wuta match ya groupe ya nsima",
+    caveat_bosnia:"Enregistrement ya mofani wuta tribune",
+    nations:{
+      "Japan":"Japon","Curacao":"Curacao","Iran":"Iran","Haiti":"Haiti","Cape Verde":"Cap-Vert",
+      "South Korea":"Coree ya Sudi","Germany":"Allemagne","Algeria":"Algerie","United States":"Etats-Unis",
+      "South Africa":"Afrique ya Sudi","Switzerland":"Suisse","Czech Republic":"Republique Tcheque",
+      "Senegal":"Senegal","Qatar":"Qatar","Ivory Coast":"Cote d'Ivoire","DR Congo":"Kongo Demokratiki",
+      "Sweden":"Suede","Jordan":"Jordanie","Iraq":"Irak","Egypt":"Egypte","Scotland":"Ecosse",
+      "Saudi Arabia":"Arabie Saoudite","Ghana":"Ghana","Uzbekistan":"Ouzbekistan","Croatia":"Croatie",
+      "France":"Faransi","Portugal":"Portugal","Norway":"Norvege","Mexico":"Mexique",
+      "New Zealand":"Nouvelle-Zelande","Australia":"Australie","Morocco":"Maroc","Paraguay":"Paraguay",
+      "Belgium":"Belgique","Austria":"Autriche","Uruguay":"Uruguay","Turkey":"Turquie",
+      "Bosnia & Herz.":"Bosnie-Herz.","Netherlands":"Pays-Bas","England":"Angleterre",
+      "Canada":"Canada","Tunisia":"Tunisie","Brazil":"Bresil","Colombia":"Colombie",
+      "Spain":"Espagne","Argentina":"Argentine","Panama":"Panama","Ecuador":"Equateur"
+    }
+  },
+  gn: {
+    lang:"Guarani", flag:"🇵🇾", dir:"ltr", font:"",
+    eyebrow:"Yvate Pelota 2026 - Jehecha Hymno Teta Rehegua - 48 Teta",
+    title_main:"Nemohen ", title_accent:"Pora",
+    subtitle:"Mavapa onemohen poraveva chupe hymno teta-pe Yvate Pelota 2026-pe? Teta 48 onembokatu pyryva nemohen rehe.",
+    stat_nations:"Teta Ojehechakuava", stat_tiers:"Nemboheko Estadistiko",
+    t1_name:"Nemboheko 1 - Iporaveva", t1_desc:"Tupahaupe, petei para ohasava ambuépe",
+    t2_name:"Nemboheko 2 - Ipora va promedio rupi", t2_desc:"Ipora heta aja, mitad yvategua",
+    t3_name:"Nemboheko 3 - Ipegua promedio rupi", t3_desc:"Nepyru oi, upeicha petei para oguahéva",
+    t4_name:"Nemboheko 4 - Ipegueveva", t4_desc:"Teta onembopegueveva",
+    ranking_title:"Nembokatu Oihaupe",
+    ranking_desc:"Teta oihaupe ojehechakua nai mesura: mbarepa porapa nemohen (40%), mbarepa heta nemohen (40%), riqueza melodika (10%), ha estabilidad (10%). Para oguata 0 gotyo 1, 1 oi yvategua.",
+    ci_text:"Linea vertikal oiva barra-pe ohechauka limite yvategua para-pe. Ko valor onemboheko teta-pe nemboheko-pe.",
+    tier1_label:"Nemboheko 1 - Nemohen Pora", tier2_label:"Nemboheko 2 - Pora", tier3_label:"Nemboheko 3 - Peteícha", tier4_label:"Nemboheko 4 - Nahendai",
+    meth_title:"Metodologia",
+    meth_note:"Ko jehecha ojapo porava Ingles-pe. Metodologia oi Ingles-pente. Mbaeiva dichi traduccion-pe oi.",
+    comp_accuracy:"Nemohen pora", comp_commitment:"Nepyru", comp_richness:"Riqueza melodika", comp_stability:"Estabilidad",
+    score_range:"Para oguata", score_label:"Para",
+    caveat_default:"Version hinchada-gua match grupo guive",
+    caveat_bosnia:"Grabacion hinchada-gua estadio-pe",
+    nations:{
+      "Japan":"Japon","Curacao":"Curacao","Iran":"Iran","Haiti":"Haiti","Cape Verde":"Cabo Verde",
+      "South Korea":"Corea Yvate","Germany":"Alemania","Algeria":"Argelia","United States":"Estados Unidos",
+      "South Africa":"Africa Yvate","Switzerland":"Suiza","Czech Republic":"Republica Checa",
+      "Senegal":"Senegal","Qatar":"Catar","Ivory Coast":"Costa de Marfil","DR Congo":"Congo D.R.",
+      "Sweden":"Suecia","Jordan":"Jordania","Iraq":"Irak","Egypt":"Egipto","Scotland":"Escocia",
+      "Saudi Arabia":"Arabia Saudita","Ghana":"Ghana","Uzbekistan":"Uzbekistan","Croatia":"Croacia",
+      "France":"Fransa","Portugal":"Portugal","Norway":"Noruega","Mexico":"Mexico",
+      "New Zealand":"Nueva Zelanda","Australia":"Australia","Morocco":"Marruecos","Paraguay":"Paraguai",
+      "Belgium":"Belgica","Austria":"Austria","Uruguay":"Uruguay","Turkey":"Turquia",
+      "Bosnia & Herz.":"Bosnia ha Herz.","Netherlands":"Paises Bajos","England":"Inglaterra",
+      "Canada":"Canada","Tunisia":"Tunez","Brazil":"Brasil","Colombia":"Colombia",
+      "Spain":"Espanya","Argentina":"Argentina","Panama":"Panama","Ecuador":"Ecuador"
+    }
+  },
+  zu: {
+    lang:"IsiZulu", flag:"🇿🇦", dir:"ltr", font:"",
+    eyebrow:"IMkhandlu Yezwe 2026 - Ukuhlaziya Izihlabelelo Zamazwe - Amazwe Angu-48",
+    title_main:"Ukuhlabelela ", title_accent:"Ngempela",
+    subtitle:"Yiliphi izwe elahlabelela iculo lamazwe ngempela e-World Cup 2026? Amazwe angu-48 wonke ahlelwe ngokwamakhono abo okuhlabelela.",
+    stat_nations:"Amazwe Ahlaziyiwe", stat_tiers:"Amazinga Ezibalo",
+    t1_name:"Izinga 1 - Abahamba phambili", t1_desc:"Bahamba phambili, amaphuzu abo aphezulu kwabanye",
+    t2_name:"Izinga 2 - Ngaphezulu kwalokho ojwayelekile", t2_desc:"Abahlabelela kahle ikakhulukazi, ingxenye ephezulu",
+    t3_name:"Izinga 3 - Ngaphansi kwalokho ojwayelekile", t3_desc:"Umdlandla ukhona, kepha ukuhlabelela akuphelelanga",
+    t4_name:"Izinga 4 - Abemva", t4_desc:"Amazwe anamaphuzu aphansi kakhulu",
+    ranking_title:"Uhlu Oluphelele",
+    ranking_desc:"Izwe ngalinye lihlaziywa ngezindlela ezine: ukuchaneka kwesigqi (40%), ukuzibandakanya (40%), ingcebo yomculo (10%), nokuqiniseka kwesigqi (10%). Amaphuzu aya kusukela ku-0 kuya ku-1, lapho u-1 eyimphuzu ephakeme kakhulu.",
+    ci_text:"Umugqa othe ngqo embhalweni ngamunye ubonisa umkhawulo ophezulu wezinga lamaphuzu. Le nani yiyo enquma ukuthi izwe lihlelwa kuphi.",
+    tier1_label:"Izinga 1 - Ukuhlabelela Ngempela", tier2_label:"Izinga 2 - Kahle", tier3_label:"Izinga 3 - Eduze", tier4_label:"Izinga 4 - Akuphelelanga",
+    meth_title:"Indlela Esetshenzisiwe",
+    meth_note:"Lolu cwaningo lwenziwa ngesiNgisi. Indlela esetshenzisiwe itholakala ngesiNgisi kuphela. Iziphosiso ezincane zingenzeka kuhumusho.",
+    comp_accuracy:"Ukuchaneka kwesigqi", comp_commitment:"Ukuzibandakanya", comp_richness:"Ingcebo yomculo", comp_stability:"Ukuqiniseka kwesigqi",
+    score_range:"Isilinganiso samaphuzu", score_label:"Amaphuzu",
+    caveat_default:"Inguqulo yabaxhasi evela ematcheni yamuva yegroupu",
+    caveat_bosnia:"Irekhodi lomxhasi elivela ezithakaleni",
+    nations:{
+      "Japan":"IJapane","Curacao":"ICurasao","Iran":"IIrani","Haiti":"IHayiti","Cape Verde":"IKhepi Vede",
+      "South Korea":"IKorea Yeningizimu","Germany":"IJalimane","Algeria":"I-Aljiriya","United States":"I-United States",
+      "South Africa":"INingizimu Afrika","Switzerland":"ISwitzerland","Czech Republic":"IRephablikhi YeCheki",
+      "Senegal":"ISenegal","Qatar":"IKhatha","Ivory Coast":"ICote d'Ivoire","DR Congo":"IDemocratic Republic ye-Congo",
+      "Sweden":"ISweden","Jordan":"IJordani","Iraq":"I-Iraki","Egypt":"IGibhithe","Scotland":"ISkotlandi",
+      "Saudi Arabia":"I-Arabiya Saudiya","Ghana":"IGhana","Uzbekistan":"I-Uzbekistani","Croatia":"IKhrowesha",
+      "France":"IFulansi","Portugal":"IPhothugali","Norway":"INorwe","Mexico":"IMeksiko",
+      "New Zealand":"INew Zealand","Australia":"I-Ostreliya","Morocco":"IMorokho","Paraguay":"IParaguwei",
+      "Belgium":"IBelgium","Austria":"I-Ostiya","Uruguay":"I-Uruguweli","Turkey":"ITheki",
+      "Bosnia & Herz.":"IBosniya ne-Herz.","Netherlands":"INetherlands","England":"INgilandi",
+      "Canada":"IKhanada","Tunisia":"ITunishiya","Brazil":"IBrazil","Colombia":"IKolombiya",
+      "Spain":"ISpeyini","Argentina":"I-Ajentina","Panama":"IPhanama","Ecuador":"I-Ekwedo"
+    }
+  }
+};
+
+// ── DATA ──
+const FLAG_BASE = 'https://raw.githubusercontent.com/lipis/flag-icons/main/flags/4x3/';
+
+const nations = [
+  {rank:1,  tier:1, nation:"Japan",          score:0.7843, ci_low:0.593, ci_high:0.913, intonation:79.20, participation:0.82, richness:1.00, stability:1.00, code:"jp"},
+  {rank:2,  tier:1, nation:"Curacao",         score:0.6701, ci_low:0.558, ci_high:0.778, intonation:83.10, participation:0.56, richness:1.00, stability:1.00, code:"cw"},
+  {rank:3,  tier:1, nation:"Iran",            score:0.6602, ci_low:0.529, ci_high:0.766, intonation:92.90, participation:0.39, richness:1.00, stability:0.98, code:"ir"},
+  {rank:4,  tier:1, nation:"Haiti",           score:0.6553, ci_low:0.535, ci_high:0.754, intonation:88.70, participation:0.44, richness:1.00, stability:1.00, code:"ht"},
+  {rank:5,  tier:1, nation:"Cape Verde",      score:0.6350, ci_low:0.500, ci_high:0.786, intonation:70.70, participation:0.71, richness:1.00, stability:1.00, code:"cv"},
+  {rank:6,  tier:1, nation:"South Korea",     score:0.6172, ci_low:0.495, ci_high:0.835, intonation:75.20, participation:0.61, richness:1.00, stability:0.99, code:"kr"},
+  {rank:7,  tier:1, nation:"Germany",         score:0.6154, ci_low:0.514, ci_high:0.733, intonation:76.20, participation:0.59, richness:1.00, stability:0.99, code:"de"},
+  {rank:8,  tier:1, nation:"Algeria",         score:0.6132, ci_low:0.539, ci_high:0.765, intonation:75.60, participation:0.59, richness:1.00, stability:1.00, code:"dz"},
+  {rank:9,  tier:1, nation:"United States",   score:0.6114, ci_low:0.473, ci_high:0.715, intonation:61.10, participation:0.87, richness:1.00, stability:0.94, code:"us", caveat:true},
+  {rank:10, tier:1, nation:"South Africa",    score:0.6111, ci_low:0.384, ci_high:0.690, intonation:60.70, participation:0.87, richness:1.00, stability:0.95, code:"za", caveat:true},
+  {rank:11, tier:1, nation:"Switzerland",     score:0.5894, ci_low:0.471, ci_high:0.743, intonation:87.40, participation:0.35, richness:1.00, stability:1.00, code:"ch"},
+  {rank:12, tier:1, nation:"Czech Republic",  score:0.5660, ci_low:0.513, ci_high:0.730, intonation:78.70, participation:0.47, richness:1.00, stability:0.98, code:"cz"},
+  {rank:13, tier:2, nation:"Senegal",         score:0.5324, ci_low:0.440, ci_high:0.637, intonation:73.70, participation:0.51, richness:1.00, stability:0.96, code:"sn"},
+  {rank:14, tier:2, nation:"Qatar",           score:0.5254, ci_low:0.457, ci_high:0.680, intonation:72.10, participation:0.50, richness:1.00, stability:1.00, code:"qa"},
+  {rank:15, tier:2, nation:"Ivory Coast",     score:0.5010, ci_low:0.428, ci_high:0.672, intonation:71.20, participation:0.48, richness:1.00, stability:0.99, code:"ci"},
+  {rank:16, tier:2, nation:"DR Congo",        score:0.4988, ci_low:0.392, ci_high:0.619, intonation:77.70, participation:0.36, richness:1.00, stability:1.00, code:"cd"},
+  {rank:17, tier:2, nation:"Sweden",          score:0.4787, ci_low:0.391, ci_high:0.609, intonation:76.80, participation:0.36, richness:1.00, stability:0.97, code:"se"},
+  {rank:18, tier:2, nation:"Jordan",          score:0.4636, ci_low:0.150, ci_high:0.609, intonation:70.40, participation:0.43, richness:1.00, stability:0.99, code:"jo"},
+  {rank:19, tier:2, nation:"Iraq",            score:0.4588, ci_low:0.399, ci_high:0.624, intonation:59.50, participation:0.60, richness:1.00, stability:1.00, code:"iq"},
+  {rank:20, tier:2, nation:"Egypt",           score:0.4559, ci_low:0.374, ci_high:0.609, intonation:71.40, participation:0.40, richness:1.00, stability:0.99, code:"eg"},
+  {rank:21, tier:2, nation:"Scotland",        score:0.4511, ci_low:0.376, ci_high:0.622, intonation:60.80, participation:0.59, richness:1.00, stability:0.96, code:"gb-sct"},
+  {rank:22, tier:2, nation:"Saudi Arabia",    score:0.4497, ci_low:0.263, ci_high:0.554, intonation:74.70, participation:0.34, richness:1.00, stability:0.98, code:"sa"},
+  {rank:23, tier:2, nation:"Ghana",           score:0.4492, ci_low:0.375, ci_high:0.622, intonation:64.60, participation:0.51, richness:1.00, stability:0.98, code:"gh"},
+  {rank:24, tier:2, nation:"Uzbekistan",      score:0.4379, ci_low:0.272, ci_high:0.667, intonation:64.80, participation:0.50, richness:1.00, stability:0.96, code:"uz"},
+  {rank:25, tier:2, nation:"Croatia",         score:0.4298, ci_low:0.383, ci_high:0.569, intonation:75.00, participation:0.32, richness:1.00, stability:0.95, code:"hr"},
+  {rank:26, tier:2, nation:"France",          score:0.4296, ci_low:0.370, ci_high:0.557, intonation:70.90, participation:0.37, richness:1.00, stability:0.98, code:"fr"},
+  {rank:27, tier:2, nation:"Portugal",        score:0.4258, ci_low:0.334, ci_high:0.590, intonation:75.10, participation:0.28, richness:1.00, stability:1.00, code:"pt"},
+  {rank:28, tier:2, nation:"Norway",          score:0.4193, ci_low:0.220, ci_high:0.589, intonation:68.90, participation:0.38, richness:1.00, stability:0.99, code:"no"},
+  {rank:29, tier:2, nation:"Mexico",          score:0.4107, ci_low:0.314, ci_high:0.613, intonation:77.00, participation:0.26, richness:1.00, stability:0.94, code:"mx", caveat:true},
+  {rank:30, tier:2, nation:"New Zealand",     score:0.4004, ci_low:0.344, ci_high:0.527, intonation:72.70, participation:0.29, richness:1.00, stability:0.98, code:"nz"},
+  {rank:31, tier:2, nation:"Australia",       score:0.3930, ci_low:0.336, ci_high:0.582, intonation:63.90, participation:0.42, richness:1.00, stability:0.99, code:"au"},
+  {rank:32, tier:2, nation:"Morocco",         score:0.3928, ci_low:0.285, ci_high:0.562, intonation:63.90, participation:0.47, richness:1.00, stability:0.91, code:"ma"},
+  {rank:33, tier:2, nation:"Paraguay",        score:0.3671, ci_low:0.273, ci_high:0.551, intonation:69.90, participation:0.35, richness:1.00, stability:0.87, code:"py", caveat:true},
+  {rank:34, tier:2, nation:"Belgium",         score:0.3558, ci_low:0.276, ci_high:0.539, intonation:70.80, participation:0.24, richness:1.00, stability:0.99, code:"be"},
+  {rank:35, tier:3, nation:"Austria",         score:0.3470, ci_low:0.314, ci_high:0.495, intonation:69.10, participation:0.26, richness:1.00, stability:0.98, code:"at"},
+  {rank:36, tier:3, nation:"Uruguay",         score:0.3354, ci_low:0.260, ci_high:0.489, intonation:68.40, participation:0.29, richness:1.00, stability:0.92, code:"uy"},
+  {rank:37, tier:3, nation:"Turkey",          score:0.3186, ci_low:0.280, ci_high:0.473, intonation:60.80, participation:0.39, richness:1.00, stability:0.92, code:"tr"},
+  {rank:38, tier:3, nation:"Bosnia & Herz.",  score:0.3181, ci_low:0.231, ci_high:0.536, intonation:65.70, participation:0.30, richness:1.00, stability:0.93, code:"ba", caveat:true, caveatBosnia:true},
+  {rank:39, tier:3, nation:"Netherlands",     score:0.3175, ci_low:0.234, ci_high:0.564, intonation:57.80, participation:0.42, richness:1.00, stability:0.95, code:"nl"},
+  {rank:40, tier:3, nation:"England",         score:0.3100, ci_low:0.210, ci_high:0.666, intonation:58.10, participation:0.44, richness:1.00, stability:0.89, code:"gb-eng"},
+  {rank:41, tier:3, nation:"Canada",          score:0.2896, ci_low:0.225, ci_high:0.411, intonation:56.20, participation:0.45, richness:1.00, stability:0.87, code:"ca", caveat:true},
+  {rank:42, tier:3, nation:"Tunisia",         score:0.2712, ci_low:0.206, ci_high:0.567, intonation:66.00, participation:0.19, richness:1.00, stability:0.97, code:"tn"},
+  {rank:43, tier:3, nation:"Brazil",          score:0.2538, ci_low:0.178, ci_high:0.412, intonation:65.30, participation:0.21, richness:1.00, stability:0.91, code:"br"},
+  {rank:44, tier:4, nation:"Colombia",        score:0.2371, ci_low:0.171, ci_high:0.356, intonation:52.70, participation:0.42, richness:1.00, stability:0.87, code:"co"},
+  {rank:45, tier:4, nation:"Spain",           score:0.2192, ci_low:0.157, ci_high:0.428, intonation:68.00, participation:0.20, richness:1.00, stability:0.76, code:"es"},
+  {rank:46, tier:4, nation:"Argentina",       score:0.2122, ci_low:0.138, ci_high:0.376, intonation:56.00, participation:0.41, richness:1.00, stability:0.73, code:"ar"},
+  {rank:47, tier:4, nation:"Panama",          score:0.2101, ci_low:0.133, ci_high:0.393, intonation:60.10, participation:0.23, richness:1.00, stability:0.90, code:"pa"},
+  {rank:48, tier:4, nation:"Ecuador",         score:0.1295, ci_low:0.092, ci_high:0.390, intonation:57.80, participation:0.22, richness:1.00, stability:0.76, code:"ec"},
+];
+
+const TIER_COLORS = {1:'#0abfa3', 2:'#5b4fcf', 3:'#e8900a', 4:'#d94040'};
+const TROPHIES    = {1:'🥇', 2:'🥈', 3:'🥉'};
+const MAX_SCORE   = 0.7843;
+const BAR_MAX_PCT = 90;
+
+let currentLang = 'en';
+
+// ── POPULATE DROPDOWN ──
+function populateDropdown() {
+  const sel = document.getElementById('lang-select');
+  Object.entries(T).forEach(([code, t]) => {
+    const opt = document.createElement('option');
+    opt.value = code;
+    opt.textContent = t.lang;
+    sel.appendChild(opt);
+  });
+}
+
+// ── APPLY LANGUAGE ──
+function setLanguage(code) {
+  currentLang = code;
+  const t = T[code];
+
+  // Direction + font
+  document.documentElement.setAttribute('lang', code);
+  document.documentElement.setAttribute('dir', t.dir);
+  if (t.font) {
+    document.getElementById('google-fonts-extra').href = t.font;
+    const bodyFont = t.font.includes('Cairo') ? "'Cairo',sans-serif"
+      : t.font.includes('Vazirmatn') ? "'Vazirmatn',sans-serif"
+      : t.font.includes('Noto+Sans+JP') ? "'Noto Sans JP',sans-serif"
+      : t.font.includes('Noto+Sans+KR') ? "'Noto Sans KR',sans-serif"
+      : "'Inter',sans-serif";
+    document.body.style.fontFamily = bodyFont;
+  } else {
+    document.getElementById('google-fonts-extra').href = '';
+    document.body.style.fontFamily = "'Inter',sans-serif";
+  }
+
+  // Hero
+  document.getElementById('eyebrow').textContent = t.eyebrow;
+  document.getElementById('title-main').textContent = t.title_main;
+  document.getElementById('title-accent').textContent = t.title_accent;
+  document.getElementById('hero-sub').textContent = t.subtitle;
+  document.getElementById('stat-nations').textContent = t.stat_nations;
+  document.getElementById('stat-tiers').textContent = t.stat_tiers;
+
+  // Tier pills
+  document.getElementById('t1-name').textContent = t.t1_name;
+  document.getElementById('t1-desc').textContent = t.t1_desc;
+  document.getElementById('t2-name').textContent = t.t2_name;
+  document.getElementById('t2-desc').textContent = t.t2_desc;
+  document.getElementById('t3-name').textContent = t.t3_name;
+  document.getElementById('t3-desc').textContent = t.t3_desc;
+  document.getElementById('t4-name').textContent = t.t4_name;
+  document.getElementById('t4-desc').textContent = t.t4_desc;
+
+  // Ranking
+  document.getElementById('ranking-title').textContent = t.ranking_title;
+  document.getElementById('ranking-desc').textContent = t.ranking_desc;
+  document.getElementById('ci-text').textContent = t.ci_text;
+  document.getElementById('col-nation').textContent = t.score_label ? 'Nation' : 'Nation';
+  document.getElementById('col-score').textContent = t.score_label;
+
+  // Methodology
+  document.getElementById('meth-title').textContent = t.meth_title;
+  document.getElementById('meth-lang-note').textContent = t.meth_note;
+
+  // Rebuild chart with translated nation names
+  buildChart();
+}
+
+// ── BUILD CHART ──
+function buildChart() {
+  const t = T[currentLang];
+  const container = document.getElementById('chartRows');
+  container.innerHTML = '';
+  let currentTier = 0;
+
+  const tierLabels = {
+    1: t.tier1_label, 2: t.tier2_label, 3: t.tier3_label, 4: t.tier4_label
+  };
+
+  nations.forEach(n => {
+    if (n.tier !== currentTier) {
+      currentTier = n.tier;
+      const label = document.createElement('div');
+      label.className = 'tier-label-row';
+      label.innerHTML = `<span class="tier-label-text" style="color:${TIER_COLORS[n.tier]}">${tierLabels[n.tier]}</span><div class="tier-label-line"></div>`;
+      container.appendChild(label);
+    }
+
+    const barPct    = Math.max((n.score / MAX_SCORE) * BAR_MAX_PCT, n.rank === 48 ? 16 : 0);
+    const ciHighPct = Math.max((n.ci_high / MAX_SCORE) * BAR_MAX_PCT, n.rank === 48 ? 16 : 0);
+    const labelInside = barPct >= 16;
+    const topClass  = n.rank <= 3 ? ` top${n.rank}` : '';
+
+    const rankHtml = TROPHIES[n.rank]
+      ? `<span class="trophy">${TROPHIES[n.rank]}</span><span class="rank-num rank-num-large" style="color:${TIER_COLORS[n.tier]}">${n.rank}</span>`
+      : `<span class="rank-num">${n.rank}</span>`;
+
+    const nationName = t.nations[n.nation] || n.nation;
+    const caveatNote = n.caveatBosnia ? t.caveat_bosnia : t.caveat_default;
+
+    const comps = [
+      {label: t.comp_accuracy,   val: n.intonation/100, display: n.intonation.toFixed(1)+'%', color:'#0abfa3'},
+      {label: t.comp_commitment, val: n.participation,  display: Math.round(n.participation*100)+'%', color:'#5b4fcf'},
+      {label: t.comp_richness,   val: n.richness,       display: Math.round(n.richness*100)+'%',       color:'#e8900a'},
+      {label: t.comp_stability,  val: n.stability,      display: Math.round(n.stability*100)+'%',      color:'#888'},
+    ];
+
+    const row = document.createElement('div');
+    row.className = `chart-row${topClass}`;
+    row.dataset.nation = n.nation;
+    row.innerHTML = `
+      <div class="row-rank">${rankHtml}</div>
+      <img class="row-flag" src="${FLAG_BASE}${n.code}.svg" alt="${nationName}" loading="lazy">
+      <div class="row-bar-wrap" style="--bar-pct:${barPct}%">
+        <div class="row-bar" style="width:${barPct}%;background:linear-gradient(90deg,${TIER_COLORS[n.tier]}dd,${TIER_COLORS[n.tier]}77);"></div>
+        <div class="ci-marker" style="left:${ciHighPct}%;"></div>
+        <div class="row-nation${labelInside ? '' : ' outside'}">${nationName}${n.caveat ? ' <span style="font-size:9px;opacity:0.5">*</span>' : ''}</div>
+      </div>
+      <div class="row-score-wrap">
+        <span class="row-score-val">${n.score.toFixed(3)}</span>
+        <span class="row-tier-badge" style="background:${TIER_COLORS[n.tier]}22;color:${TIER_COLORS[n.tier]};border:1px solid ${TIER_COLORS[n.tier]}55">T${n.tier}</span>
+      </div>
+    `;
+
+    row.addEventListener('mouseenter', e => {
+      const tooltip = document.getElementById('tooltip');
+      tooltip.innerHTML = `
+        <div class="tooltip-nation">${TROPHIES[n.rank] ? TROPHIES[n.rank]+' ' : ''}${n.rank}. ${nationName}</div>
+        <div class="tooltip-row"><span>${t.score_label}</span><span>${n.score.toFixed(4)}</span></div>
+        <div class="tooltip-row"><span>${t.score_range}</span><span>${n.ci_low.toFixed(3)} - ${n.ci_high.toFixed(3)}</span></div>
+        <hr class="tooltip-divider">
+        <div class="tooltip-bar-wrap">
+          ${comps.map(c=>`
+            <div class="tooltip-comp-row">
+              <span class="tooltip-comp-label">${c.label}</span>
+              <div class="tooltip-comp-bar-bg"><div class="tooltip-comp-bar" style="width:${c.val*100}%;background:${c.color}"></div></div>
+              <span class="tooltip-comp-val">${c.display}</span>
+            </div>`).join('')}
+        </div>
+        ${n.caveat ? `<div class="tooltip-caveat">* ${caveatNote}</div>` : ''}
+      `;
+      tooltip.style.display = 'block';
+    });
+    row.addEventListener('mousemove', e => {
+      const tooltip = document.getElementById('tooltip');
+      const pad=16, tw=tooltip.offsetWidth, th=tooltip.offsetHeight;
+      let x=e.clientX+pad, y=e.clientY+pad;
+      if(x+tw>window.innerWidth-8) x=e.clientX-tw-pad;
+      if(y+th>window.innerHeight-8) y=e.clientY-th-pad;
+      tooltip.style.left=x+'px'; tooltip.style.top=y+'px';
+    });
+    row.addEventListener('mouseleave', () => { document.getElementById('tooltip').style.display='none'; });
+    container.appendChild(row);
+  });
+}
+
+// ── WAVEFORM ──
+function drawWaveform() {
+  const canvas = document.getElementById('waveCanvas');
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = rect.width * dpr; canvas.height = rect.height * dpr;
+  ctx.scale(dpr, dpr);
+  const W = rect.width, H = rect.height;
+  const barCount = Math.floor(W / 7);
+  const scores = nations.map(n => n.score);
+  const minS = Math.min(...scores), maxS = Math.max(...scores);
+  const norm = scores.map(s => (s - minS) / (maxS - minS));
+  let frame = 0;
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    const t = frame / 60;
+    for (let i = 0; i < barCount; i++) {
+      const x = i * (W / barCount), bw = (W / barCount) - 2;
+      const si = Math.floor((i / barCount) * nations.length);
+      const nv = norm[si] || 0.5;
+      const wave = Math.sin(i * 0.25 + t * 2.5) * 0.28 + Math.sin(i * 0.08 + t * 1.2) * 0.38 + nv * 0.34;
+      const h = Math.max(3, (0.12 + Math.abs(wave)) * H * 0.88);
+      const tier = nations[si] ? nations[si].tier : 2;
+      ctx.fillStyle = TIER_COLORS[tier] + 'bb';
+      ctx.beginPath(); ctx.roundRect(x, (H - h) / 2, bw, h, 2); ctx.fill();
+    }
+    frame++; requestAnimationFrame(draw);
+  }
+  draw();
+}
+
+// ── METHODOLOGY TOGGLE ──
+document.getElementById('methToggle').addEventListener('click', function () {
+  this.classList.toggle('open');
+  document.getElementById('methBody').classList.toggle('open');
+});
+
+// ── INIT ──
+populateDropdown();
+setLanguage('en');
+drawWaveform();
+window.addEventListener('resize', () => { setTimeout(drawWaveform, 100); });
+</script>
+</body>
+</html>
