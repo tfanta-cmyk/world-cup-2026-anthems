@@ -15,22 +15,47 @@
     flex-direction: column;
     align-items: center;
     padding: 32px 16px;
-    gap: 20px;
+    gap: 14px;
   }
 
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .controls label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #333;
+  }
+  #langSelect {
+    background: #fff;
+    color: #0d1024;
+    border: 2px solid #0abfa3;
+    border-radius: 6px;
+    padding: 7px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    outline: none;
+  }
   #exportBtn {
     background: #0abfa3;
     color: #fff;
     border: none;
-    padding: 12px 32px;
+    padding: 10px 28px;
     font-family: 'Inter', sans-serif;
     font-size: 14px;
     font-weight: 700;
     border-radius: 6px;
     cursor: pointer;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.04em;
   }
   #exportBtn:hover { background: #08a88e; }
+  #exportBtn:disabled { background: #999; cursor: default; }
 
   #graphic {
     width: 900px;
@@ -122,7 +147,6 @@
     line-height: 1.5;
   }
 
-  /* Tier key — uses rank numbers in dark squares, NOT circles, to differ from score badges */
   .g-tiers { display: flex; flex-direction: column; gap: 7px; }
   .g-tier-row { display: flex; align-items: center; gap: 9px; }
   .g-tier-num {
@@ -162,7 +186,6 @@
     padding: 3px 8px;
     border-radius: 4px;
   }
-  /* Top 3 — taller, more prominent */
   .g-row.top1 { background: rgba(255,200,0,0.18); padding: 8px 8px; border-left: 3px solid #ffd700; }
   .g-row.top2 { background: rgba(180,180,180,0.18); padding: 6px 8px; border-left: 3px solid #c0c0c0; }
   .g-row.top3 { background: rgba(180,100,30,0.14); padding: 5px 8px; border-left: 3px solid #cd7f32; }
@@ -174,10 +197,7 @@
   }
   .g-trophy { font-size: 16px; line-height: 1; }
   .g-rank-num { font-size: 11px; }
-  .g-rank-num-big {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 22px; line-height: 1;
-  }
+  .g-rank-num-big { font-family: 'Bebas Neue', sans-serif; font-size: 22px; line-height: 1; }
 
   .g-row-flag {
     width: 24px; height: 16px;
@@ -200,7 +220,6 @@
     position: relative; overflow: hidden;
     flex-shrink: 0; min-width: 3px;
   }
-  /* waveform stripe overlay */
   .g-row-bar::before {
     content: '';
     position: absolute; inset: 0;
@@ -223,14 +242,8 @@
   }
   .g-row.top1 .g-row-nation { font-size: 12px; }
   .g-row.top2 .g-row-nation { font-size: 11px; }
+  .g-row-nation.outside { color: #0d1024; text-shadow: none; }
 
-  /* nation label outside bar */
-  .g-row-nation.outside {
-    color: #0d1024;
-    text-shadow: none;
-  }
-
-  /* Component dots — at right end of bar, solid dark bg so fills are unmissable */
   .g-dots {
     position: absolute; right: 4px;
     top: 50%; transform: translateY(-50%);
@@ -251,13 +264,11 @@
     width: 100%;
   }
 
-  /* Score column */
   .g-row-score {
     text-align: right; font-size: 10px; font-weight: 700;
     color: #0d1024; display: flex; align-items: center;
     justify-content: flex-end; gap: 3px; white-space: nowrap;
   }
-  /* Score badge: rounded pill, clearly different from tier key squares */
   .g-score-badge {
     font-size: 8px; padding: 2px 5px;
     border-radius: 99px; font-weight: 800;
@@ -275,84 +286,104 @@
 
   /* FOOTER */
   .g-footer {
-    background: #0d1024; padding: 14px 36px;
-    display: flex; align-items: center; justify-content: center;
+    background: #0d1024; padding: 12px 36px;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 6px;
   }
   .g-footer-brand {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 18px; letter-spacing: 0.08em; color: #fff;
   }
   .g-footer-brand span { color: #0abfa3; }
+  .g-footer-disclaimer {
+    font-size: 9px;
+    color: rgba(255,255,255,0.45);
+    font-style: italic;
+    max-width: 480px;
+    text-align: right;
+    line-height: 1.4;
+    display: none;
+  }
 </style>
 </head>
 <body>
 
-<button id="exportBtn" onclick="exportPNG()">Download as PNG</button>
+<div class="controls">
+  <label for="langSelect">🌐 Language:</label>
+  <select id="langSelect" onchange="setLang(this.value)">
+    <option value="en">English</option>
+    <option value="es">Español</option>
+    <option value="de">Deutsch</option>
+    <option value="pt">Português</option>
+    <option value="fr">Français</option>
+  </select>
+  <button id="exportBtn" onclick="exportPNG()">Download as PNG</button>
+</div>
 
 <div id="graphic">
 
   <div class="g-header">
-    <div class="g-eyebrow">2026 World Cup - National Anthem Analysis - All 48 Nations</div>
-    <div class="g-title">Pitch-<span>Perfect</span></div>
-    <div class="g-subtitle">Which nation's supporters and players sang their national anthem most in tune at the 2026 World Cup - all 48 nations ranked by anthem-singing ability.</div>
+    <div class="g-eyebrow" id="g-eyebrow">2026 World Cup - National Anthem Analysis - All 48 Nations</div>
+    <div class="g-title" id="g-title">Pitch-<span id="g-title-accent">Perfect</span></div>
+    <div class="g-subtitle" id="g-subtitle">Which nation's supporters and players sang their national anthem most in tune at the 2026 World Cup - all 48 nations ranked by anthem-singing ability.</div>
   </div>
 
   <div class="g-key">
     <div class="g-key-section">
-      <div class="g-key-title">How the score works</div>
+      <div class="g-key-title" id="g-key-score-title">How the score works</div>
       <div class="g-components">
         <div class="g-comp-row">
           <div class="g-comp-dot" style="background:#fff;border:1px solid #ccc"></div>
-          <span class="g-comp-label">Pitch accuracy - how precisely they hit the correct notes</span>
+          <span class="g-comp-label" id="g-comp-accuracy">Pitch accuracy - how precisely they hit the correct notes</span>
           <span class="g-comp-weight">40%</span>
         </div>
         <div class="g-comp-row">
           <div class="g-comp-dot" style="background:#ffe066"></div>
-          <span class="g-comp-label">Commitment - how much of the anthem was actively sung</span>
+          <span class="g-comp-label" id="g-comp-commitment">Commitment - how much of the anthem was actively sung</span>
           <span class="g-comp-weight">40%</span>
         </div>
         <div class="g-comp-row">
           <div class="g-comp-dot" style="background:#1a3aff"></div>
-          <span class="g-comp-label">Melodic richness - genuine melodic variety vs. monotone</span>
+          <span class="g-comp-label" id="g-comp-richness">Melodic richness - genuine melodic variety vs. monotone</span>
           <span class="g-comp-weight">10%</span>
         </div>
         <div class="g-comp-row">
           <div class="g-comp-dot" style="background:#39ff14"></div>
-          <span class="g-comp-label">Pitch stability - how steadily notes were held</span>
+          <span class="g-comp-label" id="g-comp-stability">Pitch stability - how steadily notes were held</span>
           <span class="g-comp-weight">10%</span>
         </div>
       </div>
-      <div class="g-dots-note">The 4 dots at the end of each bar show each nation's score per component (fuller dot = higher score). Colors match the components above.</div>
+      <div class="g-dots-note" id="g-dots-note">The 4 dots at the end of each bar show each nation's score per component (fuller dot = higher score). Colors match the components above.</div>
     </div>
     <div class="g-key-section">
-      <div class="g-key-title">Tiers</div>
+      <div class="g-key-title" id="g-key-tiers-title">Tiers</div>
       <div class="g-tiers">
         <div class="g-tier-row">
           <div class="g-tier-num" style="background:#0abfa3">1</div>
           <div class="g-tier-info">
-            <span class="g-tier-name" style="color:#0abfa3">Tier 1 - The best</span>
-            <span class="g-tier-desc">Top-ranked, scores clearly above the rest</span>
+            <span class="g-tier-name" style="color:#0abfa3" id="g-t1-name">Tier 1 - The best</span>
+            <span class="g-tier-desc" id="g-t1-desc">Top-ranked, scores clearly above the rest</span>
           </div>
         </div>
         <div class="g-tier-row">
           <div class="g-tier-num" style="background:#5b4fcf">2</div>
           <div class="g-tier-info">
-            <span class="g-tier-name" style="color:#5b4fcf">Tier 2 - Above average</span>
-            <span class="g-tier-desc">Mostly in tune, upper half of the field</span>
+            <span class="g-tier-name" style="color:#5b4fcf" id="g-t2-name">Tier 2 - Above average</span>
+            <span class="g-tier-desc" id="g-t2-desc">Mostly in tune, upper half of the field</span>
           </div>
         </div>
         <div class="g-tier-row">
           <div class="g-tier-num" style="background:#e8900a">3</div>
           <div class="g-tier-info">
-            <span class="g-tier-name" style="color:#e8900a">Tier 3 - Below average</span>
-            <span class="g-tier-desc">Passion there, pitch accuracy falls short</span>
+            <span class="g-tier-name" style="color:#e8900a" id="g-t3-name">Tier 3 - Below average</span>
+            <span class="g-tier-desc" id="g-t3-desc">Passion there, pitch accuracy falls short</span>
           </div>
         </div>
         <div class="g-tier-row">
           <div class="g-tier-num" style="background:#d94040">4</div>
           <div class="g-tier-info">
-            <span class="g-tier-name" style="color:#d94040">Tier 4 - Bottom ranked</span>
-            <span class="g-tier-desc">Lowest-scoring nations in the analysis</span>
+            <span class="g-tier-name" style="color:#d94040" id="g-t4-name">Tier 4 - Bottom ranked</span>
+            <span class="g-tier-desc" id="g-t4-desc">Lowest-scoring nations in the analysis</span>
           </div>
         </div>
       </div>
@@ -361,13 +392,14 @@
 
   <div class="g-ranking">
     <div class="g-rank-header">
-      <span>#</span><span></span><span>Nation</span><span class="rh-score">Score</span>
+      <span>#</span><span></span><span id="g-col-nation">Nation</span><span class="rh-score" id="g-col-score">Score</span>
     </div>
     <div class="g-rows" id="gRows"></div>
   </div>
 
   <div class="g-footer">
     <div class="g-footer-brand">Action<span>Network</span>.com</div>
+    <div class="g-footer-disclaimer" id="g-disclaimer"></div>
   </div>
 
 </div>
@@ -375,6 +407,175 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
 const FLAG_BASE = 'https://raw.githubusercontent.com/lipis/flag-icons/main/flags/4x3/';
+
+// ── TRANSLATIONS ──
+const LANGS = {
+  en: {
+    eyebrow: "2026 World Cup - National Anthem Analysis - All 48 Nations",
+    title: "Pitch-", accent: "Perfect",
+    subtitle: "Which nation's supporters and players sang their national anthem most in tune at the 2026 World Cup - all 48 nations ranked by anthem-singing ability.",
+    scoreTitle: "How the score works",
+    tiersTitle: "Tiers",
+    accuracy: "Pitch accuracy - how precisely they hit the correct notes",
+    commitment: "Commitment - how much of the anthem was actively sung",
+    richness: "Melodic richness - genuine melodic variety vs. monotone",
+    stability: "Pitch stability - how steadily notes were held",
+    dotsNote: "The 4 dots at the end of each bar show each nation's score per component (fuller dot = higher score). Colors match the components above.",
+    t1name: "Tier 1 - The best", t1desc: "Top-ranked, scores clearly above the rest",
+    t2name: "Tier 2 - Above average", t2desc: "Mostly in tune, upper half of the field",
+    t3name: "Tier 3 - Below average", t3desc: "Passion there, pitch accuracy falls short",
+    t4name: "Tier 4 - Bottom ranked", t4desc: "Lowest-scoring nations in the analysis",
+    colNation: "Nation", colScore: "Score",
+    tier1: "Tier 1 - Pitch-Perfect", tier2: "Tier 2 - In-Tune", tier3: "Tier 3 - Close", tier4: "Tier 4 - Off-Key",
+    disclaimer: "",
+    nations: {
+      "Japan":"Japan","Curacao":"Curaçao","Iran":"Iran","Haiti":"Haiti","Cape Verde":"Cape Verde",
+      "South Korea":"South Korea","Germany":"Germany","Algeria":"Algeria","United States":"United States",
+      "South Africa":"South Africa","Switzerland":"Switzerland","Czech Republic":"Czech Republic",
+      "Senegal":"Senegal","Qatar":"Qatar","Ivory Coast":"Ivory Coast","DR Congo":"DR Congo",
+      "Sweden":"Sweden","Jordan":"Jordan","Iraq":"Iraq","Egypt":"Egypt","Scotland":"Scotland",
+      "Saudi Arabia":"Saudi Arabia","Ghana":"Ghana","Uzbekistan":"Uzbekistan","Croatia":"Croatia",
+      "France":"France","Portugal":"Portugal","Norway":"Norway","Mexico":"Mexico",
+      "New Zealand":"New Zealand","Australia":"Australia","Morocco":"Morocco","Paraguay":"Paraguay",
+      "Belgium":"Belgium","Austria":"Austria","Uruguay":"Uruguay","Turkey":"Turkey",
+      "Bosnia & Herz.":"Bosnia & Herz.","Netherlands":"Netherlands","England":"England",
+      "Canada":"Canada","Tunisia":"Tunisia","Brazil":"Brazil","Colombia":"Colombia",
+      "Spain":"Spain","Argentina":"Argentina","Panama":"Panama","Ecuador":"Ecuador"
+    }
+  },
+  es: {
+    eyebrow: "Copa del Mundo 2026 - Análisis de Himnos Nacionales - 48 Naciones",
+    title: "A Tono ", accent: "Perfecto",
+    subtitle: "¿Qué nación cantó su himno nacional con más afinación en la Copa del Mundo 2026? Las 48 naciones clasificadas por su capacidad de canto.",
+    scoreTitle: "Cómo funciona la puntuación",
+    tiersTitle: "Niveles",
+    accuracy: "Precisión tonal - qué tan afinados son los participantes",
+    commitment: "Compromiso - cuánto del himno se cantó activamente",
+    richness: "Riqueza melódica - variedad melódica genuina vs. monotonía",
+    stability: "Estabilidad tonal - con qué firmeza se sostuvieron las notas",
+    dotsNote: "Los 4 puntos al final de cada barra muestran la puntuación por componente (punto más lleno = puntuación más alta). Los colores corresponden a los componentes de arriba.",
+    t1name: "Nivel 1 - Los mejores", t1desc: "Mejor clasificados, puntuaciones claramente superiores",
+    t2name: "Nivel 2 - Por encima de la media", t2desc: "Mayormente afinados, mitad superior del campo",
+    t3name: "Nivel 3 - Por debajo de la media", t3desc: "Pasión sí, pero la afinación falla",
+    t4name: "Nivel 4 - Últimos clasificados", t4desc: "Las naciones con las puntuaciones más bajas",
+    colNation: "Nación", colScore: "Puntuación",
+    tier1: "Nivel 1 - Afinación Perfecta", tier2: "Nivel 2 - Afinados", tier3: "Nivel 3 - Cerca", tier4: "Nivel 4 - Desafinados",
+    disclaimer: "Traducción generada automáticamente desde el inglés. Pueden existir pequeñas inexactitudes.",
+    nations: {
+      "Japan":"Japón","Curacao":"Curazao","Iran":"Irán","Haiti":"Haití","Cape Verde":"Cabo Verde",
+      "South Korea":"Corea del Sur","Germany":"Alemania","Algeria":"Argelia","United States":"Estados Unidos",
+      "South Africa":"Sudáfrica","Switzerland":"Suiza","Czech Republic":"República Checa",
+      "Senegal":"Senegal","Qatar":"Catar","Ivory Coast":"Costa de Marfil","DR Congo":"R.D. Congo",
+      "Sweden":"Suecia","Jordan":"Jordania","Iraq":"Irak","Egypt":"Egipto","Scotland":"Escocia",
+      "Saudi Arabia":"Arabia Saudí","Ghana":"Ghana","Uzbekistan":"Uzbekistán","Croatia":"Croacia",
+      "France":"Francia","Portugal":"Portugal","Norway":"Noruega","Mexico":"México",
+      "New Zealand":"Nueva Zelanda","Australia":"Australia","Morocco":"Marruecos","Paraguay":"Paraguay",
+      "Belgium":"Bélgica","Austria":"Austria","Uruguay":"Uruguay","Turkey":"Turquía",
+      "Bosnia & Herz.":"Bosnia y Herz.","Netherlands":"Países Bajos","England":"Inglaterra",
+      "Canada":"Canadá","Tunisia":"Túnez","Brazil":"Brasil","Colombia":"Colombia",
+      "Spain":"España","Argentina":"Argentina","Panama":"Panamá","Ecuador":"Ecuador"
+    }
+  },
+  de: {
+    eyebrow: "WM 2026 - Analyse der Nationalhymnen - 48 Nationen",
+    title: "Stimmlich ", accent: "Treffsicher",
+    subtitle: "Welche Nation sang ihre Nationalhymne bei der WM 2026 am treffsichersten? Alle 48 Nationen nach Gesangsvermögen gerankt.",
+    scoreTitle: "Wie die Punktzahl funktioniert",
+    tiersTitle: "Stufen",
+    accuracy: "Tongenauigkeit - wie präzise die Noten getroffen wurden",
+    commitment: "Einsatz - wie viel der Hymne aktiv gesungen wurde",
+    richness: "Melodische Vielfalt - echte Melodiebewegung vs. Monotonie",
+    stability: "Tonhaltung - wie gleichmäßig die Noten gehalten wurden",
+    dotsNote: "Die 4 Punkte am Ende jedes Balkens zeigen die Punktzahl pro Komponente (voller Punkt = höhere Punktzahl). Farben entsprechen den obigen Komponenten.",
+    t1name: "Stufe 1 - Die Besten", t1desc: "Bestplatziert, Werte klar über dem Rest",
+    t2name: "Stufe 2 - Überdurchschnittlich", t2desc: "Überwiegend treffsicher, obere Hälfte",
+    t3name: "Stufe 3 - Unterdurchschnittlich", t3desc: "Leidenschaft ja, Treffsicherheit mangelhaft",
+    t4name: "Stufe 4 - Schlusslicht", t4desc: "Die Nationen mit den niedrigsten Werten",
+    colNation: "Nation", colScore: "Punktzahl",
+    tier1: "Stufe 1 - Treffsicher", tier2: "Stufe 2 - Gut", tier3: "Stufe 3 - Knapp", tier4: "Stufe 4 - Ungenau",
+    disclaimer: "Automatisch aus dem Englischen übersetzt. Geringfügige Ungenauigkeiten möglich.",
+    nations: {
+      "Japan":"Japan","Curacao":"Curaçao","Iran":"Iran","Haiti":"Haiti","Cape Verde":"Kap Verde",
+      "South Korea":"Südkorea","Germany":"Deutschland","Algeria":"Algerien","United States":"Vereinigte Staaten",
+      "South Africa":"Südafrika","Switzerland":"Schweiz","Czech Republic":"Tschechische Republik",
+      "Senegal":"Senegal","Qatar":"Katar","Ivory Coast":"Elfenbeinküste","DR Congo":"D.R. Kongo",
+      "Sweden":"Schweden","Jordan":"Jordanien","Iraq":"Irak","Egypt":"Ägypten","Scotland":"Schottland",
+      "Saudi Arabia":"Saudi-Arabien","Ghana":"Ghana","Uzbekistan":"Usbekistan","Croatia":"Kroatien",
+      "France":"Frankreich","Portugal":"Portugal","Norway":"Norwegen","Mexico":"Mexiko",
+      "New Zealand":"Neuseeland","Australia":"Australien","Morocco":"Marokko","Paraguay":"Paraguay",
+      "Belgium":"Belgien","Austria":"Österreich","Uruguay":"Uruguay","Turkey":"Türkei",
+      "Bosnia & Herz.":"Bosnien u. Herz.","Netherlands":"Niederlande","England":"England",
+      "Canada":"Kanada","Tunisia":"Tunesien","Brazil":"Brasilien","Colombia":"Kolumbien",
+      "Spain":"Spanien","Argentina":"Argentinien","Panama":"Panama","Ecuador":"Ecuador"
+    }
+  },
+  pt: {
+    eyebrow: "Copa do Mundo 2026 - Análise dos Hinos Nacionais - 48 Nações",
+    title: "Afinação ", accent: "Perfeita",
+    subtitle: "Qual nação cantou seu hino nacional mais afinado na Copa do Mundo 2026? As 48 nações classificadas pela capacidade de canto.",
+    scoreTitle: "Como funciona a pontuação",
+    tiersTitle: "Níveis",
+    accuracy: "Precisão tonal - com que precisão as notas foram atingidas",
+    commitment: "Comprometimento - quanto do hino foi cantado ativamente",
+    richness: "Riqueza melódica - variedade melódica genuína vs. monotonia",
+    stability: "Estabilidade tonal - com que firmeza as notas foram sustentadas",
+    dotsNote: "Os 4 pontos no final de cada barra mostram a pontuação por componente (ponto mais cheio = pontuação mais alta). As cores correspondem aos componentes acima.",
+    t1name: "Nível 1 - Os melhores", t1desc: "Melhor classificados, pontuações claramente superiores",
+    t2name: "Nível 2 - Acima da média", t2desc: "Maioritariamente afinados, metade superior",
+    t3name: "Nível 3 - Abaixo da média", t3desc: "Paixão sim, mas afinação aquém",
+    t4name: "Nível 4 - Últimos classificados", t4desc: "Nações com menor pontuação na análise",
+    colNation: "Nação", colScore: "Pontuação",
+    tier1: "Nível 1 - Afinação Perfeita", tier2: "Nível 2 - Afinados", tier3: "Nível 3 - Perto", tier4: "Nível 4 - Desafinados",
+    disclaimer: "Tradução gerada automaticamente do inglês. Podem ocorrer pequenas imprecisões.",
+    nations: {
+      "Japan":"Japão","Curacao":"Curaçao","Iran":"Irã","Haiti":"Haiti","Cape Verde":"Cabo Verde",
+      "South Korea":"Coreia do Sul","Germany":"Alemanha","Algeria":"Argélia","United States":"Estados Unidos",
+      "South Africa":"África do Sul","Switzerland":"Suíça","Czech Republic":"República Tcheca",
+      "Senegal":"Senegal","Qatar":"Catar","Ivory Coast":"Costa do Marfim","DR Congo":"R.D. Congo",
+      "Sweden":"Suécia","Jordan":"Jordânia","Iraq":"Iraque","Egypt":"Egito","Scotland":"Escócia",
+      "Saudi Arabia":"Arábia Saudita","Ghana":"Gana","Uzbekistan":"Uzbequistão","Croatia":"Croácia",
+      "France":"França","Portugal":"Portugal","Norway":"Noruega","Mexico":"México",
+      "New Zealand":"Nova Zelândia","Australia":"Austrália","Morocco":"Marrocos","Paraguay":"Paraguai",
+      "Belgium":"Bélgica","Austria":"Áustria","Uruguay":"Uruguai","Turkey":"Turquia",
+      "Bosnia & Herz.":"Bósnia e Herz.","Netherlands":"Países Baixos","England":"Inglaterra",
+      "Canada":"Canadá","Tunisia":"Tunísia","Brazil":"Brasil","Colombia":"Colômbia",
+      "Spain":"Espanha","Argentina":"Argentina","Panama":"Panamá","Ecuador":"Equador"
+    }
+  },
+  fr: {
+    eyebrow: "Coupe du Monde 2026 - Analyse des Hymnes Nationaux - 48 Nations",
+    title: "En Mesure ", accent: "Parfaite",
+    subtitle: "Quelle nation a chanté son hymne national le plus juste à la Coupe du Monde 2026? Les 48 nations classées selon leur capacité vocale.",
+    scoreTitle: "Comment fonctionne le score",
+    tiersTitle: "Niveaux",
+    accuracy: "Justesse vocale - avec quelle précision les notes ont été atteintes",
+    commitment: "Engagement - quelle part de l'hymne a été chantée activement",
+    richness: "Richesse mélodique - variété mélodique authentique vs. monotonie",
+    stability: "Stabilité vocale - avec quelle régularité les notes ont été tenues",
+    dotsNote: "Les 4 points à l'extrémité de chaque barre indiquent le score par composante (point plus rempli = score plus élevé). Les couleurs correspondent aux composantes ci-dessus.",
+    t1name: "Niveau 1 - Les meilleurs", t1desc: "Mieux classés, scores nettement supérieurs",
+    t2name: "Niveau 2 - Au-dessus de la moyenne", t2desc: "Majoritairement justes, moitié supérieure",
+    t3name: "Niveau 3 - En dessous de la moyenne", t3desc: "De la passion, mais la justesse laisse à désirer",
+    t4name: "Niveau 4 - Derniers du classement", t4desc: "Les nations avec les scores les plus bas",
+    colNation: "Nation", colScore: "Score",
+    tier1: "Niveau 1 - Parfaitement Juste", tier2: "Niveau 2 - En Voix", tier3: "Niveau 3 - Proche", tier4: "Niveau 4 - Faux",
+    disclaimer: "Traduction générée automatiquement depuis l'anglais. De légères inexactitudes sont possibles.",
+    nations: {
+      "Japan":"Japon","Curacao":"Curaçao","Iran":"Iran","Haiti":"Haïti","Cape Verde":"Cap-Vert",
+      "South Korea":"Corée du Sud","Germany":"Allemagne","Algeria":"Algérie","United States":"États-Unis",
+      "South Africa":"Afrique du Sud","Switzerland":"Suisse","Czech Republic":"République tchèque",
+      "Senegal":"Sénégal","Qatar":"Qatar","Ivory Coast":"Côte d'Ivoire","DR Congo":"R.D. Congo",
+      "Sweden":"Suède","Jordan":"Jordanie","Iraq":"Irak","Egypt":"Égypte","Scotland":"Écosse",
+      "Saudi Arabia":"Arabie Saoudite","Ghana":"Ghana","Uzbekistan":"Ouzbékistan","Croatia":"Croatie",
+      "France":"France","Portugal":"Portugal","Norway":"Norvège","Mexico":"Mexique",
+      "New Zealand":"Nouvelle-Zélande","Australia":"Australie","Morocco":"Maroc","Paraguay":"Paraguay",
+      "Belgium":"Belgique","Austria":"Autriche","Uruguay":"Uruguay","Turkey":"Turquie",
+      "Bosnia & Herz.":"Bosnie-Herz.","Netherlands":"Pays-Bas","England":"Angleterre",
+      "Canada":"Canada","Tunisia":"Tunisie","Brazil":"Brésil","Colombia":"Colombie",
+      "Spain":"Espagne","Argentina":"Argentine","Panama":"Panama","Ecuador":"Équateur"
+    }
+  }
+};
 
 const nations = [
   {rank:1,  tier:1, nation:"Japan",          score:0.784, code:"jp",     intonation:79.2, participation:0.82, richness:1.00, stability:1.00},
@@ -428,18 +629,70 @@ const nations = [
 ];
 
 const TIER_COLORS = {1:'#0abfa3', 2:'#5b4fcf', 3:'#e8900a', 4:'#d94040'};
-const TIER_LABELS = {1:'Tier 1 - Pitch-Perfect', 2:'Tier 2 - In-Tune', 3:'Tier 3 - Close', 4:'Tier 4 - Off-Key'};
 const TROPHIES    = {1:'🥇', 2:'🥈', 3:'🥉'};
 const MAX_SCORE   = 0.784;
 const BAR_MAX_PCT = 85;
-// Min bar widths to guarantee label fits inside — Ecuador gets extra
-const MIN_BAR = { 48: 20 };
+const DOT_COLORS  = ['#ffffff','#ffe066','#1a3aff','#39ff14'];
 
-// Component dot colours — warm neutrals, totally distinct from tier colours (teal/purple/amber/red)
-const DOT_COLORS = ['#ffffff','#ffe066','#1a3aff','#39ff14'];
+let currentLang = 'en';
+// Cache of code -> blob URL for flags
+const flagCache = {};
 
+// ── PRE-FETCH FLAGS AS BLOB URLS ──
+async function preloadFlags() {
+  await Promise.all(nations.map(async n => {
+    if (flagCache[n.code]) return;
+    try {
+      const res = await fetch(`${FLAG_BASE}${n.code}.svg`);
+      const blob = await res.blob();
+      flagCache[n.code] = URL.createObjectURL(blob);
+    } catch(e) {
+      flagCache[n.code] = `${FLAG_BASE}${n.code}.svg`; // fallback
+    }
+  }));
+}
+
+// ── APPLY LANGUAGE ──
+function setLang(code) {
+  currentLang = code;
+  const t = LANGS[code];
+  document.getElementById('g-eyebrow').textContent = t.eyebrow;
+  document.getElementById('g-title').childNodes[0].textContent = t.title;
+  document.getElementById('g-title-accent').textContent = t.accent;
+  document.getElementById('g-subtitle').textContent = t.subtitle;
+  document.getElementById('g-key-score-title').textContent = t.scoreTitle;
+  document.getElementById('g-key-tiers-title').textContent = t.tiersTitle;
+  document.getElementById('g-comp-accuracy').textContent = t.accuracy;
+  document.getElementById('g-comp-commitment').textContent = t.commitment;
+  document.getElementById('g-comp-richness').textContent = t.richness;
+  document.getElementById('g-comp-stability').textContent = t.stability;
+  document.getElementById('g-dots-note').textContent = t.dotsNote;
+  document.getElementById('g-t1-name').textContent = t.t1name;
+  document.getElementById('g-t1-desc').textContent = t.t1desc;
+  document.getElementById('g-t2-name').textContent = t.t2name;
+  document.getElementById('g-t2-desc').textContent = t.t2desc;
+  document.getElementById('g-t3-name').textContent = t.t3name;
+  document.getElementById('g-t3-desc').textContent = t.t3desc;
+  document.getElementById('g-t4-name').textContent = t.t4name;
+  document.getElementById('g-t4-desc').textContent = t.t4desc;
+  document.getElementById('g-col-nation').textContent = t.colNation;
+  document.getElementById('g-col-score').textContent = t.colScore;
+  const disc = document.getElementById('g-disclaimer');
+  if (t.disclaimer) {
+    disc.textContent = t.disclaimer;
+    disc.style.display = 'block';
+  } else {
+    disc.style.display = 'none';
+  }
+  build();
+}
+
+// ── BUILD CHART ──
 function build() {
+  const t = LANGS[currentLang];
+  const tierLabels = {1:t.tier1, 2:t.tier2, 3:t.tier3, 4:t.tier4};
   const container = document.getElementById('gRows');
+  container.innerHTML = '';
   let currentTier = 0;
 
   nations.forEach(n => {
@@ -447,43 +700,37 @@ function build() {
       currentTier = n.tier;
       const sep = document.createElement('div');
       sep.className = 'g-tier-sep';
-      sep.innerHTML = `<span class="g-tier-sep-label" style="color:${TIER_COLORS[n.tier]}">${TIER_LABELS[n.tier]}</span><div class="g-tier-sep-line"></div>`;
+      sep.innerHTML = `<span class="g-tier-sep-label" style="color:${TIER_COLORS[n.tier]}">${tierLabels[n.tier]}</span><div class="g-tier-sep-line"></div>`;
       container.appendChild(sep);
     }
 
     const rawPct = (n.score / MAX_SCORE) * BAR_MAX_PCT;
-    const barPct = Math.max(rawPct, MIN_BAR[n.rank] || 0);
-    const labelInside = barPct >= 17;
+    const barPct = Math.max(rawPct, n.rank === 48 ? 16 : 0);
+    const labelInside = barPct >= 16;
     const topClass = n.rank <= 3 ? ` top${n.rank}` : '';
+    const nationName = t.nations[n.nation] || n.nation;
 
-    // All top-3 rank numbers same size
     const rankHtml = TROPHIES[n.rank]
       ? `<span class="g-trophy">${TROPHIES[n.rank]}</span><span class="g-rank-num-big" style="color:${TIER_COLORS[n.tier]}">${n.rank}</span>`
       : `<span class="g-rank-num">${n.rank}</span>`;
 
-    // Component dots — filled circle from bottom, proportional to value
-    const compVals = [
-      n.intonation / 100,
-      n.participation,
-      n.richness,
-      n.stability
-    ];
-    const dotsHtml = `<div class="g-dots">${compVals.map((v, i) =>
-      `<div class="g-dot">
-         <div class="g-dot-inner" style="height:${Math.round(v*100)}%;background:${DOT_COLORS[i]};"></div>
-       </div>`
+    const compVals = [n.intonation/100, n.participation, n.richness, n.stability];
+    const dotsHtml = `<div class="g-dots">${compVals.map((v,i) =>
+      `<div class="g-dot"><div class="g-dot-inner" style="height:${Math.round(v*100)}%;background:${DOT_COLORS[i]};"></div></div>`
     ).join('')}</div>`;
 
-    // Nation label — inside bar or immediately after it
     const nationHtml = labelInside
-      ? `<div class="g-row-nation">${n.nation}</div>`
-      : `<div class="g-row-nation outside" style="left:${barPct}%">${n.nation}</div>`;
+      ? `<div class="g-row-nation">${nationName}</div>`
+      : `<div class="g-row-nation outside" style="left:${barPct}%">${nationName}</div>`;
+
+    // Use blob URL if available, fallback to direct URL
+    const flagSrc = flagCache[n.code] || `${FLAG_BASE}${n.code}.svg`;
 
     const row = document.createElement('div');
     row.className = `g-row${topClass}`;
     row.innerHTML = `
       <div class="g-row-rank">${rankHtml}</div>
-      <img class="g-row-flag" src="${FLAG_BASE}${n.code}.svg" alt="${n.nation}" loading="eager" crossorigin="anonymous">
+      <img class="g-row-flag" src="${flagSrc}" alt="${nationName}" crossorigin="anonymous">
       <div class="g-row-bar-wrap">
         <div class="g-row-bar" style="width:${barPct}%;background:linear-gradient(90deg,${TIER_COLORS[n.tier]}ee,${TIER_COLORS[n.tier]}99);">
           ${dotsHtml}
@@ -499,20 +746,29 @@ function build() {
   });
 }
 
+// ── EXPORT PNG ──
 async function exportPNG() {
   const btn = document.getElementById('exportBtn');
   btn.textContent = 'Generating...';
   btn.disabled = true;
-  const imgs = document.querySelectorAll('#graphic img');
-  await Promise.all(Array.from(imgs).map(img =>
-    img.complete ? Promise.resolve() : new Promise(r => { img.onload = r; img.onerror = r; })
-  ));
+
+  // Ensure flags are preloaded as blobs
+  await preloadFlags();
+  // Rebuild with blob URLs
+  build();
+  // Small delay to ensure DOM updated
+  await new Promise(r => setTimeout(r, 300));
+
   html2canvas(document.getElementById('graphic'), {
-    scale: 2, useCORS: true, allowTaint: false,
-    backgroundColor: '#f4f6fb', logging: false
+    scale: 2,
+    useCORS: false,      // blobs don't need CORS
+    allowTaint: true,
+    backgroundColor: '#f4f6fb',
+    logging: false,
+    imageTimeout: 0
   }).then(canvas => {
     const link = document.createElement('a');
-    link.download = 'pitch-perfect-wc2026.png';
+    link.download = `pitch-perfect-wc2026-${currentLang}.png`;
     link.href = canvas.toDataURL('image/png');
     link.click();
     btn.textContent = 'Download as PNG';
@@ -520,7 +776,10 @@ async function exportPNG() {
   });
 }
 
-build();
+// ── INIT ──
+preloadFlags().then(() => {
+  setLang('en');
+});
 </script>
 </body>
 </html>
